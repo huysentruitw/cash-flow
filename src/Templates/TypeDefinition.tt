@@ -1,0 +1,43 @@
+<#+
+
+public class TypeDefinition
+{
+    public string Name { get; set; }
+
+    public string ShortName { get; set; }
+
+    public string GroupName { get; set; }
+
+    public string Description { get; set; }
+
+    public FieldDefinition[] Fields { get; set; }
+
+    public bool IsObsolete { get; set; }
+
+    public string ResponseType { get; set; }
+}
+
+public class FieldDefinition
+{
+    public string Name { get; set; }
+
+    public string Type { get; set; }
+
+    public string Description { get; set; }
+
+    public bool IsRequired { get; set; }
+
+    public bool IsEnum { get; set; }
+
+    public string DefaultValue { get; set; }
+}
+
+public class CommandDefinition : TypeDefinition
+{
+}
+
+public class EventDefinition : TypeDefinition
+{
+}
+
+#>

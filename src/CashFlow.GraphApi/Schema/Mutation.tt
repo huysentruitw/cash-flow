@@ -1,0 +1,157 @@
+﻿﻿<#@ output extension=".cs" #>
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ include file="..\..\Templates\Base.tt" #>
+<#
+var commands = LoadDefinitions(this.Host.ResolvePath(@".\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Commands.def");
+var results = LoadDefinitions(this.Host.ResolvePath(@".\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Results.def");
+var groupedCommands = commands
+    .GroupBy(
+        x => x.GroupName,
+        x => x,
+        (gn, cmds) => new { GroupName = gn, Commands = cmds.ToArray() })
+    .ToDictionary(x => x.GroupName, x => x.Commands);
+#>
+using System.Threading.Tasks;
+using AutoMapper;
+using CashFlow.Command.Abstractions;
+using GraphQL.Conventions;
+using MediatR;
+
+
+namespace CashFlow.GraphApi.Schema
+{
+#pragma warning disable IDE0008 // Use explicit type
+    internal sealed class Mutation
+    {
+        private readonly IMapper _mapper;
+
+        public Mutation(OutputTypesMapperResolver mapperResolver)
+        {
+            _mapper = mapperResolver();
+        }
+<#
+foreach (var groupName in groupedCommands.Keys)
+{
+#>
+
+        public <#=groupName #>Mutations <#=groupName #> => new <#=groupName #>Mutations(_mapper);
+<#
+}
+#>
+    }
+<#
+foreach (var kvp in groupedCommands)
+{
+#>
+
+    internal sealed class <#=kvp.Key #>Mutations
+    {
+        private readonly IMapper _mapper;
+
+        public <#=kvp.Key #>Mutations(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+<#
+    foreach (var command in kvp.Value)
+    {
+        var mutationName = command.ShortName ?? command.Name;
+#>
+
+<#
+        if (command.Description != null)
+        {
+#>
+        [Description("<#=command.Description #>")]
+<#
+        }
+
+        var returnType = command.ResponseType != null
+            ? $"MutationInfo<{command.ResponseType}>"
+            : "MutationInfo";
+
+        if (command.Fields.Any())
+        {
+#>
+        public async Task<<#=returnType #>> <#=mutationName #>([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<<#=command.Name #>Parameters> parameters)
+<#
+        }
+        else
+        {
+#>
+        public async Task<<#=returnType #>> <#=mutationName #>([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo)
+<#
+        }
+#>
+        {
+            var command = new <#=command.Name #>Command
+            {
+<#
+        foreach (var field in command.Fields)
+        {
+            if (field.IsRequired && field.DefaultValue != null)
+            {
+#>
+                <#=field.Name #> = <#=field.DefaultValue #>,
+<#
+            }
+            else
+            {
+#>
+                <#=field.Name #> = parameters.Value.<#=field.Name #>,
+<#
+            }
+        }
+#>
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+<#
+        if (command.ResponseType != null)
+        {
+#>
+            return MutationInfo<<#=command.ResponseType #>>.FromCommand(command,
+<#
+            var result = FindDefinition(results, command.ResponseType);
+            if (result != null)
+            {
+#>
+                new <#=command.ResponseType #>
+                {
+<#
+                foreach (var resultField in result.Fields)
+                {
+#>
+                    <#=resultField.Name #> = result.<#=resultField.Name #>,
+<#
+                }
+#>
+                });
+<#
+            }
+            else
+            {
+#>
+                _mapper.Map<<#=command.ResponseType #>>(result));
+<#
+            }
+        }
+        else
+        {
+#>
+            return MutationInfo.FromCommand(command);
+<#
+        }
+#>
+        }
+<#
+    }
+#>
+    }
+<#
+}
+#>
+#pragma warning restore IDE0008 // Use explicit type
+}

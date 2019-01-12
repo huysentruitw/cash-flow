@@ -1,0 +1,46 @@
+﻿﻿<#@ output extension=".cs" #>
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ include file="..\..\..\Templates\Base.tt" #>
+using CashFlow.Enums;
+using GraphQL.Conventions;
+
+namespace CashFlow.GraphApi.Schema
+{
+<#
+var results = LoadDefinitions(this.Host.ResolvePath(@".\..\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Results.def");
+
+foreach (var result in results)
+{
+    if (result.IsObsolete) continue;
+
+    if (result.Description != null)
+    {
+#>
+    [Description("<#=result.Description #>")]
+<#
+    }
+#>
+    public sealed class <#=result.Name #>
+    {
+<#
+    foreach (var field in result.Fields)
+    {
+        if (field.IsRequired && field.DefaultValue != null) continue;
+
+        if (field.Description != null)
+        {
+#>
+        [Description("<#=field.Description #>")]
+<#
+        }
+#>
+        public <#=field.Type #> <#=field.Name #> { get; set; }
+<#
+    }
+#>
+    }
+
+<#
+}
+#>
+}

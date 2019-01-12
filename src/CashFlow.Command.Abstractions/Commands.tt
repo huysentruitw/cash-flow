@@ -1,0 +1,75 @@
+﻿﻿<#@ output extension=".cs" #>
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ include file="..\Templates\Base.tt" #>
+using CashFlow.Enums;
+
+namespace CashFlow.Command.Abstractions
+{
+<#
+var commands = LoadDefinitions(this.Host.ResolvePath(@".\Definitions"), "*.Commands.def");
+
+foreach (var command in commands)
+{
+    if (command.Description != null)
+    {
+#>
+    /// <summary>
+    /// <#=command.Description #>
+    /// </summary>
+<#
+    }
+
+    if (command.IsObsolete)
+    {
+#>
+    [Obsolete("Command is obsolete", false)]
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+<#
+    }
+
+    if (command.ResponseType != null)
+    {
+#>
+    public sealed class <#=command.Name #>Command : Command<<#=command.ResponseType #>>
+    {
+<#
+    }
+    else
+    {
+#>
+    public sealed class <#=command.Name #>Command : Command
+    {
+<#
+    }
+
+    foreach (var field in command.Fields)
+    {
+        if (field.Description != null)
+        {
+#>
+        /// <summary>
+        /// <#=field.Description #>
+        /// </summary>
+<#
+        }
+
+        if (!field.IsRequired && IsValueType(field))
+        {
+#>
+        public <#=field.Type #>? <#=field.Name #> { get; set; }
+<#
+        }
+        else
+        {
+#>
+        public <#=field.Type #> <#=field.Name #> { get; set; }
+<#
+        }
+    }
+#>
+    }
+
+<#
+}
+#>
+}

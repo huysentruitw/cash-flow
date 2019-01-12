@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="GraphQL.Conventions" Version="2.0.1" />
+    <PackageReference Include="MediatR" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.mvc.viewfeatures\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Schema\InputTypes\DomainCommands.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainCommands.tt</DependentUpon>
+    </None>
+    <None Include="Schema\OutputTypes\DomainResults.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainResults.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CashFlow.Command.Abstractions\CashFlow.Command.Abstractions.csproj" />
+    <ProjectReference Include="..\CashFlow.Enums\CashFlow.Enums.csproj" />
+    <ProjectReference Include="..\CashFlow.Query.Abstractions\CashFlow.Query.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Schema\InputTypes\DomainCommands.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DomainCommands.cs</LastGenOutput>
+    </None>
+    <None Update="Schema\Mutation.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Mutation.cs</LastGenOutput>
+    </None>
+    <None Update="Schema\OutputTypes\DomainResults.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DomainResults.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Schema\InputTypes\DomainCommands.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainCommands.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Schema\Mutation.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Mutation.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Schema\OutputTypes\DomainResults.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainResults.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

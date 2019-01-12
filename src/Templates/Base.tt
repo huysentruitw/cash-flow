@@ -1,0 +1,146 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.IO" #>
+<#@ include file=".\Header.tt" #>
+<#@ include file=".\TypeDefinition.tt" #>
+
+using System;
+<#+
+
+public static TypeDefinition FindDefinition(IEnumerable<TypeDefinition> definitions, string name)
+{
+    return definitions.FirstOrDefault(x => x.Name == name);
+}
+
+public static TypeDefinition[] LoadDefinitions(string path, string pattern)
+{
+    var result = new List<TypeDefinition>();
+    foreach (var file in Directory.EnumerateFiles(path, pattern))
+        result.AddRange(LoadDefinition(file));
+
+    return result.ToArray();
+}
+
+public static IEnumerable<TypeDefinition> LoadDefinition(string definitionFileName)
+{
+    var fileName = Path.GetFileName(definitionFileName);
+    var lineNumber = -1;
+    TypeDefinition currentTypeDefinition = null;
+
+    foreach (var line in File.ReadLines(definitionFileName))
+    {
+        lineNumber++;
+        var definition = line.Trim();
+        if (string.Empty.Equals(definition))
+        {
+            if (currentTypeDefinition != null)
+                yield return currentTypeDefinition;
+            currentTypeDefinition = null;
+            continue;
+        }
+
+        if (currentTypeDefinition == null)
+        {
+            currentTypeDefinition = ParseTypeDefinition(definition, fileName, lineNumber);
+        }
+        else
+        {
+            var fieldDefinition = ParseFieldDefinition(definition, fileName, lineNumber);
+            if (fieldDefinition != null)
+                currentTypeDefinition.Fields = currentTypeDefinition.Fields.Concat(new[] { fieldDefinition }).ToArray();
+        }
+    }
+
+    if (currentTypeDefinition != null)
+        yield return currentTypeDefinition;
+}
+
+private static TypeDefinition ParseTypeDefinition(string definition, string fileName, int lineNumber)
+{
+    /* Examples:
+        * type definition: `CreateUserCommand`
+        * type definition with description: `CreateUserCommand // Creates a new user`
+        * type definition with related type: `CreateUserCommand: UserCommandCreationResult`
+        * type defintions with short name: `Create => CreateUserCommand: UserCommandCreationResult`
+        * obsolete type definition: `-CreateUserCommand`
+    */
+    var match = Regex.Match(definition, @"^(?<obsolete>\-)?((?<shortName>[^\s=]+)\s*=>\s*)?(?<name>[^\s\/:]+)\s*(:\s*(?<responseType>[^\s\/]+)\s*)?(\/\/\s*(?<description>.+)?)?$");
+    if (!match.Success) throw new Exception($"Failed to parse type definition in '{fileName}' at line {lineNumber}: '{definition}'");
+
+    return new TypeDefinition
+    {
+        Name = match.Groups["name"].Value,
+        ShortName = NullOnEmpty(match.Groups["shortName"].Value),
+        GroupName = fileName.Split('.')[0],
+        Description = NullOnEmpty(match.Groups["description"].Value),
+        Fields = Array.Empty<FieldDefinition>(),
+        IsObsolete = NullOnEmpty(match.Groups["obsolete"].Value) != null,
+        ResponseType = NullOnEmpty(match.Groups["responseType"].Value)
+    };
+}
+
+private static FieldDefinition ParseFieldDefinition(string definition, string fileName, int lineNumber)
+{
+    /* Examples:
+        * required string field: `EmailAddress: string`
+        * optional string field: `EmailAddress: string?`
+        * required string field with description: `EmailAddress: string // The users e-mail address`
+        * required enum field: `Gender: enum Gender`
+        * optional enum field: `Gender: enum Gender?`
+        * field with default value: `Id: Guid = Guid.NewGuid()`
+    */
+    var match = Regex.Match(definition, @"^(?<name>[^\s:]+)\s*:\s*(?<enum>(enum\s+)?)(?<type>[^\s\?]+)(?<optional>[\?]?)(\s*=\s*(?<defaultValue>[a-zA-Z.()_]+))?(\s*\/\/\s*(?<description>.+)?)?$");
+    if (!match.Success) throw new Exception($"Failed to parse field definition in '{fileName}' at line {lineNumber}: '{definition}'");
+
+    return new FieldDefinition
+    {
+        Name = match.Groups["name"].Value,
+        Type = match.Groups["type"].Value,
+        Description = NullOnEmpty(match.Groups["description"].Value),
+        IsRequired = NullOnEmpty(match.Groups["optional"].Value) == null,
+        IsEnum = NullOnEmpty(match.Groups["enum"].Value) != null,
+        DefaultValue = NullOnEmpty(match.Groups["defaultValue"].Value)
+    };
+}
+
+private static string NullOnEmpty(string str)
+    => string.IsNullOrEmpty(str) ? null : str;
+
+public static string CamelCase(string input)
+{
+    if (string.IsNullOrEmpty(input)) throw new ArgumentNullException(nameof(input));
+    return new string(new[] { Char.ToLower(input[0]) }.Concat(input.Skip(1)).ToArray());
+}
+
+public static bool IsValueType(FieldDefinition field)
+{
+    if (field.IsEnum) return true;
+    switch (field.Type.TrimEnd('[', ']'))
+    {
+    case "bool":
+    case "byte":
+    case "char":
+    case "decimal":
+    case "double":
+    case "float":
+    case "int":
+    case "long":
+    case "sbyte":
+    case "short":
+    case "uint":
+    case "ulong":
+    case "ushort":
+    case "Guid":
+        return true;
+    case "object":
+    case "string":
+        return false;
+    default:
+        return Type.GetType(field.Type).IsValueType;
+    }
+}
+
+#>

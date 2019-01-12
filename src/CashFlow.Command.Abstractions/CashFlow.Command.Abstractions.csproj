@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Definitions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CashFlow.Enums\CashFlow.Enums.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Commands.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Commands.cs</LastGenOutput>
+    </None>
+    <None Update="Results.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Results.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Commands.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Commands.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Results.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Results.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
