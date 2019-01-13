@@ -1,0 +1,15 @@
+{
+  "Accounts": "Rekeningen",
+  "Add new account": "Nieuwe rekening toevoegen",
+  "Codes": "Codes",
+  "Suppliers": "Leveranciers",
+  "Name": "Naam",
+  "Type": "Type",
+  "Contact info": "Contact info",
+  "Created at": "Aangemaakt op",
+  "Modified at": "Gewijzigd op",
+
+  "CASH_ACCOUNT": "Cash",
+  "CURRENT_ACCOUNT": "Zichtrekening",
+  "SAVINGS_ACCOUNT": "Spaarrekening"
+}

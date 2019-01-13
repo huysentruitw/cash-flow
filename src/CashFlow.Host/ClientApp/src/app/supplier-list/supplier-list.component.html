@@ -1,0 +1,20 @@
+<table mat-table [dataSource]="suppliers$" class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef translate>Name</th>
+    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+  </ng-container>
+  <ng-container matColumnDef="contactInfo">
+    <th mat-header-cell *matHeaderCellDef translate>Contact info</th>
+    <td mat-cell *matCellDef="let element">{{element.contactInfo}}</td>
+  </ng-container>
+  <ng-container matColumnDef="createdAt">
+    <th mat-header-cell *matHeaderCellDef translate>Created at</th>
+    <td mat-cell *matCellDef="let element">{{element.dateCreated | date}}</td>
+  </ng-container>
+  <ng-container matColumnDef="modifiedAt">
+    <th mat-header-cell *matHeaderCellDef translate>Modified at</th>
+    <td mat-cell *matCellDef="let element">{{element.dateModified | date}}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

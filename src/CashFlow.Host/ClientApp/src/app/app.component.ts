@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from "graphql-tag";
+import { TranslateService } from '@ngx-translate/core';
+import { registerLocaleData } from '@angular/common';
+import locale from '@angular/common/locales/nl-BE';
+import localeExtra from '@angular/common/locales/extra/nl-BE';
 
 @Component({
   selector: 'app-root',
@@ -8,24 +10,12 @@ import gql from "graphql-tag";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ClientApp';
+  title = 'CashFlow';
 
-  constructor(private apollo: Apollo) {}
-
-  ngOnInit() {
-    this.apollo
-      .watchQuery({
-        query: gql`
-          {
-            userInfo {
-              name
-            }
-          }
-        `
-      })
-      .valueChanges.subscribe(result => {
-        console.log(result);
-      });
+  constructor(translateService: TranslateService) {
+    translateService.setDefaultLang('nl-BE');
+    translateService.use('nl-BE');
+    registerLocaleData(locale, localeExtra);
   }
 
 }
