@@ -10,6 +10,10 @@ namespace CashFlow.Persistence
         {
         }
 
+        public virtual DbSet<Account> Accounts { get; set; }
 
+        public virtual DbSet<Code> Codes { get; set; }
+
+        public virtual DbSet<Supplier> Suppliers { get; set; }
     }
 }

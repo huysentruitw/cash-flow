@@ -1,0 +1,15 @@
+﻿Add => AddAccount // Add an account
+    Id: Guid = Guid.NewGuid() // The id of the account
+    Name: string // The name of the account to add
+    Type: enum AccountType // The type of the account
+
+Rename => RenameAccount // Rename an account
+    Id: Guid // The id of the account
+    Name: string // The new name of the account
+
+ChangeType => ChangeAccountType // Change the type of an account
+    Id: Guid // The id of the account
+    Type: enum AccountType // The new type of the account
+
+Remove => RemoveAccount // Remove an account
+    Id: Guid // The id of the account to remove

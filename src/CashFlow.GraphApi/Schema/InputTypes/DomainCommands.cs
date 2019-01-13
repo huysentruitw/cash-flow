@@ -9,4 +9,106 @@ using GraphQL.Conventions;
 
 namespace CashFlow.GraphApi.Schema
 {
+    [Description("Add an account")]
+    [InputType]
+    public sealed class AddAccountParameters
+    {
+        [Description("The name of the account to add")]
+        public NonNull<string> Name { get; set; }
+        [Description("The type of the account")]
+        public AccountType Type { get; set; }
+    }
+
+    [Description("Rename an account")]
+    [InputType]
+    public sealed class RenameAccountParameters
+    {
+        [Description("The id of the account")]
+        public Guid Id { get; set; }
+        [Description("The new name of the account")]
+        public NonNull<string> Name { get; set; }
+    }
+
+    [Description("Change the type of an account")]
+    [InputType]
+    public sealed class ChangeAccountTypeParameters
+    {
+        [Description("The id of the account")]
+        public Guid Id { get; set; }
+        [Description("The new type of the account")]
+        public AccountType Type { get; set; }
+    }
+
+    [Description("Remove an account")]
+    [InputType]
+    public sealed class RemoveAccountParameters
+    {
+        [Description("The id of the account to remove")]
+        public Guid Id { get; set; }
+    }
+
+    [Description("Add a code")]
+    [InputType]
+    public sealed class AddCodeParameters
+    {
+        [Description("The name of the code to add")]
+        public NonNull<string> Name { get; set; }
+    }
+
+    [Description("Rename a code")]
+    [InputType]
+    public sealed class RenameCodeParameters
+    {
+        [Description("The original name of the code")]
+        public NonNull<string> OriginalName { get; set; }
+        [Description("The new name of the code")]
+        public NonNull<string> NewName { get; set; }
+    }
+
+    [Description("Remove a code")]
+    [InputType]
+    public sealed class RemoveCodeParameters
+    {
+        [Description("The name of the code to remove")]
+        public NonNull<string> Name { get; set; }
+    }
+
+    [Description("Add a supplier")]
+    [InputType]
+    public sealed class AddSupplierParameters
+    {
+        [Description("The name of the supplier to add")]
+        public NonNull<string> Name { get; set; }
+        [Description("The contact info of the supplier")]
+        public string ContactInfo { get; set; }
+    }
+
+    [Description("Rename a supplier")]
+    [InputType]
+    public sealed class RenameSupplierParameters
+    {
+        [Description("The id of the supplier")]
+        public Guid Id { get; set; }
+        [Description("The new name of the supplier")]
+        public NonNull<string> Name { get; set; }
+    }
+
+    [Description("Update the contact info of the supplier")]
+    [InputType]
+    public sealed class UpdateSupplierContactInfoParameters
+    {
+        [Description("The id of the supplier")]
+        public Guid Id { get; set; }
+        [Description("The new contact info of the supplier")]
+        public string ContactInfo { get; set; }
+    }
+
+    [Description("Remove a supplier")]
+    [InputType]
+    public sealed class RemoveSupplierParameters
+    {
+        [Description("The id of the supplier to remove")]
+        public Guid Id { get; set; }
+    }
+
 }

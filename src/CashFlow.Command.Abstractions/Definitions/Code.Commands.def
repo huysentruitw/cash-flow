@@ -1,0 +1,9 @@
+﻿Add => AddCode // Add a code
+    Name: string // The name of the code to add
+
+Rename => RenameCode // Rename a code
+    OriginalName: string // The original name of the code
+    NewName: string // The new name of the code
+
+Remove => RemoveCode // Remove a code
+    Name: string // The name of the code to remove

@@ -8,7 +8,9 @@ namespace CashFlow.GraphApi
     {
         public OutputTypesProfile()
         {
-            CreateMap<Models.RemoveThisModel, RemoveThisModel>();
+            CreateMap<Models.Account, Account>();
+            CreateMap<Models.Code, Code>();
+            CreateMap<Models.Supplier, Supplier>();
         }
     }
 }

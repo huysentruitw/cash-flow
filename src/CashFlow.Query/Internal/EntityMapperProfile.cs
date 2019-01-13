@@ -8,6 +8,9 @@ namespace CashFlow.Query
     {
         public EntityMapperProfile()
         {
+            CreateMap<Entities.Account, Account>();
+            CreateMap<Entities.Code, Code>();
+            CreateMap<Entities.Supplier, Supplier>();
         }
     }
 }

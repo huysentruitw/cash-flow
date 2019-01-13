@@ -11,6 +11,10 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IMediator, Mediator>(provider => new Mediator(provider.GetService));
         services.RegisterCommandHandlersInAssembly();
+
+        services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<ICodeRepository, CodeRepository>();
+
         return services;
     }
 

@@ -1,0 +1,15 @@
+﻿Add => AddSupplier // Add a supplier
+    Id: Guid = Guid.NewGuid() // The id of the account
+    Name: string // The name of the supplier to add
+    ContactInfo: string? // The contact info of the supplier
+
+Rename => RenameSupplier // Rename a supplier
+    Id: Guid // The id of the supplier
+    Name: string // The new name of the supplier
+
+UpdateContactInfo => UpdateSupplierContactInfo // Update the contact info of the supplier
+    Id: Guid // The id of the supplier
+    ContactInfo: string? // The new contact info of the supplier
+
+Remove => RemoveSupplier // Remove a supplier
+    Id: Guid // The id of the supplier to remove

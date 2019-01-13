@@ -8,4 +8,161 @@ using CashFlow.Enums;
 
 namespace CashFlow.Command.Abstractions
 {
+    /// <summary>
+    /// Add an account
+    /// </summary>
+    public sealed class AddAccountCommand : Command
+    {
+        /// <summary>
+        /// The id of the account
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The name of the account to add
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// The type of the account
+        /// </summary>
+        public AccountType Type { get; set; }
+    }
+
+    /// <summary>
+    /// Rename an account
+    /// </summary>
+    public sealed class RenameAccountCommand : Command
+    {
+        /// <summary>
+        /// The id of the account
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The new name of the account
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// Change the type of an account
+    /// </summary>
+    public sealed class ChangeAccountTypeCommand : Command
+    {
+        /// <summary>
+        /// The id of the account
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The new type of the account
+        /// </summary>
+        public AccountType Type { get; set; }
+    }
+
+    /// <summary>
+    /// Remove an account
+    /// </summary>
+    public sealed class RemoveAccountCommand : Command
+    {
+        /// <summary>
+        /// The id of the account to remove
+        /// </summary>
+        public Guid Id { get; set; }
+    }
+
+    /// <summary>
+    /// Add a code
+    /// </summary>
+    public sealed class AddCodeCommand : Command
+    {
+        /// <summary>
+        /// The name of the code to add
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// Rename a code
+    /// </summary>
+    public sealed class RenameCodeCommand : Command
+    {
+        /// <summary>
+        /// The original name of the code
+        /// </summary>
+        public string OriginalName { get; set; }
+        /// <summary>
+        /// The new name of the code
+        /// </summary>
+        public string NewName { get; set; }
+    }
+
+    /// <summary>
+    /// Remove a code
+    /// </summary>
+    public sealed class RemoveCodeCommand : Command
+    {
+        /// <summary>
+        /// The name of the code to remove
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// Add a supplier
+    /// </summary>
+    public sealed class AddSupplierCommand : Command
+    {
+        /// <summary>
+        /// The id of the account
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The name of the supplier to add
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// The contact info of the supplier
+        /// </summary>
+        public string ContactInfo { get; set; }
+    }
+
+    /// <summary>
+    /// Rename a supplier
+    /// </summary>
+    public sealed class RenameSupplierCommand : Command
+    {
+        /// <summary>
+        /// The id of the supplier
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The new name of the supplier
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// Update the contact info of the supplier
+    /// </summary>
+    public sealed class UpdateSupplierContactInfoCommand : Command
+    {
+        /// <summary>
+        /// The id of the supplier
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The new contact info of the supplier
+        /// </summary>
+        public string ContactInfo { get; set; }
+    }
+
+    /// <summary>
+    /// Remove a supplier
+    /// </summary>
+    public sealed class RemoveSupplierCommand : Command
+    {
+        /// <summary>
+        /// The id of the supplier to remove
+        /// </summary>
+        public Guid Id { get; set; }
+    }
+
 }

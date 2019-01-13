@@ -22,6 +22,205 @@ namespace CashFlow.GraphApi.Schema
         {
             _mapper = mapperResolver();
         }
+
+        public AccountMutations Account => new AccountMutations(_mapper);
+
+        public CodeMutations Code => new CodeMutations(_mapper);
+
+        public SupplierMutations Supplier => new SupplierMutations(_mapper);
+    }
+
+    internal sealed class AccountMutations
+    {
+        private readonly IMapper _mapper;
+
+        public AccountMutations(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+        [Description("Add an account")]
+        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddAccountParameters> parameters)
+        {
+            var command = new AddAccountCommand
+            {
+                Id = Guid.NewGuid(),
+                Name = parameters.Value.Name,
+                Type = parameters.Value.Type,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Rename an account")]
+        public async Task<MutationInfo> Rename([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RenameAccountParameters> parameters)
+        {
+            var command = new RenameAccountCommand
+            {
+                Id = parameters.Value.Id,
+                Name = parameters.Value.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Change the type of an account")]
+        public async Task<MutationInfo> ChangeType([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<ChangeAccountTypeParameters> parameters)
+        {
+            var command = new ChangeAccountTypeCommand
+            {
+                Id = parameters.Value.Id,
+                Type = parameters.Value.Type,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Remove an account")]
+        public async Task<MutationInfo> Remove([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RemoveAccountParameters> parameters)
+        {
+            var command = new RemoveAccountCommand
+            {
+                Id = parameters.Value.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+    }
+
+    internal sealed class CodeMutations
+    {
+        private readonly IMapper _mapper;
+
+        public CodeMutations(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+        [Description("Add a code")]
+        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddCodeParameters> parameters)
+        {
+            var command = new AddCodeCommand
+            {
+                Name = parameters.Value.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Rename a code")]
+        public async Task<MutationInfo> Rename([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RenameCodeParameters> parameters)
+        {
+            var command = new RenameCodeCommand
+            {
+                OriginalName = parameters.Value.OriginalName,
+                NewName = parameters.Value.NewName,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Remove a code")]
+        public async Task<MutationInfo> Remove([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RemoveCodeParameters> parameters)
+        {
+            var command = new RemoveCodeCommand
+            {
+                Name = parameters.Value.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+    }
+
+    internal sealed class SupplierMutations
+    {
+        private readonly IMapper _mapper;
+
+        public SupplierMutations(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+        [Description("Add a supplier")]
+        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddSupplierParameters> parameters)
+        {
+            var command = new AddSupplierCommand
+            {
+                Id = Guid.NewGuid(),
+                Name = parameters.Value.Name,
+                ContactInfo = parameters.Value.ContactInfo,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Rename a supplier")]
+        public async Task<MutationInfo> Rename([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RenameSupplierParameters> parameters)
+        {
+            var command = new RenameSupplierCommand
+            {
+                Id = parameters.Value.Id,
+                Name = parameters.Value.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Update the contact info of the supplier")]
+        public async Task<MutationInfo> UpdateContactInfo([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<UpdateSupplierContactInfoParameters> parameters)
+        {
+            var command = new UpdateSupplierContactInfoCommand
+            {
+                Id = parameters.Value.Id,
+                ContactInfo = parameters.Value.ContactInfo,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Remove a supplier")]
+        public async Task<MutationInfo> Remove([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RemoveSupplierParameters> parameters)
+        {
+            var command = new RemoveSupplierCommand
+            {
+                Id = parameters.Value.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
     }
 #pragma warning restore IDE0008 // Use explicit type
 }
