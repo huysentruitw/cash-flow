@@ -1,6 +1,7 @@
 {
   "Accounts": "Rekeningen",
   "Add new account": "Nieuwe rekening toevoegen",
+  "Modify account": "Rekening aanpassen",
   "Codes": "Codes",
   "Suppliers": "Leveranciers",
   "Name": "Naam",
@@ -8,6 +9,8 @@
   "Contact info": "Contact info",
   "Created at": "Aangemaakt op",
   "Modified at": "Gewijzigd op",
+  "Cancel": "Annuleren",
+  "Save": "Bewaren", 
 
   "CASH_ACCOUNT": "Cash",
   "CURRENT_ACCOUNT": "Zichtrekening",

@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-export interface DialogData {
+export class DialogData {
   id: string;
+  name: string;
+  type: string;
 }
 
 @Component({
@@ -11,12 +13,21 @@ export interface DialogData {
   styleUrls: ['./account-dialog.component.scss']
 })
 export class AccountDialogComponent {
+  readonly types = [
+    'CASH_ACCOUNT',
+    'CURRENT_ACCOUNT',
+    'SAVINGS_ACCOUNT'
+  ];
 
-  constructor(private dialogRef: MatDialogRef<AccountDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: DialogData) { }
+  constructor(
+    private dialogRef: MatDialogRef<AccountDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  get isAdd(): boolean {
+    return !this.data.id;
   }
 
+  get isValid(): boolean {
+    return !!this.data.name && !!this.data.type;
+  }
 }

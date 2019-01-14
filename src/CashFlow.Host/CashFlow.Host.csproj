@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -25,18 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\models\account.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CashFlow.Command\CashFlow.Command.csproj" />
     <ProjectReference Include="..\CashFlow.GraphApi\CashFlow.GraphApi.csproj" />
     <ProjectReference Include="..\CashFlow.Persistence\CashFlow.Persistence.csproj" />
     <ProjectReference Include="..\CashFlow.Query\CashFlow.Query.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\models\account.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

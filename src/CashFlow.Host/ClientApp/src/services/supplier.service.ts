@@ -18,7 +18,7 @@ export class SupplierService {
 
   getSuppliers(): Observable<Supplier[]> {
     return this.apollo
-      .watchQuery<ListReponse>({
+      .query<ListReponse>({
         query: gql`
         {
           suppliers {
@@ -30,7 +30,7 @@ export class SupplierService {
           }
         }`
       })
-      .valueChanges.pipe(map(({ data }) => data.suppliers));
+      .pipe(map(({ data }) => data.suppliers));
   }
 
 }

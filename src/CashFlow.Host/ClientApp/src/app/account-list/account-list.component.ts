@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { AccountService } from './../../services/account.service';
 import { Account } from './../../models/account';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,19 +21,53 @@ export class AccountListComponent implements OnInit {
     this.accounts$ = this.accountService.getAccounts();
   }
 
-  deleteAccount(id: string): void {
-    console.log('delete', id);
+  removeAccount(id: string): void {
+    this.accountService.removeAccount(id).subscribe(
+      () => {},
+      error => {
+        console.error(error);
+      });
   }
 
-  addAccount(id: string): void {
+  addAccount(): void {
     const dialogRef = this.dialog.open(AccountDialogComponent,
       {
         width: '400px',
-        data: { id: id }
+        data: { }
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('dialog closed', result);
+      if (!!result) {
+        this.accountService.addAccount(result.name, result.type).subscribe(
+          () => {},
+          error => {
+            console.error(error);
+          });
+      }
+    });
+  }
+
+  modifyAccount(account: Account): void {
+    const dialogRef = this.dialog.open(AccountDialogComponent,
+      {
+        width: '400px',
+        data: {
+          id: account.id,
+          name: account.name,
+          type: account.type
+        }
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.accountService.renameAccount(result.id, result.name)
+          .pipe(switchMap(() => this.accountService.changeAccountType(result.id, result.type)))
+          .subscribe(
+          () => {},
+          error => {
+            console.error(error);
+          });
+      }
     });
   }
 }

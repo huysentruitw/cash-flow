@@ -18,9 +18,9 @@ export class AccountService {
 
   getAccounts(): Observable<Account[]> {
     return this.apollo
-      .watchQuery<ListReponse>({
+      .query<ListReponse>({
         query: gql`
-        {
+        query getAccounts {
           accounts {
             id
             name
@@ -30,6 +30,85 @@ export class AccountService {
           }
         }`
       })
-      .valueChanges.pipe(map(({ data }) => data.accounts));
+      .pipe(map(({ data }) => data.accounts));
+  }
+
+  addAccount(name: string, type: string): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation addAcount($parameters: AddAccountParameters!) {
+          account {
+            add(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            name: name,
+            type: type
+          }
+        }
+      });
+  }
+
+  renameAccount(id: string, name: string): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation renameAccount($parameters: RenameAccountParameters!) {
+          account {
+            rename(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: id,
+            name: name
+          }
+        }
+      });
+  }
+
+  changeAccountType(id: string, type: string): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation changeAccountType($parameters: ChangeAccountTypeParameters!) {
+          account {
+            changeType(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: id,
+            type: type
+          }
+        }
+      });
+  }
+
+  removeAccount(id: string): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation removeAccount($parameters: RemoveAccountParameters!) {
+          account {
+            remove(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: id
+          }
+        }
+      });
   }
 }

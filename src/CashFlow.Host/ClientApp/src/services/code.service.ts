@@ -18,7 +18,7 @@ export class CodeService {
 
   getCodes(): Observable<Code[]> {
     return this.apollo
-      .watchQuery<ListReponse>({
+      .query<ListReponse>({
         query: gql`
         {
           codes {
@@ -27,7 +27,7 @@ export class CodeService {
           }
         }`
       })
-      .valueChanges.pipe(map(({ data }) => data.codes));
+      .pipe(map(({ data }) => data.codes));
   }
 
 }

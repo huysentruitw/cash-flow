@@ -4,22 +4,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from "./graphql.module";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from './material.module';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { AccountListComponent } from './account-list/account-list.component';
 import { CodeListComponent } from './code-list/code-list.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { AccountDialogComponent } from './account-dialog/account-dialog.component';
 
-@NgModule({
+@
+NgModule({
   declarations: [
     AppComponent,
     AccountListComponent,
@@ -30,23 +27,17 @@ import { AccountDialogComponent } from './account-dialog/account-dialog.componen
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     GraphQLModule,
     HttpClientModule,
-
+    MaterialModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
         deps: [HttpClient]
       }
-    }),
-
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule
+    })
   ],
   entryComponents: [
     AccountDialogComponent
