@@ -5,9 +5,16 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Supplier } from './../models/supplier';
 
-class ListReponse {
-  suppliers: Supplier[];
-}
+const listQuery = gql`
+  query getSuppliers {
+    suppliers {
+      id
+      name
+      contactInfo
+      dateCreated
+      dateModified
+    }
+  }`;
 
 @Injectable({
   providedIn: 'root'
@@ -18,19 +25,90 @@ export class SupplierService {
 
   getSuppliers(): Observable<Supplier[]> {
     return this.apollo
-      .query<ListReponse>({
-        query: gql`
-        {
-          suppliers {
-            id
-            name
-            contactInfo
-            dateCreated
-            dateModified
-          }
-        }`
-      })
-      .pipe(map(({ data }) => data.suppliers));
+      .watchQuery<any>({ query: listQuery })
+      .valueChanges.pipe(map(({ data }) => data.suppliers));
   }
 
+  addSupplier(name: string, contactInfo: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation addSupplier($parameters: AddSupplierParameters!) {
+          supplier {
+            add(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            name: name,
+            contactInfo: contactInfo
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
+
+  renameSupplier(id: string, name: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation renameSupplier($parameters: RenameSupplierParameters!) {
+          supplier {
+            rename(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: id,
+            name: name
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
+
+  updateContactInfo(id: string, contactInfo: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation updateSupplierContactInfo($parameters: UpdateSupplierContactInfoParameters!) {
+          supplier {
+            updateContactInfo(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: id,
+            contactInfo: contactInfo
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
+
+  removeSupplier(id: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation removeSupplier($parameters: RemoveSupplierParameters!) {
+          supplier {
+            remove(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: id
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
 }

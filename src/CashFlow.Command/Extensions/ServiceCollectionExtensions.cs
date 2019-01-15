@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<ICodeRepository, CodeRepository>();
+        services.AddScoped<ISupplierRepository, SupplierRepository>();
 
         return services;
     }

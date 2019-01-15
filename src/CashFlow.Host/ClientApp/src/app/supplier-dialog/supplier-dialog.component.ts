@@ -2,22 +2,24 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export class DialogData {
-  isAdd: boolean;
+  id: string;
   name: string;
+  contactInfo: string;
 }
 
 @Component({
-  selector: 'app-code-dialog',
-  templateUrl: './code-dialog.component.html',
-  styleUrls: ['./code-dialog.component.scss']
+  selector: 'app-supplier-dialog',
+  templateUrl: './supplier-dialog.component.html',
+  styleUrls: ['./supplier-dialog.component.scss']
 })
-export class CodeDialogComponent {
+export class SupplierDialogComponent {
+
   constructor(
-    private dialogRef: MatDialogRef<CodeDialogComponent>,
+    private dialogRef: MatDialogRef<SupplierDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   get isAdd(): boolean {
-    return this.data.isAdd;
+    return !this.data.id;
   }
 
   get isValid(): boolean {
