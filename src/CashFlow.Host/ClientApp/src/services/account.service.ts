@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Account } from './../models/account';
 
-const ListQuery = gql`
+const listQuery = gql`
   query getAccounts {
     accounts {
       id
@@ -25,9 +25,7 @@ export class AccountService {
 
   getAccounts(): Observable<Account[]> {
     return this.apollo
-      .watchQuery<any>({
-        query: ListQuery
-      })
+      .watchQuery<any>({ query: listQuery })
       .valueChanges.pipe(map(({ data }) => data.accounts));
   }
 
@@ -48,7 +46,7 @@ export class AccountService {
             type: type
           }
         },
-        refetchQueries: refetchList ? [{ query: ListQuery }] : []
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
       });
   }
 
@@ -69,7 +67,7 @@ export class AccountService {
             name: name
           }
         },
-        refetchQueries: refetchList ? [{ query: ListQuery }] : []
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
       });
   }
 
@@ -90,7 +88,7 @@ export class AccountService {
             type: type
           }
         },
-        refetchQueries: refetchList ? [{ query: ListQuery }] : []
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
       });
   }
 
@@ -110,7 +108,7 @@ export class AccountService {
             id: id
           }
         },
-        refetchQueries: refetchList ? [{ query: ListQuery }] : []
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
       });
   }
 }

@@ -15,6 +15,7 @@ import { CodeListComponent } from './code-list/code-list.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { AccountDialogComponent } from './account-dialog/account-dialog.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { CodeDialogComponent } from './code-dialog/code-dialog.component';
 
 @
 NgModule({
@@ -24,6 +25,7 @@ NgModule({
     CodeListComponent,
     SupplierListComponent,
     AccountDialogComponent,
+    CodeDialogComponent,
     ConfirmationDialogComponent
   ],
   imports: [
@@ -43,6 +45,7 @@ NgModule({
   ],
   entryComponents: [
     AccountDialogComponent,
+    CodeDialogComponent,
     ConfirmationDialogComponent
   ],
   providers: [

@@ -5,9 +5,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Code } from './../models/code';
 
-class ListReponse {
-  codes: Code[];
-}
+const listQuery = gql`
+  query getCodes {
+    codes {
+      name
+      dateCreated
+    }
+  }`;
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +22,68 @@ export class CodeService {
 
   getCodes(): Observable<Code[]> {
     return this.apollo
-      .query<ListReponse>({
-        query: gql`
-        {
-          codes {
-            name
-            dateCreated
-          }
-        }`
-      })
-      .pipe(map(({ data }) => data.codes));
+      .watchQuery<any>({ query: listQuery })
+      .valueChanges.pipe(map(({ data }) => data.codes));
   }
 
+  addCode(name: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+            mutation addCode($parameters: AddCodeParameters!) {
+              code {
+                add(parameters: $parameters) {
+                  correlationId
+                }
+              }
+            }`,
+        variables: {
+          parameters: {
+            name: name
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
+
+  renameCode(originalName: string, newName: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+            mutation renameCode($parameters: RenameCodeParameters!) {
+              code {
+                rename(parameters: $parameters) {
+                  correlationId
+                }
+              }
+            }`,
+        variables: {
+          parameters: {
+            originalName: originalName,
+            newName: newName
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
+
+  removeCode(name: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+            mutation removeCode($parameters: RemoveCodeParameters!) {
+              code {
+                remove(parameters: $parameters) {
+                  correlationId
+                }
+              }
+            }`,
+        variables: {
+          parameters: {
+            name: name
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
 }
