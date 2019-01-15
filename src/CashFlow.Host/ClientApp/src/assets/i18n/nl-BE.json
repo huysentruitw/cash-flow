@@ -2,6 +2,7 @@
   "Accounts": "Rekeningen",
   "Add new account": "Nieuwe rekening toevoegen",
   "Modify account": "Rekening aanpassen",
+  "Remove account?": "Rekening '{{name}}' verwijderen?",
   "Codes": "Codes",
   "Suppliers": "Leveranciers",
   "Name": "Naam",
@@ -10,7 +11,7 @@
   "Created at": "Aangemaakt op",
   "Modified at": "Gewijzigd op",
   "Cancel": "Annuleren",
-  "Save": "Bewaren", 
+  "Save": "Bewaren",
 
   "CASH_ACCOUNT": "Cash",
   "CURRENT_ACCOUNT": "Zichtrekening",

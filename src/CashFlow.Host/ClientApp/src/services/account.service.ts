@@ -5,9 +5,16 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Account } from './../models/account';
 
-class ListReponse {
-  accounts: Account[];
-}
+const ListQuery = gql`
+  query getAccounts {
+    accounts {
+      id
+      name
+      type
+      dateCreated
+      dateModified
+    }
+  }`;
 
 @Injectable({
   providedIn: 'root'
@@ -18,22 +25,13 @@ export class AccountService {
 
   getAccounts(): Observable<Account[]> {
     return this.apollo
-      .query<ListReponse>({
-        query: gql`
-        query getAccounts {
-          accounts {
-            id
-            name
-            type
-            dateCreated
-            dateModified
-          }
-        }`
+      .watchQuery<any>({
+        query: ListQuery
       })
-      .pipe(map(({ data }) => data.accounts));
+      .valueChanges.pipe(map(({ data }) => data.accounts));
   }
 
-  addAccount(name: string, type: string): Observable<void> {
+  addAccount(name: string, type: string, refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({
         mutation: gql`
@@ -49,11 +47,12 @@ export class AccountService {
             name: name,
             type: type
           }
-        }
+        },
+        refetchQueries: refetchList ? [{ query: ListQuery }] : []
       });
   }
 
-  renameAccount(id: string, name: string): Observable<void> {
+  renameAccount(id: string, name: string, refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({
         mutation: gql`
@@ -69,11 +68,12 @@ export class AccountService {
             id: id,
             name: name
           }
-        }
+        },
+        refetchQueries: refetchList ? [{ query: ListQuery }] : []
       });
   }
 
-  changeAccountType(id: string, type: string): Observable<void> {
+  changeAccountType(id: string, type: string, refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({
         mutation: gql`
@@ -89,11 +89,12 @@ export class AccountService {
             id: id,
             type: type
           }
-        }
+        },
+        refetchQueries: refetchList ? [{ query: ListQuery }] : []
       });
   }
 
-  removeAccount(id: string): Observable<void> {
+  removeAccount(id: string, refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({
         mutation: gql`
@@ -108,7 +109,8 @@ export class AccountService {
           parameters: {
             id: id
           }
-        }
+        },
+        refetchQueries: refetchList ? [{ query: ListQuery }] : []
       });
   }
 }

@@ -14,6 +14,7 @@ import { AccountListComponent } from './account-list/account-list.component';
 import { CodeListComponent } from './code-list/code-list.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { AccountDialogComponent } from './account-dialog/account-dialog.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @
 NgModule({
@@ -22,7 +23,8 @@ NgModule({
     AccountListComponent,
     CodeListComponent,
     SupplierListComponent,
-    AccountDialogComponent
+    AccountDialogComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     AppRoutingModule,
@@ -40,7 +42,8 @@ NgModule({
     })
   ],
   entryComponents: [
-    AccountDialogComponent
+    AccountDialogComponent,
+    ConfirmationDialogComponent
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'nl-BE' },
