@@ -1,37 +1,51 @@
-<mat-toolbar color="primary" class="m-header mat-elevation-z4" fxLayout>
-  <span class="title"><mat-icon>money</mat-icon>CashFlow</span>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened="true">
 
-  <nav mat-tab-nav-bar
-       color="primary"
-       backgroundColor="primary">
-    <a mat-tab-link
-       routerLink="/accounts"
-       routerLinkActive
-       #rlaAccounts="routerLinkActive"
-       [active]="rlaAccounts.isActive"
-       translate>
-      Accounts
-    </a>
-    <a mat-tab-link
-       routerLink="/codes"
-       routerLinkActive
-       #rlaCodes="routerLinkActive"
-       [active]="rlaCodes.isActive"
-       translate>
-      Codes
-    </a>
-    <a mat-tab-link
-       routerLink="/suppliers"
-       routerLinkActive
-       #rlaSuppliers="routerLinkActive"
-       [active]="rlaSuppliers.isActive"
-       translate>
-      Suppliers
-    </a>
+    <mat-toolbar color="primary" backgroundColor="primary">
+      <mat-toolbar-row>
+        <h2 class="title"><mat-icon>money</mat-icon>CashFlow</h2>
+      </mat-toolbar-row>
+    </mat-toolbar>
 
-  </nav>
-</mat-toolbar>
+    <mat-nav-list>
 
-<div class="mainContainer">
-  <router-outlet></router-outlet>
-</div>
+      <h2 matSubheader translate>Data</h2>
+      <a mat-list-item routerLink="/" style="height: 0;"></a>
+      <a mat-list-item
+         routerLink="/suppliers"
+         routerLinkActive
+         #routerLinkActiveInstance="routerLinkActive"
+         [class.list-item-active]="routerLinkActiveInstance.isActive">
+        <mat-icon color="primary">local_shipping</mat-icon>
+        <span translate>Suppliers</span>
+      </a>
+      <a mat-list-item
+         routerLink="/accounts"
+         routerLinkActive
+         #routerLinkActiveInstance="routerLinkActive"
+         [class.list-item-active]="routerLinkActiveInstance.isActive">
+        <mat-icon color="primary">account_balance_wallet</mat-icon>
+        <span translate>Accounts</span>
+      </a>
+      <a mat-list-item
+         routerLink="/codes"
+         routerLinkActive
+         #routerLinkActiveInstance="routerLinkActive"
+         [class.list-item-active]="routerLinkActiveInstance.isActive">
+        <mat-icon color="primary">code</mat-icon>
+        <span translate>Codes</span>
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar (click)="sidenav.toggle()">
+
+    </mat-toolbar>
+    <div class="main-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
