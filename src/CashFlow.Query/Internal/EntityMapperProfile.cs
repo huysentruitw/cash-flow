@@ -10,6 +10,7 @@ namespace CashFlow.Query
         {
             CreateMap<Entities.Account, Account>();
             CreateMap<Entities.Code, Code>();
+            CreateMap<Entities.FinancialYear, FinancialYear>();
             CreateMap<Entities.Supplier, Supplier>();
         }
     }

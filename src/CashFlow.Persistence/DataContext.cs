@@ -14,6 +14,8 @@ namespace CashFlow.Persistence
 
         public virtual DbSet<Code> Codes { get; set; }
 
+        public virtual DbSet<FinancialYear> FinancialYears { get; set; }
+
         public virtual DbSet<Supplier> Suppliers { get; set; }
     }
 }

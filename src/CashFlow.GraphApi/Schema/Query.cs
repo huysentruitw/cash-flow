@@ -20,6 +20,9 @@ namespace CashFlow.GraphApi.Schema
         public async Task<Code[]> Codes([Inject] ICodeRepository repository)
             => _mapper.Map<Code[]>(await repository.GetCodes());
 
+        public async Task<FinancialYear[]> FinancialYears([Inject] IFinancialYearRepository repository)
+            => _mapper.Map<FinancialYear[]>(await repository.GetFinancialYears());
+
         public async Task<Supplier[]> Suppliers([Inject] ISupplierRepository repository)
             => _mapper.Map<Supplier[]>(await repository.GetSuppliers());
     }

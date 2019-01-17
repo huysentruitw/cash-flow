@@ -27,6 +27,8 @@ namespace CashFlow.GraphApi.Schema
 
         public CodeMutations Code => new CodeMutations(_mapper);
 
+        public FinancialYearMutations FinancialYear => new FinancialYearMutations(_mapper);
+
         public SupplierMutations Supplier => new SupplierMutations(_mapper);
     }
 
@@ -144,6 +146,32 @@ namespace CashFlow.GraphApi.Schema
             var command = new RemoveCodeCommand
             {
                 Name = parameters.Value.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+    }
+
+    internal sealed class FinancialYearMutations
+    {
+        private readonly IMapper _mapper;
+
+        public FinancialYearMutations(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+        [Description("Add a new financial year")]
+        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddFinancialYearParameters> parameters)
+        {
+            var command = new AddFinancialYearCommand
+            {
+                Id = Guid.NewGuid(),
+                Name = parameters.Value.Name,
+                PreviousFinancialYearId = parameters.Value.PreviousFinancialYearId,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 

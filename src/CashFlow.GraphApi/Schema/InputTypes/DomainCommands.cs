@@ -73,6 +73,16 @@ namespace CashFlow.GraphApi.Schema
         public NonNull<string> Name { get; set; }
     }
 
+    [Description("Add a new financial year")]
+    [InputType]
+    public sealed class AddFinancialYearParameters
+    {
+        [Description("The name of the new financial year")]
+        public NonNull<string> Name { get; set; }
+        [Description("The id of the previous financial year")]
+        public Guid? PreviousFinancialYearId { get; set; }
+    }
+
     [Description("Add a supplier")]
     [InputType]
     public sealed class AddSupplierParameters

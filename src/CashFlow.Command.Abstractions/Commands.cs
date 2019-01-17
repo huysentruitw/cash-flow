@@ -106,6 +106,25 @@ namespace CashFlow.Command.Abstractions
     }
 
     /// <summary>
+    /// Add a new financial year
+    /// </summary>
+    public sealed class AddFinancialYearCommand : Command
+    {
+        /// <summary>
+        /// The id of the new financial year
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The name of the new financial year
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// The id of the previous financial year
+        /// </summary>
+        public Guid? PreviousFinancialYearId { get; set; }
+    }
+
+    /// <summary>
     /// Add a supplier
     /// </summary>
     public sealed class AddSupplierCommand : Command

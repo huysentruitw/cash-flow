@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<ICodeRepository, CodeRepository>();
+        services.AddScoped<IFinancialYearRepository, FinancialYearRepository>();
         services.AddScoped<ISupplierRepository, SupplierRepository>();
 
         services.AddSingleton<EntityMapperResolver>(_ =>

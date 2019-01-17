@@ -10,6 +10,7 @@ namespace CashFlow.GraphApi
         {
             CreateMap<Models.Account, Account>();
             CreateMap<Models.Code, Code>();
+            CreateMap<Models.FinancialYear, FinancialYear>();
             CreateMap<Models.Supplier, Supplier>();
         }
     }
