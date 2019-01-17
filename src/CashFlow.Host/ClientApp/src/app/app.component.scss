@@ -1,41 +1,7 @@
-.title {
-  margin-right: 2em;
-}
-
-.title > mat-icon {
-  position: relative;
-  top: 4px;
-  margin-right: 7px;
-  transform: rotateZ(-20deg);
-}
-
 .main-container {
   padding: 2em;
 }
 
-.mat-list-item .mat-icon {
-  margin-right: 0.3em;
-}
-
 .mat-sidenav-container {
   height: 100%;
-}
-
-$sidenav-width: 320px;
-
-.mat-sidenav {
-  width: $sidenav-width;
-}
-
-.toolbar-title {
-  margin: 0 16px 0 16px;
-}
-
-.mat-subheader {
-  font-size: 18px;
-  font-weight: 900;
-}
-
-.app-nav-list-icon {
-  margin: 0 12px 0 12px;
 }

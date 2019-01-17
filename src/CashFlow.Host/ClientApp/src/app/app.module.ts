@@ -1,4 +1,3 @@
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from "./graphql.module";
@@ -10,25 +9,28 @@ import { MaterialModule } from './material.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { AccountListComponent } from './account-list/account-list.component';
-import { CodeListComponent } from './code-list/code-list.component';
-import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { AccountDialogComponent } from './account-dialog/account-dialog.component';
-import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { AccountListComponent } from './account-list/account-list.component';
+import { AppComponent } from './app.component';
 import { CodeDialogComponent } from './code-dialog/code-dialog.component';
+import { CodeListComponent } from './code-list/code-list.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 import { SupplierDialogComponent } from './supplier-dialog/supplier-dialog.component';
+import { SupplierListComponent } from './supplier-list/supplier-list.component';
 
 @
 NgModule({
   declarations: [
-    AppComponent,
-    AccountListComponent,
-    CodeListComponent,
-    SupplierListComponent,
     AccountDialogComponent,
+    AccountListComponent,
+    AppComponent,
     CodeDialogComponent,
+    CodeListComponent,
     ConfirmationDialogComponent,
-    SupplierDialogComponent
+    SidebarComponent,
+    SupplierDialogComponent,
+    SupplierListComponent
   ],
   imports: [
     AppRoutingModule,
