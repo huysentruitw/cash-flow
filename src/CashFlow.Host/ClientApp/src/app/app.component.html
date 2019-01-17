@@ -1,13 +1,15 @@
 <mat-sidenav-container>
-  <app-sidebar #sidebar></app-sidebar>
+  <mat-sidenav #sidebar mode="side" opened="true">
+    <app-sidebar></app-sidebar>
+  </mat-sidenav>
 
-  <mat-sidenav-content>
-    <mat-toolbar (click)="sidebar.toggle()">
+    <mat-sidenav-content>
+      <mat-toolbar (click)="sidebar.toggle()">
 
-    </mat-toolbar>
-    <div class="main-container">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
+      </mat-toolbar>
+      <div class="main-container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
 
 </mat-sidenav-container>
