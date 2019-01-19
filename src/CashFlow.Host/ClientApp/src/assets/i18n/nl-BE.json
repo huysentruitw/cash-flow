@@ -5,7 +5,7 @@
   "Remove account?": "Rekening '{{name}}' verwijderen?",
   "Codes": "Codes",
   "Add new code": "Nieuwe code toevoegen",
-  "Modify code": "Code aanpassen", 
+  "Modify code": "Code aanpassen",
   "Remove code?": "Code '{{name}}' verwijderen?",
   "Suppliers": "Leveranciers",
   "Add new supplier": "Nieuwe leverancier toevoegen",
@@ -19,6 +19,9 @@
   "Cancel": "Annuleren",
   "Save": "Bewaren",
   "Data": "Gegevens",
+  "Financial year": "Boekjaar",
+  "Add new financial year": "Nieuw boekjaar toevoegen",
+  "Previous financial year": "Vorig boekjaar",
 
   "CASH_ACCOUNT": "Cash",
   "CURRENT_ACCOUNT": "Zichtrekening",

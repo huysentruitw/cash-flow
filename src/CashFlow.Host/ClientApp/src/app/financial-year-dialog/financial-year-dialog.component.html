@@ -1,0 +1,17 @@
+<h2 mat-dialog-title translate>Add new financial year</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <input matInput placeholder="{{'Name' | translate}}" [(ngModel)]="data.name" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="{{'Previous financial year' | translate}}" [(ngModel)]="data.previousFinancialYearId">
+      <mat-option *ngFor="let financialYear of data.financialYears" [value]="financialYear.id">
+        {{financialYear.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{'Cancel' | translate}}</button>
+  <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="!isValid">{{'Save' | translate}}</button>
+</mat-dialog-actions>
