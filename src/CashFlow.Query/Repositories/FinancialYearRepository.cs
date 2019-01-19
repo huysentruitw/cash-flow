@@ -20,6 +20,6 @@ namespace CashFlow.Query.Repositories
         }
 
         public async Task<FinancialYear[]> GetFinancialYears()
-            => _mapper.Map<FinancialYear[]>(await _dataContext.FinancialYears.AsNoTracking().OrderByDescending(x => x.Name).ToArrayAsync());
+            => _mapper.Map<FinancialYear[]>(await _dataContext.FinancialYears.AsNoTracking().OrderBy(x => x.Name).ToArrayAsync());
     }
 }
