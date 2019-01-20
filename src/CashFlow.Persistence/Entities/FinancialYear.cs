@@ -11,6 +11,8 @@ namespace CashFlow.Persistence.Entities
         [MaxLength(100)]
         public string Name { get; set; }
 
+        public bool IsActive { get; set; }
+
         public DateTimeOffset DateCreated { get; set; }
     }
 }

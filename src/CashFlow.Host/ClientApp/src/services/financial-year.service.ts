@@ -10,6 +10,7 @@ const listQuery = gql`
     financialYears {
       id
       name
+      isActive
       dateCreated
     }
   }`;
