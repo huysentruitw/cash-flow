@@ -179,6 +179,20 @@ namespace CashFlow.GraphApi.Schema
 
             return MutationInfo.FromCommand(command);
         }
+
+        [Description("Set the given financial year as active")]
+        public async Task<MutationInfo> Activate([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<ActivateFinancialYearParameters> parameters)
+        {
+            var command = new ActivateFinancialYearCommand
+            {
+                Id = parameters.Value.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
     }
 
     internal sealed class SupplierMutations

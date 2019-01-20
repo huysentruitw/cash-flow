@@ -25,6 +25,7 @@
   "Financial year": "Boekjaar",
   "Add new financial year": "Nieuw boekjaar toevoegen",
   "Previous financial year": "Vorig boekjaar",
+  "Are you sure you want to change the active financial year to {{name}}?": "Weet u zeker dat u het actieve boekjaar wilt wijzigen naar {{name}}?",
 
   "CASH_ACCOUNT": "Cash",
   "CURRENT_ACCOUNT": "Zichtrekening",

@@ -125,6 +125,17 @@ namespace CashFlow.Command.Abstractions
     }
 
     /// <summary>
+    /// Set the given financial year as active
+    /// </summary>
+    public sealed class ActivateFinancialYearCommand : Command
+    {
+        /// <summary>
+        /// The id of the financial year to activate
+        /// </summary>
+        public Guid Id { get; set; }
+    }
+
+    /// <summary>
     /// Add a supplier
     /// </summary>
     public sealed class AddSupplierCommand : Command

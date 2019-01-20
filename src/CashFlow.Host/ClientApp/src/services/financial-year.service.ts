@@ -48,4 +48,24 @@ export class FinancialYearService {
         refetchQueries: refetchList ? [{ query: listQuery }] : []
       });
   }
+
+  activateFinancialYear(id: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+          mutation activateFinancialYear($parameters: ActivateFinancialYearParameters!) {
+            financialYear {
+              activate(parameters: $parameters) {
+                correlationId
+              }
+            }
+          }`,
+        variables: {
+          parameters: {
+            id: id
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
 }

@@ -2,3 +2,6 @@
     Id: Guid = Guid.NewGuid() // The id of the new financial year
     Name: string // The name of the new financial year
     PreviousFinancialYearId: Guid? // The id of the previous financial year
+
+Activate => ActivateFinancialYear // Set the given financial year as active
+    Id: Guid // The id of the financial year to activate

@@ -32,4 +32,25 @@ namespace CashFlow.Command.CommandHandlers
             return Unit.Value;
         }
     }
+
+    internal sealed class ActivateFinancialYearCommandHandler : SafeCommandHandler<ActivateFinancialYearCommand>
+    {
+        private readonly IFinancialYearRepository _repository;
+
+        public ActivateFinancialYearCommandHandler(IFinancialYearRepository repository)
+        {
+            _repository = repository;
+        }
+
+        protected override void DefineRules()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+        }
+
+        protected override async Task<Unit> HandleValidatedCommand(ActivateFinancialYearCommand command)
+        {
+            await _repository.ActivateFinancialYear(command.Id);
+            return Unit.Value;
+        }
+    }
 }

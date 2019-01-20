@@ -83,6 +83,14 @@ namespace CashFlow.GraphApi.Schema
         public Guid? PreviousFinancialYearId { get; set; }
     }
 
+    [Description("Set the given financial year as active")]
+    [InputType]
+    public sealed class ActivateFinancialYearParameters
+    {
+        [Description("The id of the financial year to activate")]
+        public Guid Id { get; set; }
+    }
+
     [Description("Add a supplier")]
     [InputType]
     public sealed class AddSupplierParameters
