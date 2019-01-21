@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { FinancialYear } from 'src/models/financial-year';
 import { FinancialYearService } from 'src/services/financial-year.service';
-import { takeUntil, take, map } from 'rxjs/operators';
+import { takeUntil, take, map, switchMap } from 'rxjs/operators';
 import { FinancialYearDialogComponent } from '../financial-year-dialog/financial-year-dialog.component';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
@@ -31,17 +31,17 @@ export class FinancialYearSelectorComponent implements OnInit, OnDestroy {
   }
 
   addFinancialYear(): void {
-    this.financialYears$.pipe(take(1)).subscribe(financialYears => {
-      console.log(financialYears);
-      const dialogRef = this.dialog.open(FinancialYearDialogComponent,
+    this.financialYears$.pipe(
+      take(1),
+      switchMap(financialYears => this.dialog.open(FinancialYearDialogComponent,
         {
           width: '400px',
           data: {
             financialYears: financialYears
           }
-        });
-
-      dialogRef.afterClosed().subscribe(result => {
+        }).afterClosed()
+      ))
+      .subscribe(result => {
         if (!!result) {
           this.financialYearService.addFinancialYear(result.name, result.previousFinancialYearId).subscribe(
             () => { },
@@ -50,35 +50,32 @@ export class FinancialYearSelectorComponent implements OnInit, OnDestroy {
             });
         }
       });
-
-    });
   }
 
   updateActiveFinancialYear(financialYearId: any): void {
-    this.financialYears$.pipe(take(1)).subscribe(financialYears => {
-      var newFinancialYear = financialYears.find(year => year.id === financialYearId);
-      if (!newFinancialYear)
-        return;
-
-      this.dialog.open(ConfirmationDialogComponent,
+    this.financialYears$.pipe(
+      take(1),
+      map(financialYears => financialYears.find(year => year.id === financialYearId)),
+      switchMap(newFinancialYear => this.dialog.open(ConfirmationDialogComponent,
         {
           width: '400px',
           data: {
             title: this.translate.instant('Are you sure you want to change the active financial year to {{name}}?', { name: newFinancialYear.name })
           }
         })
-        .afterClosed().subscribe(result => {
-          if (!!result) {
-            this.financialYearService.activateFinancialYear(financialYearId).subscribe(
-              () => { },
-              error => {
-                console.error(error);
-              });
-          } else {
-            this.activeFinancialYear$ = this.financialYears$.pipe(map(years => years.find(year => year.isActive)));
-          }
-        });
-    });
+        .afterClosed()
+      ))
+      .subscribe(result => {
+        if (!!result) {
+          this.financialYearService.activateFinancialYear(financialYearId).subscribe(
+            () => { },
+            error => {
+              console.error(error);
+            });
+        } else {
+          this.activeFinancialYear$ = this.financialYears$.pipe(map(years => years.find(year => year.isActive)));
+        }
+      });
   }
 
 }
