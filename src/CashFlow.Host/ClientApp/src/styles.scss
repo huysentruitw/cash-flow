@@ -14,3 +14,7 @@ body {
 table {
   width: 100%;
 }
+
+app-financial-year-selector .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label-wrapper {
+  visibility: hidden !important;
+}
