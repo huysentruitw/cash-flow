@@ -21,5 +21,9 @@ namespace CashFlow.Data
         public DbSet<FinancialYear> FinancialYears { get; set; }
 
         public DbSet<Supplier> Suppliers { get; set; }
+
+        public DbSet<TransactionCode> TransactionCodes { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

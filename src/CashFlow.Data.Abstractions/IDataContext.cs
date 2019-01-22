@@ -16,6 +16,10 @@ namespace CashFlow.Data.Abstractions
 
         DbSet<Supplier> Suppliers { get; set; }
 
+        DbSet<TransactionCode> TransactionCodes { get; set; }
+
+        DbSet<Transaction> Transactions { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         DatabaseFacade Database { get; }

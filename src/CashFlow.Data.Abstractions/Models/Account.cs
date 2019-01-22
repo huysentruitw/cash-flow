@@ -3,7 +3,7 @@ using CashFlow.Enums;
 
 namespace CashFlow.Data.Abstractions.Models
 {
-    public sealed class Account
+    public class Account
     {
         public Guid Id { get; set; }
 
