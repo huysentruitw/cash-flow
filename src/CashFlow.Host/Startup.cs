@@ -27,7 +27,7 @@ namespace CashFlow.Host
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddPersistence(Configuration.GetConnectionString("Default"));
+            services.AddData(Configuration.GetConnectionString("Default"));
             services.AddCommand();
             services.AddQuery();
             services.AddGraphApi();

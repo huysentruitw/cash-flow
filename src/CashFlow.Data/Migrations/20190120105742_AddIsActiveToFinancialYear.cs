@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CashFlow.Persistence.Migrations
+namespace CashFlow.Data.Migrations
 {
     public partial class AddIsActiveToFinancialYear : Migration
     {

@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CashFlow.Persistence\CashFlow.Persistence.csproj" />
+    <ProjectReference Include="..\CashFlow.Data.Abstractions\CashFlow.Data.Abstractions.csproj" />
     <ProjectReference Include="..\CashFlow.Query.Abstractions\CashFlow.Query.Abstractions.csproj" />
   </ItemGroup>
 
@@ -17,6 +13,10 @@
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
       <HintPath>C:\Users\woute\.nuget\packages\microsoft.extensions.dependencyinjection.abstractions\2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Internal\" />
   </ItemGroup>
 
 </Project>

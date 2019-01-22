@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using CashFlow.Query.Abstractions.Models;
+using CashFlow.Data.Abstractions.Models;
 
 namespace CashFlow.Query.Abstractions.Repositories
 {

@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CashFlow.Command.Abstractions\CashFlow.Command.Abstractions.csproj" />
+    <ProjectReference Include="..\CashFlow.Data.Abstractions\CashFlow.Data.Abstractions.csproj" />
     <ProjectReference Include="..\CashFlow.Enums\CashFlow.Enums.csproj" />
     <ProjectReference Include="..\CashFlow.Query.Abstractions\CashFlow.Query.Abstractions.csproj" />
   </ItemGroup>

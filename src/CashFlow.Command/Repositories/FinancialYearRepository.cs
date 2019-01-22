@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CashFlow.Command.Abstractions.Exceptions;
-using CashFlow.Persistence;
-using CashFlow.Persistence.Entities;
+using CashFlow.Data.Abstractions;
+using CashFlow.Data.Abstractions.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
@@ -17,9 +17,9 @@ namespace CashFlow.Command.Repositories
 
     internal sealed class FinancialYearRepository : IFinancialYearRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
-        public FinancialYearRepository(DataContext dataContext)
+        public FinancialYearRepository(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }

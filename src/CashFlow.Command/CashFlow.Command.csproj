@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CashFlow.Command.Abstractions\CashFlow.Command.Abstractions.csproj" />
-    <ProjectReference Include="..\CashFlow.Persistence\CashFlow.Persistence.csproj" />
+    <ProjectReference Include="..\CashFlow.Data.Abstractions\CashFlow.Data.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using CashFlow.Persistence;
-using CashFlow.Persistence.Entities;
+using CashFlow.Data.Abstractions;
+using CashFlow.Data.Abstractions.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CashFlow.Command.Repositories
@@ -15,9 +15,9 @@ namespace CashFlow.Command.Repositories
 
     internal sealed class CodeRepository : ICodeRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
-        public CodeRepository(DataContext dataContext)
+        public CodeRepository(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }
@@ -35,8 +35,8 @@ namespace CashFlow.Command.Repositories
         public async Task RenameCode(string originalName, string newName)
         {
             Code originalCode = await _dataContext.Codes.FirstAsync(x => x.Name == originalName);
-            _dataContext.Remove(originalCode);
-            await _dataContext.AddAsync(new Code
+            _dataContext.Codes.Remove(originalCode);
+            await _dataContext.Codes.AddAsync(new Code
             {
                 Name = newName,
                 DateCreated = originalCode.DateCreated

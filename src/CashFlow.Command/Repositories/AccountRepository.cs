@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using CashFlow.Data.Abstractions;
+using CashFlow.Data.Abstractions.Models;
 using CashFlow.Enums;
-using CashFlow.Persistence;
-using CashFlow.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CashFlow.Command.Repositories
@@ -17,9 +17,9 @@ namespace CashFlow.Command.Repositories
 
     internal sealed class AccountRepository : IAccountRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
-        public AccountRepository(DataContext dataContext)
+        public AccountRepository(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }

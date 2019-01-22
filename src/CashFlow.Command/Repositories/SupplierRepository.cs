@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using CashFlow.Persistence;
-using CashFlow.Persistence.Entities;
+using CashFlow.Data.Abstractions;
+using CashFlow.Data.Abstractions.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CashFlow.Command.Repositories
@@ -16,9 +16,9 @@ namespace CashFlow.Command.Repositories
 
     internal sealed class SupplierRepository : ISupplierRepository
     {
-        private readonly DataContext _dataContext;
+        private readonly IDataContext _dataContext;
 
-        public SupplierRepository(DataContext dataContext)
+        public SupplierRepository(IDataContext dataContext)
         {
             _dataContext = dataContext;
         }

@@ -1,6 +1,6 @@
 using AutoMapper;
 using CashFlow.GraphApi.Schema;
-using Models = CashFlow.Query.Abstractions.Models;
+using Models = CashFlow.Data.Abstractions.Models;
 
 namespace CashFlow.GraphApi
 {

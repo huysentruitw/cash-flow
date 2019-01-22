@@ -1,7 +1,7 @@
 using System;
 using CashFlow.Enums;
 
-namespace CashFlow.Query.Abstractions.Models
+namespace CashFlow.Data.Abstractions.Models
 {
     public sealed class Account
     {

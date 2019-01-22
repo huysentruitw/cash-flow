@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CashFlow.Persistence.Migrations
+namespace CashFlow.Data.Migrations
 {
     public partial class AddSeedData : Migration
     {
