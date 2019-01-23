@@ -17,7 +17,7 @@ namespace CashFlow.Data.EntityTypeConfigurations
             builder.HasIndex(x => x.SupplierId);
             builder.Property(x => x.DateCreated).IsRequired();
             builder.Property(x => x.Amount).IsRequired();
-            builder.Property(x => x.IsTransfer).IsRequired();
+            builder.Property(x => x.IsInternalTransfer).IsRequired();
             builder.Property(x => x.Description).IsRequired().HasMaxLength(250);
             builder.Property(x => x.Comment).HasMaxLength(250);
         }

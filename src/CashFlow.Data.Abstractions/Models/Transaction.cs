@@ -20,7 +20,7 @@ namespace CashFlow.Data.Abstractions.Models
 
         public decimal Amount { get; set; }
 
-        public bool IsTransfer { get; set; }
+        public bool IsInternalTransfer { get; set; }
 
         public string Description { get; set; }
 
