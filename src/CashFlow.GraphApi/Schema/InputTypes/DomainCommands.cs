@@ -129,4 +129,26 @@ namespace CashFlow.GraphApi.Schema
         public Guid Id { get; set; }
     }
 
+    [Description("Adds a transaction")]
+    [InputType]
+    public sealed class AddTransactionParameters
+    {
+        [Description("The id of the financial year")]
+        public Guid FinancialYearId { get; set; }
+        [Description("The id of the account related to the transaction")]
+        public Guid AccountId { get; set; }
+        [Description("The optional id of the supplier linked to the transaction")]
+        public Guid? SupplierId { get; set; }
+        [Description("The amount. Positive for income, negative for expenses")]
+        public decimal Amount { get; set; }
+        [Description("True if the transaction is an internal transfer between accounts, false when actual income or expense")]
+        public bool IsInternalTransfer { get; set; }
+        [Description("The description of the transaction")]
+        public NonNull<string> Description { get; set; }
+        [Description("Optional comment related to the transaction")]
+        public string Comment { get; set; }
+        [Description("Zero or more names of codes linked to the transaction")]
+        public NonNull<string[]> CodeNames { get; set; }
+    }
+
 }

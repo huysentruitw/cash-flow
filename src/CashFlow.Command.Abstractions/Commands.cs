@@ -195,4 +195,47 @@ namespace CashFlow.Command.Abstractions
         public Guid Id { get; set; }
     }
 
+    /// <summary>
+    /// Adds a transaction
+    /// </summary>
+    public sealed class AddTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the transaction
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The id of the financial year
+        /// </summary>
+        public Guid FinancialYearId { get; set; }
+        /// <summary>
+        /// The id of the account related to the transaction
+        /// </summary>
+        public Guid AccountId { get; set; }
+        /// <summary>
+        /// The optional id of the supplier linked to the transaction
+        /// </summary>
+        public Guid? SupplierId { get; set; }
+        /// <summary>
+        /// The amount. Positive for income, negative for expenses
+        /// </summary>
+        public decimal Amount { get; set; }
+        /// <summary>
+        /// True if the transaction is an internal transfer between accounts, false when actual income or expense
+        /// </summary>
+        public bool IsInternalTransfer { get; set; }
+        /// <summary>
+        /// The description of the transaction
+        /// </summary>
+        public string Description { get; set; }
+        /// <summary>
+        /// Optional comment related to the transaction
+        /// </summary>
+        public string Comment { get; set; }
+        /// <summary>
+        /// Zero or more names of codes linked to the transaction
+        /// </summary>
+        public string[] CodeNames { get; set; }
+    }
+
 }

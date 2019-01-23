@@ -1,0 +1,10 @@
+﻿Add => AddTransaction // Adds a transaction
+    Id: Guid = Guid.NewGuid() // The id of the transaction
+    FinancialYearId: Guid // The id of the financial year
+    AccountId: Guid // The id of the account related to the transaction
+    SupplierId: Guid? // The optional id of the supplier linked to the transaction
+    Amount: decimal // The amount. Positive for income, negative for expenses
+    IsInternalTransfer: bool // True if the transaction is an internal transfer between accounts, false when actual income or expense
+    Description: string // The description of the transaction
+    Comment: string? // Optional comment related to the transaction
+    CodeNames: string[] // Zero or more names of codes linked to the transaction

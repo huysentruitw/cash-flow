@@ -30,6 +30,8 @@ namespace CashFlow.GraphApi.Schema
         public FinancialYearMutations FinancialYear => new FinancialYearMutations(_mapper);
 
         public SupplierMutations Supplier => new SupplierMutations(_mapper);
+
+        public TransactionMutations Transaction => new TransactionMutations(_mapper);
     }
 
     internal sealed class AccountMutations
@@ -256,6 +258,38 @@ namespace CashFlow.GraphApi.Schema
             var command = new RemoveSupplierCommand
             {
                 Id = parameters.Value.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+    }
+
+    internal sealed class TransactionMutations
+    {
+        private readonly IMapper _mapper;
+
+        public TransactionMutations(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
+
+        [Description("Adds a transaction")]
+        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddTransactionParameters> parameters)
+        {
+            var command = new AddTransactionCommand
+            {
+                Id = Guid.NewGuid(),
+                FinancialYearId = parameters.Value.FinancialYearId,
+                AccountId = parameters.Value.AccountId,
+                SupplierId = parameters.Value.SupplierId,
+                Amount = parameters.Value.Amount,
+                IsInternalTransfer = parameters.Value.IsInternalTransfer,
+                Description = parameters.Value.Description,
+                Comment = parameters.Value.Comment,
+                CodeNames = parameters.Value.CodeNames,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
