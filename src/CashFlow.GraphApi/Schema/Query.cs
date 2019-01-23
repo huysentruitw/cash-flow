@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using CashFlow.Query.Abstractions.Repositories;
@@ -25,5 +26,8 @@ namespace CashFlow.GraphApi.Schema
 
         public async Task<Supplier[]> Suppliers([Inject] ISupplierRepository repository)
             => _mapper.Map<Supplier[]>(await repository.GetSuppliers());
+
+        public async Task<Transaction[]> Transactions([Inject] ITransactionRepository repository, Guid financialYearId)
+            => _mapper.Map<Transaction[]>(await repository.GetTransactions(financialYearId));
     }
 }

@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICodeRepository, CodeRepository>();
         services.AddScoped<IFinancialYearRepository, FinancialYearRepository>();
         services.AddScoped<ISupplierRepository, SupplierRepository>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
         return services;
     }
 }
