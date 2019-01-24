@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FinancialYear } from 'src/models/financial-year';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
+
+  @Output()
+  financialYearChange: EventEmitter<FinancialYear> = new EventEmitter<FinancialYear>();
 
   constructor() { }
 

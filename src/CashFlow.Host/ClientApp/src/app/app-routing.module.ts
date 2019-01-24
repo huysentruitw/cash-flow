@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AccountListComponent } from './account-list/account-list.component';
 import { CodeListComponent } from './code-list/code-list.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'suppliers',
     component: SupplierListComponent
+  },
+  {
+    path: 'transactions',
+    component: TransactionListComponent
   }
 ];
 

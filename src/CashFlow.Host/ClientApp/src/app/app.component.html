@@ -4,7 +4,7 @@
   </mat-sidenav>
 
     <mat-sidenav-content>
-      <app-toolbar><!--(click)="sidebar.toggle()"--></app-toolbar>
+      <app-toolbar (financialYearChange)="financialYear$.next($event)"><!--(click)="sidebar.toggle()"--></app-toolbar>
       <div class="main-container">
         <router-outlet></router-outlet>
       </div>

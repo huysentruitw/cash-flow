@@ -21,6 +21,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SupplierDialogComponent } from './supplier-dialog/supplier-dialog.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 @
 NgModule({
@@ -36,7 +37,8 @@ NgModule({
     SidebarComponent,
     SupplierDialogComponent,
     SupplierListComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    TransactionListComponent
   ],
   imports: [
     AppRoutingModule,
