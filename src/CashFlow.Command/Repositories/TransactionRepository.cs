@@ -27,35 +27,48 @@ namespace CashFlow.Command.Repositories
         {
             using (IDbContextTransaction transaction = await _dataContext.Database.BeginTransactionAsync())
             {
-                int evidenceNumber = 1 + _dataContext.Transactions.Where(x => x.FinancialYearId == financialYearId).Max(x => x.EvidenceNumber);
-
-                DateTimeOffset utcNow = _utcNowFactory();
-
-                await _dataContext.Transactions.AddAsync(new Transaction
+                try
                 {
-                    Id = id,
-                    EvidenceNumber = evidenceNumber,
-                    FinancialYearId = financialYearId,
-                    AccountId = accountId,
-                    SupplierId = supplierId,
-                    DateCreated = utcNow,
-                    Amount = amount,
-                    IsInternalTransfer = isInternalTransfer,
-                    Description = description,
-                    Comment = comment
-                });
+                    int evidenceNumber = 1 + _dataContext.Transactions
+                        .Where(x => x.FinancialYearId == financialYearId)
+                        .Select(x => x.EvidenceNumber)
+                        .DefaultIfEmpty()
+                        .Max();
 
-                foreach (string codeName in codeNames)
-                {
-                    await _dataContext.TransactionCodes.AddAsync(new TransactionCode
+                    DateTimeOffset utcNow = _utcNowFactory();
+
+                    await _dataContext.Transactions.AddAsync(new Transaction
                     {
-                        TransactionId = id,
-                        CodeName = codeName,
-                        DateAssigned = utcNow
+                        Id = id,
+                        EvidenceNumber = evidenceNumber,
+                        FinancialYearId = financialYearId,
+                        AccountId = accountId,
+                        SupplierId = supplierId,
+                        DateCreated = utcNow,
+                        Amount = amount,
+                        IsInternalTransfer = isInternalTransfer,
+                        Description = description,
+                        Comment = comment
                     });
-                }
 
-                await _dataContext.SaveChangesAsync();
+                    foreach (string codeName in codeNames)
+                    {
+                        await _dataContext.TransactionCodes.AddAsync(new TransactionCode
+                        {
+                            TransactionId = id,
+                            CodeName = codeName,
+                            DateAssigned = utcNow
+                        });
+                    }
+
+                    await _dataContext.SaveChangesAsync();
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
             }
         }
     }
