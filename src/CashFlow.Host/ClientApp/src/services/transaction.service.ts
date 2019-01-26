@@ -35,7 +35,7 @@ export class TransactionService {
 
   constructor(private apollo: Apollo) { }
 
-  getTransactions<T extends Transaction>(financialYearId: string): Observable<T[]> {
+  getTransactions(financialYearId: string): Observable<Transaction[]> {
     return this.apollo
       .watchQuery<any>({
         query: listQuery,

@@ -1,3 +1,4 @@
+<p *ngIf="startingBalance$ | async as startingBalance"><span translate>Starting balance:</span> {{startingBalance / 100 | number:'1.2-2'}}</p>
 <table mat-table [dataSource]="transactions$" class="mat-elevation-z8">
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef translate>Date</th>

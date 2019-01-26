@@ -3,8 +3,6 @@ import localeExtra from '@angular/common/locales/extra/nl-BE';
 import locale from '@angular/common/locales/nl-BE';
 import { Component, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ReplaySubject } from 'rxjs';
-import { FinancialYear } from 'src/models/financial-year';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +11,6 @@ import { FinancialYear } from 'src/models/financial-year';
 })
 export class AppComponent implements OnDestroy {
   title = 'CashFlow';
-  financialYear$ = new ReplaySubject<FinancialYear>();
 
   constructor(translateService: TranslateService) {
     translateService.setDefaultLang('nl-BE');
@@ -22,7 +19,5 @@ export class AppComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.financialYear$.next();
-    this.financialYear$.complete();
   }
 }

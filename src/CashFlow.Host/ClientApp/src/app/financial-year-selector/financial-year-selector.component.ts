@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, timer } from 'rxjs';
 import { debounce, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { FinancialYear } from 'src/models/financial-year';
+import { BusService } from 'src/services/bus.service';
 import { FinancialYearService } from 'src/services/financial-year.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { FinancialYearDialogComponent } from '../financial-year-dialog/financial-year-dialog.component';
@@ -18,19 +19,16 @@ export class FinancialYearSelectorComponent implements OnInit, OnDestroy {
   financialYears$: Observable<FinancialYear[]>;
   activeFinancialYear$: Observable<FinancialYear>;
 
-  @Output()
-  change: EventEmitter<FinancialYear> = new EventEmitter<FinancialYear>();
-
-  constructor(private financialYearService: FinancialYearService, private translate: TranslateService, private dialog: MatDialog) { }
+  constructor(
+    private financialYearService: FinancialYearService,
+    private busService: BusService,
+    private translate: TranslateService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.financialYears$ = this.financialYearService.getFinancialYears().pipe(takeUntil(this.destroy$));
     this.activeFinancialYear$ = this.financialYears$.pipe(map(years => years.find(year => year.isActive)));
-    this.activeFinancialYear$.pipe(debounce(() => timer(100))).subscribe(financialYear => {
-      if (!!financialYear) {
-        this.change.emit(financialYear);
-      }
-    });
+    this.activeFinancialYear$.pipe(debounce(() => timer(100))).subscribe(financialYear => this.busService.activeFinancialYear$.next(financialYear));
   }
 
   ngOnDestroy(): void {

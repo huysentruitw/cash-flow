@@ -8,9 +8,6 @@ import { FinancialYear } from 'src/models/financial-year';
 })
 export class ToolbarComponent implements OnInit {
 
-  @Output()
-  financialYearChange: EventEmitter<FinancialYear> = new EventEmitter<FinancialYear>();
-
   constructor() { }
 
   ngOnInit() {

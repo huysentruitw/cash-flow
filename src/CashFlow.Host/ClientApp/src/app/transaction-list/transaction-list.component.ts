@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { FinancialYear } from 'src/models/financial-year';
 import { TransactionWithBalance } from 'src/models/transaction-with-balance';
+import { BusService } from 'src/services/bus.service';
+import { FinancialYearService } from 'src/services/financial-year.service';
 import { TransactionService } from 'src/services/transaction.service';
-import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -14,24 +15,36 @@ import { AppComponent } from '../app.component';
 export class TransactionListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private financialYear$: Observable<FinancialYear>;
+  private startingBalance$: Observable<number>;
   displayedColumns = ['date', 'evidenceNumber', 'codes', 'description', 'income', 'expense', 'balance'];
   transactions$: Observable<TransactionWithBalance[]>;
 
-  constructor(app: AppComponent, private transactionService: TransactionService) {
-    this.financialYear$ = app.financialYear$.pipe(takeUntil(this.destroy$));
-  }
+  constructor(
+    private transactionService: TransactionService,
+    private financialYearService: FinancialYearService,
+    private busService: BusService) { }
 
   ngOnInit(): void {
-    this.transactions$ = this.financialYear$
-      .pipe(
-      switchMap(financialYear => this.transactionService.getTransactions<TransactionWithBalance>(financialYear.id)),
-      tap(transactions => {
-        var balanceInCents = 0;
-        transactions.forEach(transaction => {
-          balanceInCents += transaction.amountInCents;
-          transaction.balanceInCents = balanceInCents;
-        });
-      }));
+    this.financialYear$ = this.busService.activeFinancialYear$
+      .pipe(takeUntil(this.destroy$), filter(financialYear => !!financialYear));
+
+    this.startingBalance$ = this.financialYear$.pipe(
+      switchMap(financialYear => this.financialYearService.getStartingBalances(financialYear.id)),
+      map(startingBalances => startingBalances.reduce((acc, startingBalance) => acc + startingBalance.startingBalanceInCents, 0))
+    );
+ 
+    const transactions$ = this.financialYear$.pipe(
+      switchMap(financialYear => this.transactionService.getTransactions(financialYear.id))
+    );
+
+    this.transactions$ = combineLatest(this.startingBalance$, transactions$).pipe(
+      map(([balanceInCents, transactions]) => transactions.map(transaction => {
+        const transactionWithBalance = <TransactionWithBalance>transaction;
+        balanceInCents += transaction.amountInCents;
+        transactionWithBalance.balanceInCents = balanceInCents;
+        return transactionWithBalance;
+      }))
+    );
   }
 
   ngOnDestroy(): void {
