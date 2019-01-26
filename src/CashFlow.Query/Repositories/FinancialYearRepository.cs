@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
@@ -18,5 +20,8 @@ namespace CashFlow.Query.Repositories
 
         public async Task<FinancialYear[]> GetFinancialYears()
             => await _dataContext.FinancialYears.AsNoTracking().OrderBy(x => x.Name).ToArrayAsync();
+
+        public async Task<IDictionary<Guid, FinancialYear>> GetFinancialYearsInBatch(IEnumerable<Guid> financialYearIds)
+            => await _dataContext.FinancialYears.AsNoTracking().Where(x => financialYearIds.Contains(x.Id)).ToDictionaryAsync(x => x.Id);
     }
 }
