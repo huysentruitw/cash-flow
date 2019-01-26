@@ -47,3 +47,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<div class="addTransaction">
+  <button mat-raised-button color="accent" (click)="addTransaction()"><mat-icon>add</mat-icon> <span translate>Add a new transaction</span></button>
+</div>

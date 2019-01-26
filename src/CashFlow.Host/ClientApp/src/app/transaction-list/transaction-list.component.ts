@@ -46,6 +46,9 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     this.selectedAccount$.next(account);
   }
 
+  addTransaction(): void {
+  }
+
   private initAccountStream(): void {
     this.accounts$ = this.accountService.getAccounts().pipe(take(1));
   }
