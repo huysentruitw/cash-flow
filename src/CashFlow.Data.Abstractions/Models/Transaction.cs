@@ -18,7 +18,7 @@ namespace CashFlow.Data.Abstractions.Models
 
         public DateTimeOffset? DateModified { get; set; }
 
-        public decimal Amount { get; set; }
+        public long AmountInCents { get; set; }
 
         public bool IsInternalTransfer { get; set; }
 

@@ -285,7 +285,7 @@ namespace CashFlow.GraphApi.Schema
                 FinancialYearId = parameters.Value.FinancialYearId,
                 AccountId = parameters.Value.AccountId,
                 SupplierId = parameters.Value.SupplierId,
-                Amount = parameters.Value.Amount,
+                AmountInCents = parameters.Value.AmountInCents,
                 IsInternalTransfer = parameters.Value.IsInternalTransfer,
                 Description = parameters.Value.Description,
                 Comment = parameters.Value.Comment,

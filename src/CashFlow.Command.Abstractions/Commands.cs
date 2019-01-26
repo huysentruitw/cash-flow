@@ -217,9 +217,9 @@ namespace CashFlow.Command.Abstractions
         /// </summary>
         public Guid? SupplierId { get; set; }
         /// <summary>
-        /// The amount. Positive for income, negative for expenses
+        /// The amount expressed in cents. Positive for income, negative for expenses
         /// </summary>
-        public decimal Amount { get; set; }
+        public long AmountInCents { get; set; }
         /// <summary>
         /// True if the transaction is an internal transfer between accounts, false when actual income or expense
         /// </summary>

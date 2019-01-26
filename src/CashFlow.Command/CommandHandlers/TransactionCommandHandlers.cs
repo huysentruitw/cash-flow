@@ -20,7 +20,7 @@ namespace CashFlow.Command.CommandHandlers
             RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.FinancialYearId).NotEmpty();
             RuleFor(x => x.AccountId).NotEmpty();
-            RuleFor(x => x.Amount).NotEqual(0);
+            RuleFor(x => x.AmountInCents).NotEqual(0);
             RuleFor(x => x.Description).NotEmpty().MaximumLength(250);
             RuleFor(x => x.Comment).MaximumLength(250);
             RuleFor(x => x.CodeNames).NotNull();
@@ -33,7 +33,7 @@ namespace CashFlow.Command.CommandHandlers
                 financialYearId: command.FinancialYearId,
                 accountId: command.AccountId,
                 supplierId: command.SupplierId,
-                amount: command.Amount,
+                amountInCents: command.AmountInCents,
                 isInternalTransfer: command.IsInternalTransfer,
                 description: command.Description,
                 comment: command.Comment,

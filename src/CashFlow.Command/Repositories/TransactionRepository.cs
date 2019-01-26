@@ -9,7 +9,7 @@ namespace CashFlow.Command.Repositories
 {
     internal interface ITransactionRepository
     {
-        Task Add(Guid id, Guid financialYearId, Guid accountId, Guid? supplierId, decimal amount, bool isInternalTransfer, string description, string comment, string[] codeNames);
+        Task Add(Guid id, Guid financialYearId, Guid accountId, Guid? supplierId, long amountInCents, bool isInternalTransfer, string description, string comment, string[] codeNames);
     }
 
     internal sealed class TransactionRepository : ITransactionRepository
@@ -23,7 +23,7 @@ namespace CashFlow.Command.Repositories
             _utcNowFactory = utcNowFactory ?? (() => DateTimeOffset.UtcNow);
         }
 
-        public async Task Add(Guid id, Guid financialYearId, Guid accountId, Guid? supplierId, decimal amount, bool isInternalTransfer, string description, string comment, string[] codeNames)
+        public async Task Add(Guid id, Guid financialYearId, Guid accountId, Guid? supplierId, long amountInCents, bool isInternalTransfer, string description, string comment, string[] codeNames)
         {
             using (IDbContextTransaction transaction = await _dataContext.Database.BeginTransactionAsync())
             {
@@ -45,7 +45,7 @@ namespace CashFlow.Command.Repositories
                         AccountId = accountId,
                         SupplierId = supplierId,
                         DateCreated = utcNow,
-                        Amount = amount,
+                        AmountInCents = amountInCents,
                         IsInternalTransfer = isInternalTransfer,
                         Description = description,
                         Comment = comment
