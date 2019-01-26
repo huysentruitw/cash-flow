@@ -14,6 +14,8 @@ namespace CashFlow.Data.Abstractions
 
         DbSet<FinancialYear> FinancialYears { get; set; }
 
+        DbSet<StartingBalance> StartingBalances { get; set; }
+
         DbSet<Supplier> Suppliers { get; set; }
 
         DbSet<TransactionCode> TransactionCodes { get; set; }
