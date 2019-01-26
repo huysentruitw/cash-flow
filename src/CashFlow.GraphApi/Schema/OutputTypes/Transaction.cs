@@ -14,6 +14,7 @@ namespace CashFlow.GraphApi.Schema
 
         public int EvidenceNumber { get; set; }
 
+        [Ignore]
         public Guid FinancialYearId { get; set; }
 
         public Guid AccountId { get; set; }
@@ -41,6 +42,17 @@ namespace CashFlow.GraphApi.Schema
                 .GetOrAddCollectionBatchLoader<Guid, Models.TransactionCode>(nameof(repository.GetTransactionCodesInBatch), repository.GetTransactionCodesInBatch)
                 .LoadAsync(Id);
             return mapperResolver().Map<TransactionCode[]>(codes);
+        }
+
+        public async Task<FinancialYear> FinancialYear(
+            [Inject] DataLoaderContext dataLoaderContext,
+            [Inject] OutputTypesMapperResolver mapperResolver,
+            [Inject] IFinancialYearRepository repository)
+        {
+            Models.FinancialYear financialYear = await dataLoaderContext
+                .GetOrAddBatchLoader<Guid, Models.FinancialYear>(nameof(repository.GetFinancialYearsInBatch), repository.GetFinancialYearsInBatch)
+                .LoadAsync(FinancialYearId);
+            return mapperResolver().Map<FinancialYear>(financialYear);
         }
     }
 }
