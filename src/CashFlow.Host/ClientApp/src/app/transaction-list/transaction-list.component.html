@@ -1,4 +1,14 @@
-<p *ngIf="startingBalance$ | async as startingBalance"><span translate>Starting balance:</span> {{startingBalance / 100 | number:'1.2-2'}}</p>
+<mat-toolbar class="filters">
+  <mat-tab-group class="account" *ngIf="accounts$ | async as accounts"
+                 [selectedIndex]="accounts.indexOf(selectedAccount$ | async) + 1"
+                 (selectedIndexChange)="selectAccount($event > 0 ? accounts[$event - 1] : null)">
+    <mat-tab [label]="'All' | translate"></mat-tab>
+    <mat-tab *ngFor="let account of accounts; let index = index" [label]="account.name"></mat-tab>
+  </mat-tab-group>
+
+  <span class="startingBalance"><span translate>Starting balance</span>: {{(startingBalance$ | async) / 100 | number:'1.2-2'}}</span>
+</mat-toolbar>
+
 <table mat-table [dataSource]="transactions$" class="mat-elevation-z8">
   <ng-container matColumnDef="date">
     <th mat-header-cell *matHeaderCellDef translate>Date</th>
