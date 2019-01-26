@@ -9,5 +9,6 @@ namespace CashFlow.Query.Abstractions.Repositories
     {
         Task<FinancialYear[]> GetFinancialYears();
         Task<IDictionary<Guid, FinancialYear>> GetFinancialYearsInBatch(IEnumerable<Guid> financialYearIds);
+        Task<StartingBalance[]> GetFinancialYearStartingBalances(Guid financialYearId);
     }
 }
