@@ -3,7 +3,7 @@ using CashFlow.Enums;
 
 namespace CashFlow.GraphApi.Schema
 {
-    public sealed class Account
+    internal sealed class Account
     {
         public Guid Id { get; set; }
 
