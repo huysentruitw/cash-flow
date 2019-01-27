@@ -34,7 +34,7 @@ namespace CashFlow.Command.CommandHandlers
                 accountId: command.AccountId,
                 supplierId: command.SupplierId,
                 amountInCents: command.AmountInCents,
-                isInternalTransfer: command.IsInternalTransfer,
+                isInternalTransfer: false,
                 description: command.Description,
                 comment: command.Comment,
                 codeNames: command.CodeNames);

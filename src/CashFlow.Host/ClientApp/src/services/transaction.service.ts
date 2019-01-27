@@ -43,4 +43,31 @@ export class TransactionService {
       })
       .valueChanges.pipe(map(({ data }) => data.transactions));
   }
+
+  addTransaction(financialYearId: string, accountId: string, supplierId: string, amountInCents: number,
+    description: string, comment: string, codeNames: string[], refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation addTransaction($parameters: AddTransactionParameters!) {
+          transaction {
+            add(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            financialYearId: financialYearId,
+            accountId: accountId,
+            supplierId: supplierId,
+            amountInCents: amountInCents,
+            description: description,
+            comment: comment,
+            codeNames: codeNames
+          }
+        },
+        refetchQueries: refetchList ? [{ query: listQuery }] : []
+      });
+  }
 }

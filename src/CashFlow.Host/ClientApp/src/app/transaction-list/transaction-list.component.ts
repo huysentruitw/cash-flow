@@ -1,14 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, Observable, Subject, BehaviorSubject } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { Account } from 'src/models/account';
 import { FinancialYear } from 'src/models/financial-year';
+import { Transaction } from 'src/models/transaction';
 import { TransactionWithBalance } from 'src/models/transaction-with-balance';
 import { AccountService } from 'src/services/account.service';
 import { BusService } from 'src/services/bus.service';
 import { FinancialYearService } from 'src/services/financial-year.service';
 import { TransactionService } from 'src/services/transaction.service';
-import { Transaction } from 'src/models/transaction';
+import { TransactionDialogComponent } from '../transaction-dialog/transaction-dialog.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -28,7 +30,8 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private transactionService: TransactionService,
     private financialYearService: FinancialYearService,
-    private busService: BusService) { }
+    private busService: BusService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.initAccountStream();
@@ -47,6 +50,35 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   addTransaction(): void {
+    combineLatest(this.selectedAccount$, this.busService.activeFinancialYear$)
+      .pipe(take(1))
+      .subscribe(([selectedAccount, financialYear]) => {
+        const dialogRef = this.dialog.open(TransactionDialogComponent,
+          {
+            width: '600px',
+            data: {
+              financialYearId: financialYear.id,
+              accountId: !!selectedAccount ? selectedAccount.id : null
+            }
+          });
+
+        dialogRef.afterClosed().subscribe(result => {
+          if (!!result) {
+            this.transactionService.addTransaction(
+              result.financialYearId,
+              result.accountId,
+              result.supplierId,
+              result.amountInCents,
+              result.description,
+              result.comment,
+              []).subscribe(
+                () => { },
+                error => {
+                  console.error(error);
+                });
+          }
+        });
+      });
   }
 
   private initAccountStream(): void {

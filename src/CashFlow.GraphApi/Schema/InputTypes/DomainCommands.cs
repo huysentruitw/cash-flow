@@ -141,8 +141,6 @@ namespace CashFlow.GraphApi.Schema
         public Guid? SupplierId { get; set; }
         [Description("The amount expressed in cents. Positive for income, negative for expenses")]
         public long AmountInCents { get; set; }
-        [Description("True if the transaction is an internal transfer between accounts, false when actual income or expense")]
-        public bool IsInternalTransfer { get; set; }
         [Description("The description of the transaction")]
         public NonNull<string> Description { get; set; }
         [Description("Optional comment related to the transaction")]

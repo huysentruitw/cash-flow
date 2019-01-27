@@ -221,10 +221,6 @@ namespace CashFlow.Command.Abstractions
         /// </summary>
         public long AmountInCents { get; set; }
         /// <summary>
-        /// True if the transaction is an internal transfer between accounts, false when actual income or expense
-        /// </summary>
-        public bool IsInternalTransfer { get; set; }
-        /// <summary>
         /// The description of the transaction
         /// </summary>
         public string Description { get; set; }

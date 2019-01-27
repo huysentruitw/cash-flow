@@ -22,6 +22,7 @@ import { SupplierDialogComponent } from './supplier-dialog/supplier-dialog.compo
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { TransactionDialogComponent } from './transaction-dialog/transaction-dialog.component';
 
 @
 NgModule({
@@ -38,6 +39,7 @@ NgModule({
     SupplierDialogComponent,
     SupplierListComponent,
     ToolbarComponent,
+    TransactionDialogComponent,
     TransactionListComponent
   ],
   imports: [
@@ -60,7 +62,8 @@ NgModule({
     CodeDialogComponent,
     ConfirmationDialogComponent,
     FinancialYearDialogComponent,
-    SupplierDialogComponent
+    SupplierDialogComponent,
+    TransactionDialogComponent
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'nl-BE' }

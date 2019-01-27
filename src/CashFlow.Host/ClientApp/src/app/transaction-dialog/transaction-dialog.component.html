@@ -1,0 +1,38 @@
+<h2 mat-dialog-title translate>Add a new transaction</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-select placeholder="{{'Financial year' | translate}}" [(ngModel)]="data.financialYearId">
+      <mat-option *ngFor="let financialYear of financialYears$ | async" [value]="financialYear.id">
+        {{financialYear.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="{{'Account' | translate}}" [(ngModel)]="data.accountId">
+      <mat-option *ngFor="let account of accounts$ | async" [value]="account.id">
+        {{account.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="{{'Amount' | translate}}" type="number" [(ngModel)]="data.amount" (input)="updateAmount($event.target.value)" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="{{'Supplier' | translate}}" [(ngModel)]="data.supplierId">
+      <mat-option>[{{'None' | translate}}]</mat-option>
+      <mat-option *ngFor="let supplier of suppliers$ | async" [value]="supplier.id">
+        {{supplier.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="{{'Description' | translate}}" [(ngModel)]="data.description" />
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="{{'Comment' | translate}}" [(ngModel)]="data.comment"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{'Cancel' | translate}}</button>
+  <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="!isValid">{{'Save' | translate}}</button>
+</mat-dialog-actions>
