@@ -145,8 +145,28 @@ namespace CashFlow.GraphApi.Schema
         public NonNull<string> Description { get; set; }
         [Description("Optional comment related to the transaction")]
         public string Comment { get; set; }
-        [Description("Zero or more names of codes linked to the transaction")]
+        [Description("Zero or more names of codes to assign to the transaction")]
         public NonNull<string[]> CodeNames { get; set; }
+    }
+
+    [Description("Assigns a code to a transaction")]
+    [InputType]
+    public sealed class AssignCodeToTransactionParameters
+    {
+        [Description("The id of the transaction")]
+        public Guid Id { get; set; }
+        [Description("The name of the code to assign")]
+        public NonNull<string> CodeName { get; set; }
+    }
+
+    [Description("Unassigns a code from a transaction")]
+    [InputType]
+    public sealed class UnassignCodeFromTransactionParameters
+    {
+        [Description("The id of the transaction")]
+        public Guid Id { get; set; }
+        [Description("The name of the code to unassign")]
+        public NonNull<string> CodeName { get; set; }
     }
 
 }

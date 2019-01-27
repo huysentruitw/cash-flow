@@ -6,4 +6,12 @@
     AmountInCents: long // The amount expressed in cents. Positive for income, negative for expenses
     Description: string // The description of the transaction
     Comment: string? // Optional comment related to the transaction
-    CodeNames: string[] // Zero or more names of codes linked to the transaction
+    CodeNames: string[] // Zero or more names of codes to assign to the transaction
+
+AssignCode => AssignCodeToTransaction // Assigns a code to a transaction
+    Id: Guid // The id of the transaction
+    CodeName: string // The name of the code to assign
+
+UnassignCode => UnassignCodeFromTransaction // Unassigns a code from a transaction
+    Id: Guid // The id of the transaction
+    CodeName: string // The name of the code to unassign

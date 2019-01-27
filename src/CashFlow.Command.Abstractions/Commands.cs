@@ -229,9 +229,39 @@ namespace CashFlow.Command.Abstractions
         /// </summary>
         public string Comment { get; set; }
         /// <summary>
-        /// Zero or more names of codes linked to the transaction
+        /// Zero or more names of codes to assign to the transaction
         /// </summary>
         public string[] CodeNames { get; set; }
+    }
+
+    /// <summary>
+    /// Assigns a code to a transaction
+    /// </summary>
+    public sealed class AssignCodeToTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the transaction
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The name of the code to assign
+        /// </summary>
+        public string CodeName { get; set; }
+    }
+
+    /// <summary>
+    /// Unassigns a code from a transaction
+    /// </summary>
+    public sealed class UnassignCodeFromTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the transaction
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The name of the code to unassign
+        /// </summary>
+        public string CodeName { get; set; }
     }
 
 }

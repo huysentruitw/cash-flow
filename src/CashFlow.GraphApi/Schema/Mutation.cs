@@ -296,6 +296,36 @@ namespace CashFlow.GraphApi.Schema
 
             return MutationInfo.FromCommand(command);
         }
+
+        [Description("Assigns a code to a transaction")]
+        public async Task<MutationInfo> AssignCode([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AssignCodeToTransactionParameters> parameters)
+        {
+            var command = new AssignCodeToTransactionCommand
+            {
+                Id = parameters.Value.Id,
+                CodeName = parameters.Value.CodeName,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Unassigns a code from a transaction")]
+        public async Task<MutationInfo> UnassignCode([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<UnassignCodeFromTransactionParameters> parameters)
+        {
+            var command = new UnassignCodeFromTransactionCommand
+            {
+                Id = parameters.Value.Id,
+                CodeName = parameters.Value.CodeName,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
     }
 #pragma warning restore IDE0008 // Use explicit type
 }

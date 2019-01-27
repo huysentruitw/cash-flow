@@ -10,6 +10,8 @@ namespace CashFlow.Command.Repositories
     internal interface ITransactionRepository
     {
         Task Add(Guid id, Guid financialYearId, Guid accountId, Guid? supplierId, long amountInCents, bool isInternalTransfer, string description, string comment, string[] codeNames);
+        Task AssignCode(Guid id, string codeName);
+        Task UnassignCode(Guid id, string codeName);
     }
 
     internal sealed class TransactionRepository : ITransactionRepository
@@ -70,6 +72,48 @@ namespace CashFlow.Command.Repositories
                     throw;
                 }
             }
+        }
+
+        public async Task AssignCode(Guid id, string codeName)
+        {
+            using (IDbContextTransaction transaction = await _dataContext.Database.BeginTransactionAsync())
+            {
+                DateTimeOffset utcNow = _utcNowFactory();
+
+                try
+                {
+                    if (!_dataContext.Codes.Any(x => x.Name == codeName))
+                    {
+                        await _dataContext.Codes.AddAsync(new Code
+                        {
+                            Name = codeName,
+                            DateCreated = utcNow
+                        });
+                    }
+
+                    await _dataContext.TransactionCodes.AddAsync(new TransactionCode
+                    {
+                        TransactionId = id,
+                        CodeName = codeName,
+                        DateAssigned = utcNow
+                    });
+                    await _dataContext.SaveChangesAsync();
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public async Task UnassignCode(Guid id, string codeName)
+        {
+            var code = new TransactionCode { TransactionId = id, CodeName = codeName };
+            _dataContext.TransactionCodes.Attach(code);
+            _dataContext.TransactionCodes.Remove(code);
+            await _dataContext.SaveChangesAsync();
         }
     }
 }
