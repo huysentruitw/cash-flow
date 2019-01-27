@@ -19,6 +19,7 @@ namespace CashFlow.GraphApi.Schema
 
         public Guid AccountId { get; set; }
 
+        [Ignore]
         public Guid? SupplierId { get; set; }
 
         public DateTimeOffset DateCreated { get; set; }
@@ -53,6 +54,20 @@ namespace CashFlow.GraphApi.Schema
                 .GetOrAddBatchLoader<Guid, Models.FinancialYear>(nameof(repository.GetFinancialYearsInBatch), repository.GetFinancialYearsInBatch)
                 .LoadAsync(FinancialYearId);
             return mapperResolver().Map<FinancialYear>(financialYear);
+        }
+
+        public async Task<Supplier> Supplier(
+            [Inject] DataLoaderContext dataLoaderContext,
+            [Inject] OutputTypesMapperResolver mapperResolver,
+            [Inject] ISupplierRepository repository)
+        {
+            if (!SupplierId.HasValue)
+                return null;
+
+            Models.Supplier supplier = await dataLoaderContext
+                .GetOrAddBatchLoader<Guid, Models.Supplier>(nameof(repository.GetSuppliersInBatch), repository.GetSuppliersInBatch)
+                .LoadAsync(SupplierId.Value);
+            return mapperResolver().Map<Supplier>(supplier);
         }
     }
 }

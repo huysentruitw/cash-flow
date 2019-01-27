@@ -21,7 +21,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private financialYear$: Observable<FinancialYear>;
   private startingBalance$: Observable<number>;
-  displayedColumns = ['date', 'evidenceNumber', 'codes', 'description', 'income', 'expense', 'balance'];
+  displayedColumns = ['date', 'evidenceNumber', 'codes', 'supplier', 'description', 'income', 'expense', 'balance'];
   transactions$: Observable<TransactionWithBalance[]>;
   accounts$: Observable<Account[]>;
   selectedAccount$ = new BehaviorSubject<Account>(null);

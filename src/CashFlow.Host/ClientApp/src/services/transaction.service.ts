@@ -11,19 +11,22 @@ const listQuery = gql`
       id
       evidenceNumber
       accountId
-      supplierId
       dateCreated
       dateModified
       amountInCents
       isInternalTransfer
       description
       comment
+      codes {
+        codeName
+      }
       financialYear {
         id
         name
       }
-      codes {
-        codeName
+      supplier {
+        id
+        name
       }
     }
   }`;

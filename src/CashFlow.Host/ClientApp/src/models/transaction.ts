@@ -1,4 +1,5 @@
 import { FinancialYear } from './financial-year';
+import { Supplier } from './supplier';
 
 export class TransactionCode {
   codeName!: string;
@@ -10,13 +11,13 @@ export class Transaction {
   id!: string;
   evidenceNumber!: number;
   accountId!: string;
-  supplierId: string;
   dateCreated!: Date;
   dateModified: Date;
   amountInCents!: number;
   isInternalTransfer!: boolean;
   description!: string;
   comment: string;
-  financialYear!: FinancialYear;
   codes!: TransactionCode[];
+  financialYear: FinancialYear;
+  supplier: Supplier;
 }
