@@ -55,7 +55,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
       .subscribe(([selectedAccount, financialYear]) => {
         const dialogRef = this.dialog.open(TransactionDialogComponent,
           {
-            width: '600px',
+            width: '500px',
             data: {
               financialYearId: financialYear.id,
               accountId: !!selectedAccount ? selectedAccount.id : null
