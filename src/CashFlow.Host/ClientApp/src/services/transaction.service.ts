@@ -70,7 +70,58 @@ export class TransactionService {
             codeNames: codeNames
           }
         },
-        refetchQueries: refetchList ? [{ query: listQuery }] : []
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
+      });
+  }
+
+  assignCode(transactionId: string, codeName: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation assignCodeToTransaction($parameters: AssignCodeToTransactionParameters!) {
+          transaction {
+            assignCode(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: transactionId,
+            codeName: codeName
+          }
+        },
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
+      });
+  }
+
+  unassignCode(transactionId: string, codeName: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation unassignCodeToTransaction($parameters: UnassignCodeFromTransactionParameters!) {
+          transaction {
+            unassignCode(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: transactionId,
+            codeName: codeName
+          }
+        },
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
       });
   }
 }

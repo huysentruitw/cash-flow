@@ -21,8 +21,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { SupplierDialogComponent } from './supplier-dialog/supplier-dialog.component';
 import { SupplierListComponent } from './supplier-list/supplier-list.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { TransactionCodeDialogComponent } from './transaction-code-dialog/transaction-code-dialog.component';
 import { TransactionDialogComponent } from './transaction-dialog/transaction-dialog.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 @
 NgModule({
@@ -39,6 +40,7 @@ NgModule({
     SupplierDialogComponent,
     SupplierListComponent,
     ToolbarComponent,
+    TransactionCodeDialogComponent,
     TransactionDialogComponent,
     TransactionListComponent
   ],
@@ -63,6 +65,7 @@ NgModule({
     ConfirmationDialogComponent,
     FinancialYearDialogComponent,
     SupplierDialogComponent,
+    TransactionCodeDialogComponent,
     TransactionDialogComponent
   ],
   providers: [

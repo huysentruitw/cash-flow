@@ -4,13 +4,14 @@ import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { Account } from 'src/models/account';
 import { FinancialYear } from 'src/models/financial-year';
-import { Transaction } from 'src/models/transaction';
+import { Transaction, TransactionCode } from 'src/models/transaction';
 import { TransactionWithBalance } from 'src/models/transaction-with-balance';
 import { AccountService } from 'src/services/account.service';
 import { BusService } from 'src/services/bus.service';
 import { FinancialYearService } from 'src/services/financial-year.service';
 import { TransactionService } from 'src/services/transaction.service';
 import { TransactionDialogComponent } from '../transaction-dialog/transaction-dialog.component';
+import { TransactionCodeDialogComponent } from '../transaction-code-dialog/transaction-code-dialog.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -78,6 +79,35 @@ export class TransactionListComponent implements OnInit, OnDestroy {
                 });
           }
         });
+      });
+  }
+
+  assignCode(transaction: Transaction): void {
+    const dialogRef = this.dialog.open(TransactionCodeDialogComponent,
+      {
+        width: '400px',
+        data: {}
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.transactionService.assignCode(
+          transaction.id,
+          result.codeName,
+          transaction.financialYear.id).subscribe(
+          () => { },
+          error => {
+            console.error(error);
+          });
+      }
+    });
+  }
+
+  unassignCode(transaction: Transaction, code: TransactionCode): void {
+    this.transactionService.unassignCode(transaction.id, code.codeName, transaction.financialYear.id).subscribe(
+      () => { },
+      error => {
+        console.error(error);
       });
   }
 

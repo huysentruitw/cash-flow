@@ -21,6 +21,19 @@
   font-size: 11px;
   border-radius: .2rem;
   margin-right: .5rem;
+  text-wrap: avoid;
+}
+
+.codeButton, .codeButton .mat-icon {
+  width: 14px;
+  height: 14px;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.assignCodeButton {
+  background-color: #e5e5e5;
+  border-radius: .5rem;
 }
 
 .addTransaction {
