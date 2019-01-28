@@ -1,4 +1,4 @@
-<mat-form-field *ngIf="financialYears$ | async as financialYears">
+<mat-form-field *ngIf="financialYears$ | async as financialYears" class="selector">
   <mat-select placeholder="{{'Financial year' | translate}}" (selectionChange)="updateActiveFinancialYear($event.value)" [value]="(activeFinancialYear$ | async)?.id">
     <mat-option *ngFor="let financialYear of financialYears" [value]="financialYear.id">
       {{financialYear.name}}
