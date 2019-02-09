@@ -1,6 +1,30 @@
 ﻿﻿<#@ output extension=".cs" #>
 <#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ include file="..\..\..\Templates\Base.tt" #>
+<#
+
+string GetFieldType(FieldDefinition field)
+{
+    var typeName = field.Type;
+    if (field.NestedType != null)
+    {
+        var baseTypeName = typeName.TrimEnd(new[] { '[', ']' });
+        typeName = typeName.Replace(baseTypeName, $"{baseTypeName}Parameters");
+    }
+
+    // Optional value type
+    if (!field.IsRequired && field.NestedType == null && IsValueType(field))
+        return $"{typeName}?";
+
+    // Required reference type
+    if (field.IsRequired && (field.NestedType != null || !IsValueType(field)))
+        return $"NonNull<{typeName}>";
+
+    // Other
+    return typeName;
+}
+
+#>
 using CashFlow.Enums;
 using GraphQL.Conventions;
 
@@ -8,23 +32,24 @@ namespace CashFlow.GraphApi.Schema
 {
 <#
 var commands = LoadDefinitions(this.Host.ResolvePath(@".\..\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Commands.def");
+var nestedTypes = ExtractNestedTypes(commands);
 
-foreach (var command in commands)
+foreach (var type in commands.Union(nestedTypes))
 {
-    if (command.IsObsolete) continue;
+    if (type.IsObsolete) continue;
 
-    if (command.Description != null)
+    if (type.Description != null)
     {
 #>
-    [Description("<#=command.Description #>")]
+    [Description("<#=type.Description #>")]
 <#
     }
 #>
     [InputType]
-    public sealed class <#=command.Name #>Parameters
+    public sealed class <#=type.Name #>Parameters
     {
 <#
-    foreach (var field in command.Fields)
+    foreach (var field in type.Fields)
     {
         if (field.IsRequired && field.DefaultValue != null) continue;
 
@@ -35,24 +60,9 @@ foreach (var command in commands)
 <#
         }
 
-        if (field.IsRequired == IsValueType(field))
-        {
 #>
-        public <#=field.Type #> <#=field.Name #> { get; set; }
+        public <#=GetFieldType(field) #> <#=field.Name #> { get; set; }
 <#
-        }
-        else if (field.IsRequired)
-        {
-#>
-        public NonNull<<#=field.Type #>> <#=field.Name #> { get; set; }
-<#
-        }
-        else
-        {
-#>
-        public <#=field.Type #>? <#=field.Name #> { get; set; }
-<#
-        }
     }
 #>
     }

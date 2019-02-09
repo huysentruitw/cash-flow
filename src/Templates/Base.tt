@@ -28,34 +28,66 @@ public static IEnumerable<TypeDefinition> LoadDefinition(string definitionFileNa
 {
     var fileName = Path.GetFileName(definitionFileName);
     var lineNumber = -1;
-    TypeDefinition currentTypeDefinition = null;
-
-    foreach (var line in File.ReadLines(definitionFileName))
+    var lines = new Queue<string>(File.ReadLines(definitionFileName));
+    while (lines.Any())
     {
         lineNumber++;
-        var definition = line.Trim();
-        if (string.Empty.Equals(definition))
+        var definition = lines.Dequeue().Trim();
+        if (string.IsNullOrEmpty(definition))
+            continue;
+
+        var typeDefinition = ParseTypeDefinition(definition, fileName, lineNumber);
+        typeDefinition.Fields = LoadFieldDefinitions(lines, fileName, ref lineNumber);
+        yield return typeDefinition;
+    }
+}
+
+public static IEnumerable<TypeDefinition> ExtractNestedTypes(IEnumerable<TypeDefinition> typeDefinitions)
+{
+    var typesToProcess = new Queue<TypeDefinition>(typeDefinitions);
+    while (typesToProcess.Any())
+    {
+        var typeToProcess = typesToProcess.Dequeue();
+
+        foreach (var nestedType in typeToProcess.Fields
+            .Where(x => x.NestedType != null)
+            .Select(x => x.NestedType))
         {
-            if (currentTypeDefinition != null)
-                yield return currentTypeDefinition;
-            currentTypeDefinition = null;
+            yield return nestedType;
+            typesToProcess.Enqueue(nestedType);
+        }
+    }
+}
+
+private static FieldDefinition[] LoadFieldDefinitions(Queue<string> lines, string fileName, ref int lineNumber)
+{
+    int? currentIndentationLevel = null;
+    var fieldDefinitions = new List<FieldDefinition>();
+    while (lines.Any())
+    {
+        lineNumber++;
+        
+        int indentationLevel = GetIndentationLevel(lines.Peek());
+        currentIndentationLevel = currentIndentationLevel ?? indentationLevel;
+        if (indentationLevel == 0 || indentationLevel < currentIndentationLevel.Value)
+            break;
+
+        if (indentationLevel > currentIndentationLevel.Value)
+        {
+            FieldDefinition lastFieldDefinition = fieldDefinitions.Last();
+            lastFieldDefinition.NestedType = new TypeDefinition
+            {
+                Name = lastFieldDefinition.Type.TrimEnd(new[] { '[', ']' }),
+                Fields = LoadFieldDefinitions(lines, fileName, ref lineNumber)
+            };
             continue;
         }
 
-        if (currentTypeDefinition == null)
-        {
-            currentTypeDefinition = ParseTypeDefinition(definition, fileName, lineNumber);
-        }
-        else
-        {
-            var fieldDefinition = ParseFieldDefinition(definition, fileName, lineNumber);
-            if (fieldDefinition != null)
-                currentTypeDefinition.Fields = currentTypeDefinition.Fields.Concat(new[] { fieldDefinition }).ToArray();
-        }
+        string definition = lines.Dequeue().Trim(); 
+        fieldDefinitions.Add(ParseFieldDefinition(definition, fileName, lineNumber));
     }
 
-    if (currentTypeDefinition != null)
-        yield return currentTypeDefinition;
+    return fieldDefinitions.ToArray();
 }
 
 private static TypeDefinition ParseTypeDefinition(string definition, string fileName, int lineNumber)
@@ -102,12 +134,16 @@ private static FieldDefinition ParseFieldDefinition(string definition, string fi
         Description = NullOnEmpty(match.Groups["description"].Value),
         IsRequired = NullOnEmpty(match.Groups["optional"].Value) == null,
         IsEnum = NullOnEmpty(match.Groups["enum"].Value) != null,
-        DefaultValue = NullOnEmpty(match.Groups["defaultValue"].Value)
+        DefaultValue = NullOnEmpty(match.Groups["defaultValue"].Value),
+        NestedType = null
     };
 }
 
 private static string NullOnEmpty(string str)
     => string.IsNullOrEmpty(str) ? null : str;
+
+private static int GetIndentationLevel(string definition)
+    => Regex.Replace(definition, @"[^ ].*$", string.Empty).Length;
 
 public static string CamelCase(string input)
 {
@@ -134,6 +170,7 @@ public static bool IsValueType(FieldDefinition field)
     case "ulong":
     case "ushort":
     case "Guid":
+    case "DateTimeOffset":
         return true;
     case "object":
     case "string":

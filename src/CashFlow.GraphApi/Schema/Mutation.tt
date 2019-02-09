@@ -2,6 +2,7 @@
 <#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ include file="..\..\Templates\Base.tt" #>
 <#
+
 var commands = LoadDefinitions(this.Host.ResolvePath(@".\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Commands.def");
 var results = LoadDefinitions(this.Host.ResolvePath(@".\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Results.def");
 var groupedCommands = commands
@@ -10,13 +11,62 @@ var groupedCommands = commands
         x => x,
         (gn, cmds) => new { GroupName = gn, Commands = cmds.ToArray() })
     .ToDictionary(x => x.GroupName, x => x.Commands);
+
+void RenderFieldAssignments(TypeDefinition type, string sourceBase = "parameters.Value", int indentationDepth = 0)
+{
+    var indentation = new string(' ', indentationDepth * 4);
+    foreach (var field in type.Fields)
+    {
+        if (field.IsRequired && field.DefaultValue != null)
+        {
 #>
+                <#=indentation #><#=field.Name #> = <#=field.DefaultValue #>,
+<#
+        }
+        else if (field.NestedType != null)
+        {
+            var sourceName = field.IsRequired ? $"{field.Name}.Value" : field.Name;
+            var isArray = field.Type.EndsWith("[]");
+            if (!isArray)
+            {
+#>
+                <#=indentation #><#=field.Name #> = new <#=field.NestedType.Name #>
+                <#=indentation #>{
+<#
+                RenderFieldAssignments(field.NestedType, $"{sourceBase}.{sourceName}", indentationDepth + 1);
+#>
+                <#=indentation #>},
+<#
+            }
+            else
+            {
+                var temporaryVariableName = "" + (char)('a' + indentationDepth);
+#>
+                <#=indentation #><#=field.Name #> = <#=sourceBase #>.<#=sourceName #>.Select(<#=temporaryVariableName #> => new <#=field.NestedType.Name #>
+                <#=indentation #>{
+<#
+                RenderFieldAssignments(field.NestedType, temporaryVariableName, indentationDepth + 1);
+#>
+                <#=indentation #>}).ToArray(),
+<#
+            }
+        }
+        else
+        {
+#>
+                <#=indentation #><#=field.Name #> = <#=sourceBase #>.<#=field.Name #>,
+<#
+        }
+    }
+}
+
+#>
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using CashFlow.Command.Abstractions;
 using GraphQL.Conventions;
 using MediatR;
-
 
 namespace CashFlow.GraphApi.Schema
 {
@@ -87,21 +137,7 @@ foreach (var kvp in groupedCommands)
             var command = new <#=command.Name #>Command
             {
 <#
-        foreach (var field in command.Fields)
-        {
-            if (field.IsRequired && field.DefaultValue != null)
-            {
-#>
-                <#=field.Name #> = <#=field.DefaultValue #>,
-<#
-            }
-            else
-            {
-#>
-                <#=field.Name #> = parameters.Value.<#=field.Name #>,
-<#
-            }
-        }
+        RenderFieldAssignments(command);
 #>
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };

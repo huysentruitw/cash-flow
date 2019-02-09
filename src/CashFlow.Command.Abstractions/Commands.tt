@@ -53,7 +53,43 @@ foreach (var command in commands)
 <#
         }
 
-        if (!field.IsRequired && IsValueType(field))
+        if (!field.IsRequired && field.NestedType == null && IsValueType(field))
+        {
+#>
+        public <#=field.Type #>? <#=field.Name #> { get; set; }
+<#
+        }
+        else
+        {
+#>
+        public <#=field.Type #> <#=field.Name #> { get; set; }
+<#
+        }
+    }
+#>
+    }
+
+<#
+}
+
+foreach (var nestedType in ExtractNestedTypes(commands))
+{
+#>
+    public sealed class <#=nestedType.Name #>
+    {
+<#
+    foreach (var field in nestedType.Fields)
+    {
+        if (field.Description != null)
+        {
+#>
+        /// <summary>
+        /// <#=field.Description #>
+        /// </summary>
+<#
+        }
+
+        if (!field.IsRequired && field.NestedType == null && IsValueType(field))
         {
 #>
         public <#=field.Type #>? <#=field.Name #> { get; set; }

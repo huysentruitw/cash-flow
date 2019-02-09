@@ -30,6 +30,8 @@ public class FieldDefinition
     public bool IsEnum { get; set; }
 
     public string DefaultValue { get; set; }
+
+    public TypeDefinition NestedType { get; set; }
 }
 
 public class CommandDefinition : TypeDefinition
