@@ -53,6 +53,8 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<div class="addTransaction">
-  <button mat-raised-button color="accent" (click)="addTransaction()"><mat-icon>add</mat-icon> <span translate>Add a new transaction</span></button>
+<div class="addTransactionButtons">
+  <button mat-raised-button color="accent" (click)="addIncome()"><mat-icon>add</mat-icon> <span translate>Income</span></button>
+  <button mat-raised-button color="accent" (click)="addExpense()"><mat-icon>add</mat-icon> <span translate>Expense</span></button>
+  <button mat-raised-button color="accent" (click)="addTransfer()"><mat-icon>add</mat-icon> <span translate>Transfer</span></button>
 </div>

@@ -39,8 +39,12 @@
   line-height: 18px;
 }
 
-.addTransaction {
+.addTransactionButtons {
   margin-top: 1.5rem;
+}
+
+.addTransactionButtons button {
+  margin-right: 1rem;
 }
 
 .iconColumn {

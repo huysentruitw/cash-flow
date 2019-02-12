@@ -10,7 +10,7 @@ import { AccountService } from 'src/services/account.service';
 import { BusService } from 'src/services/bus.service';
 import { FinancialYearService } from 'src/services/financial-year.service';
 import { TransactionService } from 'src/services/transaction.service';
-import { TransactionDialogComponent } from '../transaction-dialog/transaction-dialog.component';
+import { TransactionDialogComponent, TransactionMode } from '../transaction-dialog/transaction-dialog.component';
 import { TransactionCodeDialogComponent } from '../transaction-code-dialog/transaction-code-dialog.component';
 
 @Component({
@@ -50,7 +50,19 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     this.selectedAccount$.next(account);
   }
 
-  addTransaction(): void {
+  addIncome(): void {
+    this.addTransaction(TransactionMode.Income);
+  }
+
+  addExpense(): void {
+    this.addTransaction(TransactionMode.Expense);
+  }
+
+  addTransfer(): void {
+    this.addTransaction(TransactionMode.Transfer);
+  }
+
+  private addTransaction(mode: TransactionMode): void {
     combineLatest(this.selectedAccount$, this.busService.activeFinancialYear$)
       .pipe(take(1))
       .subscribe(([selectedAccount, financialYear]) => {
@@ -58,15 +70,19 @@ export class TransactionListComponent implements OnInit, OnDestroy {
           {
             width: '500px',
             data: {
-              financialYearId: financialYear.id,
+              mode: mode,
+              financialYear: financialYear,
               accountId: !!selectedAccount ? selectedAccount.id : null
             }
           });
 
         dialogRef.afterClosed().subscribe(result => {
           if (!!result) {
+            if (result.mode === TransactionMode.Expense)
+              result.amountInCents = -result.amountInCents;
+
             this.transactionService.addTransaction(
-              result.financialYearId,
+              result.financialYear.id,
               result.accountId,
               result.supplierId,
               result.amountInCents,
