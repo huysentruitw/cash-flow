@@ -19,6 +19,8 @@ export class DialogData {
   mode: TransactionMode;
   financialYear: FinancialYear;
   accountId: string;
+  originAccountId: string;
+  destinationAccountId: string;
   supplierId: string;
   amount: number;
   amountInCents: number;
@@ -55,6 +57,13 @@ export class TransactionDialogComponent implements OnInit {
   }
 
   get isValid(): boolean {
+    if (this.data.mode === TransactionMode.Transfer) {
+      return !!this.data.originAccountId
+        && !!this.data.destinationAccountId
+        && this.data.amountInCents > 0
+        && !!this.data.description;
+    }
+
     return !!this.data.accountId
       && this.data.amountInCents > 0
       && !!this.data.description;

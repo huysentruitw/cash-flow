@@ -276,15 +276,57 @@ namespace CashFlow.GraphApi.Schema
             _mapper = mapper;
         }
 
-        [Description("Adds a transaction")]
-        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddTransactionParameters> parameters)
+        [Description("Adds an income transaction")]
+        public async Task<MutationInfo> AddIncome([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddIncomeTransactionParameters> parameters)
         {
-            var command = new AddTransactionCommand
+            var command = new AddIncomeTransactionCommand
+            {
+                Id = Guid.NewGuid(),
+                FinancialYearId = parameters.Value.FinancialYearId,
+                AccountId = parameters.Value.AccountId,
+                AmountInCents = parameters.Value.AmountInCents,
+                Description = parameters.Value.Description,
+                Comment = parameters.Value.Comment,
+                CodeNames = parameters.Value.CodeNames,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Adds an expense transaction")]
+        public async Task<MutationInfo> AddExpense([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddExpenseTransactionParameters> parameters)
+        {
+            var command = new AddExpenseTransactionCommand
             {
                 Id = Guid.NewGuid(),
                 FinancialYearId = parameters.Value.FinancialYearId,
                 AccountId = parameters.Value.AccountId,
                 SupplierId = parameters.Value.SupplierId,
+                AmountInCents = parameters.Value.AmountInCents,
+                Description = parameters.Value.Description,
+                Comment = parameters.Value.Comment,
+                CodeNames = parameters.Value.CodeNames,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Adds a transfer transaction")]
+        public async Task<MutationInfo> AddTransfer([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddTransferTransactionParameters> parameters)
+        {
+            var command = new AddTransferTransactionCommand
+            {
+                IdOrigin = Guid.NewGuid(),
+                IdDestination = Guid.NewGuid(),
+                FinancialYearId = parameters.Value.FinancialYearId,
+                OriginAccountId = parameters.Value.OriginAccountId,
+                DestinationAccountId = parameters.Value.DestinationAccountId,
                 AmountInCents = parameters.Value.AmountInCents,
                 Description = parameters.Value.Description,
                 Comment = parameters.Value.Comment,

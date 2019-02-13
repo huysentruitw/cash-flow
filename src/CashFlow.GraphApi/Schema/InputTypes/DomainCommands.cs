@@ -129,9 +129,27 @@ namespace CashFlow.GraphApi.Schema
         public Guid Id { get; set; }
     }
 
-    [Description("Adds a transaction")]
+    [Description("Adds an income transaction")]
     [InputType]
-    public sealed class AddTransactionParameters
+    public sealed class AddIncomeTransactionParameters
+    {
+        [Description("The id of the financial year")]
+        public Guid FinancialYearId { get; set; }
+        [Description("The id of the account related to the transaction")]
+        public Guid AccountId { get; set; }
+        [Description("The amount expressed in cents. Positive for income, negative for expenses")]
+        public long AmountInCents { get; set; }
+        [Description("The description of the transaction")]
+        public NonNull<string> Description { get; set; }
+        [Description("Optional comment related to the transaction")]
+        public string Comment { get; set; }
+        [Description("Zero or more names of codes to assign to the transaction")]
+        public NonNull<string[]> CodeNames { get; set; }
+    }
+
+    [Description("Adds an expense transaction")]
+    [InputType]
+    public sealed class AddExpenseTransactionParameters
     {
         [Description("The id of the financial year")]
         public Guid FinancialYearId { get; set; }
@@ -139,6 +157,26 @@ namespace CashFlow.GraphApi.Schema
         public Guid AccountId { get; set; }
         [Description("The optional id of the supplier linked to the transaction")]
         public Guid? SupplierId { get; set; }
+        [Description("The amount expressed in cents. Positive for income, negative for expenses")]
+        public long AmountInCents { get; set; }
+        [Description("The description of the transaction")]
+        public NonNull<string> Description { get; set; }
+        [Description("Optional comment related to the transaction")]
+        public string Comment { get; set; }
+        [Description("Zero or more names of codes to assign to the transaction")]
+        public NonNull<string[]> CodeNames { get; set; }
+    }
+
+    [Description("Adds a transfer transaction")]
+    [InputType]
+    public sealed class AddTransferTransactionParameters
+    {
+        [Description("The id of the financial year")]
+        public Guid FinancialYearId { get; set; }
+        [Description("The id of the origin account related to the transaction")]
+        public Guid OriginAccountId { get; set; }
+        [Description("The id of the destination account related to the transaction")]
+        public Guid DestinationAccountId { get; set; }
         [Description("The amount expressed in cents. Positive for income, negative for expenses")]
         public long AmountInCents { get; set; }
         [Description("The description of the transaction")]

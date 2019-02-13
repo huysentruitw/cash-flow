@@ -196,9 +196,44 @@ namespace CashFlow.Command.Abstractions
     }
 
     /// <summary>
-    /// Adds a transaction
+    /// Adds an income transaction
     /// </summary>
-    public sealed class AddTransactionCommand : Command
+    public sealed class AddIncomeTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the transaction
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The id of the financial year
+        /// </summary>
+        public Guid FinancialYearId { get; set; }
+        /// <summary>
+        /// The id of the account related to the transaction
+        /// </summary>
+        public Guid AccountId { get; set; }
+        /// <summary>
+        /// The amount expressed in cents. Positive for income, negative for expenses
+        /// </summary>
+        public long AmountInCents { get; set; }
+        /// <summary>
+        /// The description of the transaction
+        /// </summary>
+        public string Description { get; set; }
+        /// <summary>
+        /// Optional comment related to the transaction
+        /// </summary>
+        public string Comment { get; set; }
+        /// <summary>
+        /// Zero or more names of codes to assign to the transaction
+        /// </summary>
+        public string[] CodeNames { get; set; }
+    }
+
+    /// <summary>
+    /// Adds an expense transaction
+    /// </summary>
+    public sealed class AddExpenseTransactionCommand : Command
     {
         /// <summary>
         /// The id of the transaction
@@ -216,6 +251,49 @@ namespace CashFlow.Command.Abstractions
         /// The optional id of the supplier linked to the transaction
         /// </summary>
         public Guid? SupplierId { get; set; }
+        /// <summary>
+        /// The amount expressed in cents. Positive for income, negative for expenses
+        /// </summary>
+        public long AmountInCents { get; set; }
+        /// <summary>
+        /// The description of the transaction
+        /// </summary>
+        public string Description { get; set; }
+        /// <summary>
+        /// Optional comment related to the transaction
+        /// </summary>
+        public string Comment { get; set; }
+        /// <summary>
+        /// Zero or more names of codes to assign to the transaction
+        /// </summary>
+        public string[] CodeNames { get; set; }
+    }
+
+    /// <summary>
+    /// Adds a transfer transaction
+    /// </summary>
+    public sealed class AddTransferTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the origin transaction
+        /// </summary>
+        public Guid IdOrigin { get; set; }
+        /// <summary>
+        /// The id of the destination transaction
+        /// </summary>
+        public Guid IdDestination { get; set; }
+        /// <summary>
+        /// The id of the financial year
+        /// </summary>
+        public Guid FinancialYearId { get; set; }
+        /// <summary>
+        /// The id of the origin account related to the transaction
+        /// </summary>
+        public Guid OriginAccountId { get; set; }
+        /// <summary>
+        /// The id of the destination account related to the transaction
+        /// </summary>
+        public Guid DestinationAccountId { get; set; }
         /// <summary>
         /// The amount expressed in cents. Positive for income, negative for expenses
         /// </summary>

@@ -47,14 +47,43 @@ export class TransactionService {
       .valueChanges.pipe(map(({ data }) => data.transactions));
   }
 
-  addTransaction(financialYearId: string, accountId: string, supplierId: string, amountInCents: number,
+  addIncome(financialYearId: string, accountId: string, amountInCents: number,
     description: string, comment: string, codeNames: string[], refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation addTransaction($parameters: AddTransactionParameters!) {
+        mutation addIncome($parameters: AddIncomeTransactionParameters!) {
           transaction {
-            add(parameters: $parameters) {
+            addIncome(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            financialYearId: financialYearId,
+            accountId: accountId,
+            amountInCents: amountInCents,
+            description: description,
+            comment: comment,
+            codeNames: codeNames
+          }
+        },
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
+      });
+  }
+
+  addExpense(financialYearId: string, accountId: string, supplierId: string, amountInCents: number,
+    description: string, comment: string, codeNames: string[], refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation addExpense($parameters: AddExpenseTransactionParameters!) {
+          transaction {
+            addExpense(parameters: $parameters) {
               correlationId
             }
           }
@@ -64,6 +93,36 @@ export class TransactionService {
             financialYearId: financialYearId,
             accountId: accountId,
             supplierId: supplierId,
+            amountInCents: amountInCents,
+            description: description,
+            comment: comment,
+            codeNames: codeNames
+          }
+        },
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
+      });
+  }
+
+  addTransfer(financialYearId: string, originAccountId: string, destinationAccountId: string, amountInCents: number,
+    description: string, comment: string, codeNames: string[], refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation addTransfer($parameters: AddTransferTransactionParameters!) {
+          transaction {
+            addTransfer(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            financialYearId: financialYearId,
+            originAccountId: originAccountId,
+            destinationAccountId: destinationAccountId,
             amountInCents: amountInCents,
             description: description,
             comment: comment,

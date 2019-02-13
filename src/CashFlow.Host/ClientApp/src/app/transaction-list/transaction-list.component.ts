@@ -10,7 +10,7 @@ import { AccountService } from 'src/services/account.service';
 import { BusService } from 'src/services/bus.service';
 import { FinancialYearService } from 'src/services/financial-year.service';
 import { TransactionService } from 'src/services/transaction.service';
-import { TransactionDialogComponent, TransactionMode } from '../transaction-dialog/transaction-dialog.component';
+import { TransactionDialogComponent, TransactionMode, DialogData } from '../transaction-dialog/transaction-dialog.component';
 import { TransactionCodeDialogComponent } from '../transaction-code-dialog/transaction-code-dialog.component';
 
 @Component({
@@ -51,24 +51,24 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   addIncome(): void {
-    this.addTransaction(TransactionMode.Income);
+    this.addTransactionDialog(TransactionMode.Income);
   }
 
   addExpense(): void {
-    this.addTransaction(TransactionMode.Expense);
+    this.addTransactionDialog(TransactionMode.Expense);
   }
 
   addTransfer(): void {
-    this.addTransaction(TransactionMode.Transfer);
+    this.addTransactionDialog(TransactionMode.Transfer);
   }
 
-  private addTransaction(mode: TransactionMode): void {
+  private addTransactionDialog(mode: TransactionMode): void {
     combineLatest(this.selectedAccount$, this.busService.activeFinancialYear$)
       .pipe(take(1))
       .subscribe(([selectedAccount, financialYear]) => {
         const dialogRef = this.dialog.open(TransactionDialogComponent,
           {
-            width: '500px',
+            width: '280px',
             data: {
               mode: mode,
               financialYear: financialYear,
@@ -76,26 +76,53 @@ export class TransactionListComponent implements OnInit, OnDestroy {
             }
           });
 
-        dialogRef.afterClosed().subscribe(result => {
-          if (!!result) {
-            if (result.mode === TransactionMode.Expense)
-              result.amountInCents = -result.amountInCents;
-
-            this.transactionService.addTransaction(
-              result.financialYear.id,
-              result.accountId,
-              result.supplierId,
-              result.amountInCents,
-              result.description,
-              result.comment,
-              []).subscribe(
-                () => { },
-                error => {
-                  console.error(error);
-                });
-          }
+        dialogRef.afterClosed()
+          .pipe(
+            filter(data => !!data),
+            switchMap(result => this.addTransaction(result))
+          )
+          .subscribe(
+            () => {},
+            error => {
+              console.error(error);
+            });
         });
-      });
+  }
+
+  private addTransaction(dialogData: DialogData): Observable<void> {
+    if (dialogData.mode === TransactionMode.Income) {
+      return this.transactionService.addIncome(
+        dialogData.financialYear.id,
+        dialogData.accountId,
+        dialogData.amountInCents,
+        dialogData.description,
+        dialogData.comment,
+        []);
+    }
+
+    if (dialogData.mode === TransactionMode.Expense) {
+      return this.transactionService.addExpense(
+        dialogData.financialYear.id,
+        dialogData.accountId,
+        dialogData.supplierId,
+        dialogData.amountInCents,
+        dialogData.description,
+        dialogData.comment,
+        []);
+    }
+
+    if (dialogData.mode === TransactionMode.Transfer) {
+      return this.transactionService.addTransfer(
+        dialogData.financialYear.id,
+        dialogData.originAccountId,
+        dialogData.destinationAccountId,
+        dialogData.amountInCents,
+        dialogData.description,
+        dialogData.comment,
+        []);
+    }
+
+    throw new Error(`Unknown transaction mode ${dialogData.mode}`);
   }
 
   assignCode(transaction: Transaction): void {
