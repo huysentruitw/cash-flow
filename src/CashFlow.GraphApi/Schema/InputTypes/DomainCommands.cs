@@ -187,6 +187,14 @@ namespace CashFlow.GraphApi.Schema
         public NonNull<string[]> CodeNames { get; set; }
     }
 
+    [Description("Removes the latest transaction")]
+    [InputType]
+    public sealed class RemoveLatestTransactionParameters
+    {
+        [Description("The id of the transaction (used for verification)")]
+        public Guid Id { get; set; }
+    }
+
     [Description("Assigns a code to a transaction")]
     [InputType]
     public sealed class AssignCodeToTransactionParameters

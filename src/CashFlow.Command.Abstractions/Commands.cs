@@ -313,6 +313,17 @@ namespace CashFlow.Command.Abstractions
     }
 
     /// <summary>
+    /// Removes the latest transaction
+    /// </summary>
+    public sealed class RemoveLatestTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the transaction (used for verification)
+        /// </summary>
+        public Guid Id { get; set; }
+    }
+
+    /// <summary>
     /// Assigns a code to a transaction
     /// </summary>
     public sealed class AssignCodeToTransactionCommand : Command

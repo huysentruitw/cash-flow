@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using CashFlow.Command.Abstractions;
+using CashFlow.Command.Abstractions.Exceptions;
 using CashFlow.Command.Repositories;
 using FluentValidation;
 using MediatR;
@@ -124,6 +125,28 @@ namespace CashFlow.Command.CommandHandlers
                 comment: command.Comment,
                 codeNames: command.CodeNames);
 
+            return Unit.Value;
+        }
+    }
+
+    internal sealed class RemoveLatestTransactionCommandHandler : SafeCommandHandler<RemoveLatestTransactionCommand>
+    {
+        private readonly ITransactionRepository _repository;
+
+        public RemoveLatestTransactionCommandHandler(ITransactionRepository repository)
+        {
+            _repository = repository;
+        }
+
+        protected override void DefineRules()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+        }
+
+        protected override async Task<Unit> HandleValidatedCommand(RemoveLatestTransactionCommand command)
+        {
+            if (!await _repository.RemoveLatest(id: command.Id))
+                throw new FailedToDeleteLastTransactionException();
             return Unit.Value;
         }
     }

@@ -10,8 +10,10 @@ import { AccountService } from 'src/services/account.service';
 import { BusService } from 'src/services/bus.service';
 import { FinancialYearService } from 'src/services/financial-year.service';
 import { TransactionService } from 'src/services/transaction.service';
-import { TransactionDialogComponent, TransactionMode, DialogData } from '../transaction-dialog/transaction-dialog.component';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { TransactionCodeDialogComponent } from '../transaction-code-dialog/transaction-code-dialog.component';
+import { DialogData, TransactionDialogComponent, TransactionMode } from '../transaction-dialog/transaction-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-transaction-list',
@@ -22,7 +24,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private financialYear$: Observable<FinancialYear>;
   private startingBalance$: Observable<number>;
-  displayedColumns = ['date', 'evidenceNumber', 'codes', 'supplier', 'description', 'income', 'expense', 'balance'];
+  displayedColumns = ['date', 'evidenceNumber', 'codes', 'supplier', 'description', 'income', 'expense', 'balance', 'remove'];
   transactions$: Observable<TransactionWithBalance[]>;
   accounts$: Observable<Account[]>;
   selectedAccount$ = new BehaviorSubject<Account>(null);
@@ -31,6 +33,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private transactionService: TransactionService,
     private financialYearService: FinancialYearService,
+    private translateService: TranslateService,
     private busService: BusService,
     private dialog: MatDialog) { }
 
@@ -123,6 +126,33 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     }
 
     throw new Error(`Unknown transaction mode ${dialogData.mode}`);
+  }
+
+  isLatestTransaction(transactions: Transaction[], transaction: Transaction): boolean {
+    return transactions.length > 0 && transaction === transactions[transactions.length - 1];
+  }
+
+  removeLatest(transaction: Transaction): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent,
+      {
+        width: '400px',
+        data: {
+          title: this.translateService.instant('Remove transaction {{name}}?', { name: `${transaction.financialYear.name}/${transaction.evidenceNumber}` }),
+          icon: 'delete'
+        }
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.transactionService.removeLatest(
+          transaction.id,
+          transaction.financialYear.id).subscribe(
+          () => { },
+          error => {
+            console.error(error);
+          });
+      }
+    });
   }
 
   assignCode(transaction: Transaction): void {

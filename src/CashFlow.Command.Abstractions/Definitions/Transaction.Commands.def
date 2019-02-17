@@ -28,6 +28,9 @@ AddTransfer => AddTransferTransaction // Adds a transfer transaction
     Comment: string? // Optional comment related to the transaction
     CodeNames: string[] // Zero or more names of codes to assign to the transaction
 
+RemoveLatest => RemoveLatestTransaction // Removes the latest transaction
+    Id: Guid // The id of the transaction (used for verification)
+
 AssignCode => AssignCodeToTransaction // Assigns a code to a transaction
     Id: Guid // The id of the transaction
     CodeName: string // The name of the code to assign

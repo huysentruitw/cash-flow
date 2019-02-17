@@ -160,6 +160,30 @@ export class TransactionService {
       });
   }
 
+  removeLatest(transactionId: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation removeLatest($parameters: RemoveLatestTransactionParameters!) {
+          transaction {
+            removeLatest(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }
+        `,
+        variables: {
+          parameters: {
+            id: transactionId
+          }
+        },
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
+      });
+  }
+
   unassignCode(transactionId: string, codeName: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({

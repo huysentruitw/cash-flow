@@ -339,6 +339,20 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
+        [Description("Removes the latest transaction")]
+        public async Task<MutationInfo> RemoveLatest([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RemoveLatestTransactionParameters> parameters)
+        {
+            var command = new RemoveLatestTransactionCommand
+            {
+                Id = parameters.Value.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
         [Description("Assigns a code to a transaction")]
         public async Task<MutationInfo> AssignCode([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AssignCodeToTransactionParameters> parameters)
         {

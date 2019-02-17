@@ -16,6 +16,8 @@
   "Remove supplier": "Leverancier verwijderen",
   "Remove supplier?": "Leverancier '{{name}}' verwijderen?",
   "Transactions": "Transacties",
+  "Remove latest transaction": "Laatste transactie verwijderen",
+  "Remove transaction {{name}}?": "Transactie '{{name}}' verwijderen?",
   "Evidence number": "Bewijsnummer",
   "Date": "Datum",
   "Codes": "Codes",

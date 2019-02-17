@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CashFlow.Command.Abstractions.Exceptions;
 using CashFlow.Data.Abstractions;
 using CashFlow.Data.Abstractions.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CashFlow.Command.Repositories
@@ -10,6 +12,7 @@ namespace CashFlow.Command.Repositories
     internal interface ITransactionRepository
     {
         Task Add(Guid id, Guid financialYearId, Guid accountId, Guid? supplierId, long amountInCents, bool isInternalTransfer, string description, string comment, string[] codeNames);
+        Task<bool> RemoveLatest(Guid id);
         Task AssignCode(Guid id, string codeName);
         Task UnassignCode(Guid id, string codeName);
     }
@@ -72,6 +75,25 @@ namespace CashFlow.Command.Repositories
                     throw;
                 }
             }
+        }
+
+        public async Task<bool> RemoveLatest(Guid id)
+        {
+            Transaction transaction = await _dataContext.Transactions.FirstOrDefaultAsync(x => x.Id == id);
+            if (transaction == null)
+                throw new TransactionNotFoundException(id);
+
+            int lastEvidenceNumber = _dataContext.Transactions
+                .Where(x => x.FinancialYearId == transaction.FinancialYearId)
+                .Select(x => x.EvidenceNumber)
+                .Max();
+
+            if (transaction.EvidenceNumber != lastEvidenceNumber)
+                return false;
+
+            _dataContext.Transactions.Remove(transaction);
+            await _dataContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task AssignCode(Guid id, string codeName)
