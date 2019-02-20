@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F71C8922-1372-42A4-B4FD-B74B10E3A4A0}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{8DF777D9-67E8-49E6-ADEB-674EAE5B4833}"
@@ -51,9 +52,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Data", "src\CashFl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Services", "03 Services", "{90CE7F05-CACA-4FD4-968E-10909AF8CA00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.Reporting", "src\CashFlow.Reporting\CashFlow.Reporting.csproj", "{BB0D5DB9-6F16-49A7-BDF3-94FE85330B07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Reporting", "src\CashFlow.Reporting\CashFlow.Reporting.csproj", "{BB0D5DB9-6F16-49A7-BDF3-94FE85330B07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.Reporting.Tests", "tests\CashFlow.Reporting.Tests\CashFlow.Reporting.Tests.csproj", "{99D05D8D-C875-4FB6-9D96-A93CA2D4A219}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Reporting.Tests", "tests\CashFlow.Reporting.Tests\CashFlow.Reporting.Tests.csproj", "{99D05D8D-C875-4FB6-9D96-A93CA2D4A219}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
