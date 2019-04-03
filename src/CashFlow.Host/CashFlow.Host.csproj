@@ -33,6 +33,7 @@
     <ProjectReference Include="..\CashFlow.Data\CashFlow.Data.csproj" />
     <ProjectReference Include="..\CashFlow.GraphApi\CashFlow.GraphApi.csproj" />
     <ProjectReference Include="..\CashFlow.Query\CashFlow.Query.csproj" />
+    <ProjectReference Include="..\CashFlow.Reporting\CashFlow.Reporting.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
