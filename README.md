@@ -36,7 +36,7 @@ Other: see https://jsreport.net/on-prem
 
 * Right-click on the correct solution folder
 * Add > New project...
-* Pick _xUnit Test Project (.NET Core) from _Test_
+* Pick _xUnit Test Project (.NET Core)_ from _Test_
 * Enter a name in the form _CashFlow.Something.Tests_
 * Append _\tests_ to the location
 * Click OK
