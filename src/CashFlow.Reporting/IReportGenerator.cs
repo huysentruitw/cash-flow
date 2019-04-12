@@ -1,4 +1,5 @@
-﻿using System.IO;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CashFlow.Reporting
@@ -12,6 +13,7 @@ namespace CashFlow.Reporting
             object templateData = null,
             PageMargins margins = null,
             PageFormat format = PageFormat.A4,
-            PageOrientation orientation = PageOrientation.Portrait);
+            PageOrientation orientation = PageOrientation.Portrait,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }
