@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,10 @@ namespace CashFlow.Host
             services.AddCommand();
             services.AddQuery();
             services.AddGraphApi();
-            services.AddReporting();
+            services.AddReporting(options =>
+            {
+                options.JsReportServiceUri = Configuration.GetValue<Uri>("Reporting:JsReportServiceUri");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
