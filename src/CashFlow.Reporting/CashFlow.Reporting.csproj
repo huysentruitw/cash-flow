@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="HandlebarsHelpers.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="HandlebarsHelpers.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="jsreport.Client" Version="3.0.0" />
     <PackageReference Include="jsreport.Types" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.2" />

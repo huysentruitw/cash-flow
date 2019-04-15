@@ -9,10 +9,12 @@ namespace CashFlow.Reporting
     internal sealed class ReportGenerator : IReportGenerator
     {
         private readonly IRenderService _renderService;
+        private readonly string _handlebarsHelpers;
 
         public ReportGenerator(IRenderService renderService)
         {
             _renderService = renderService;
+            _handlebarsHelpers = LoadHandlebarsHelpers();
         }
 
         public async Task<Stream> GeneratePdf(
@@ -32,6 +34,7 @@ namespace CashFlow.Reporting
                     Engine = Engine.Handlebars,
                     Recipe = Recipe.ChromePdf,
                     Content = bodyTemplate,
+                    Helpers = _handlebarsHelpers,
                     Chrome = new Chrome
                     {
                         Landscape = orientation == PageOrientation.Landscape,
@@ -51,6 +54,15 @@ namespace CashFlow.Reporting
 
             Report report = await _renderService.RenderAsync(renderRequest, cancellationToken);
             return report.Content;
+        }
+
+        private static string LoadHandlebarsHelpers()
+        {
+            using (Stream stream = typeof(ReportGenerator).Assembly.GetManifestResourceStream(typeof(ReportGenerator), "HandlebarsHelpers.js"))
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
     }
 }
