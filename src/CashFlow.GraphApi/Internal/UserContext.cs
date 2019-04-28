@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using GraphQL.Conventions;
@@ -16,10 +16,9 @@ namespace CashFlow.GraphApi
             _dataLoaderContext = dataLoaderContext;
         }
 
-        public Task FetchData(CancellationToken token)
+        public async Task FetchData(CancellationToken token)
         {
-            _dataLoaderContext.DispatchAll(token);
-            return Task.CompletedTask;
+            await _dataLoaderContext.DispatchAllAsync(token);
         }
     }
 }

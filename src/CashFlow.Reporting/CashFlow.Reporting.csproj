@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="jsreport.Client" Version="3.0.0" />
-    <PackageReference Include="jsreport.Types" Version="2.2.7" />
+    <PackageReference Include="jsreport.Client" Version="3.0.1" />
+    <PackageReference Include="jsreport.Types" Version="2.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
   </ItemGroup>
