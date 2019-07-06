@@ -209,6 +209,10 @@ namespace CashFlow.Command.Abstractions
         /// </summary>
         public Guid FinancialYearId { get; set; }
         /// <summary>
+        /// The date of the transaction
+        /// </summary>
+        public DateTimeOffset TransactionDate { get; set; }
+        /// <summary>
         /// The id of the account related to the transaction
         /// </summary>
         public Guid AccountId { get; set; }
@@ -243,6 +247,10 @@ namespace CashFlow.Command.Abstractions
         /// The id of the financial year
         /// </summary>
         public Guid FinancialYearId { get; set; }
+        /// <summary>
+        /// The date of the transaction
+        /// </summary>
+        public DateTimeOffset TransactionDate { get; set; }
         /// <summary>
         /// The id of the account related to the transaction
         /// </summary>
@@ -286,6 +294,10 @@ namespace CashFlow.Command.Abstractions
         /// The id of the financial year
         /// </summary>
         public Guid FinancialYearId { get; set; }
+        /// <summary>
+        /// The date of the transaction
+        /// </summary>
+        public DateTimeOffset TransactionDate { get; set; }
         /// <summary>
         /// The id of the origin account related to the transaction
         /// </summary>

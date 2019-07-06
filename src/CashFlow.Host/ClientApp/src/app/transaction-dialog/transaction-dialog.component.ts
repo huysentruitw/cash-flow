@@ -8,6 +8,7 @@ import { FinancialYear } from 'src/models/financial-year';
 import { Supplier } from 'src/models/supplier';
 import { AccountService } from 'src/services/account.service';
 import { SupplierService } from 'src/services/supplier.service';
+import * as moment from 'moment';
 
 export enum TransactionMode {
   Income,
@@ -18,6 +19,7 @@ export enum TransactionMode {
 export class DialogData {
   mode: TransactionMode;
   financialYear: FinancialYear;
+  transactionDate: Date;
   accountId: string;
   originAccountId: string;
   destinationAccountId: string;
@@ -48,6 +50,7 @@ export class TransactionDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.amount = this.data.amountInCents / 100;
+    this.data.transactionDate = this.data.transactionDate || moment.utc().startOf('day').toDate();
     this.accounts$ = this.accountService.getAccounts().pipe(take(1));
     this.suppliers$ = this.supplierService.getSuppliers().pipe(take(1));
   }

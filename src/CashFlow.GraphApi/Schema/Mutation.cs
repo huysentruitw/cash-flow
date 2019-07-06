@@ -283,6 +283,7 @@ namespace CashFlow.GraphApi.Schema
             {
                 Id = Guid.NewGuid(),
                 FinancialYearId = parameters.Value.FinancialYearId,
+                TransactionDate = parameters.Value.TransactionDate,
                 AccountId = parameters.Value.AccountId,
                 AmountInCents = parameters.Value.AmountInCents,
                 Description = parameters.Value.Description,
@@ -303,6 +304,7 @@ namespace CashFlow.GraphApi.Schema
             {
                 Id = Guid.NewGuid(),
                 FinancialYearId = parameters.Value.FinancialYearId,
+                TransactionDate = parameters.Value.TransactionDate,
                 AccountId = parameters.Value.AccountId,
                 SupplierId = parameters.Value.SupplierId,
                 AmountInCents = parameters.Value.AmountInCents,
@@ -325,6 +327,7 @@ namespace CashFlow.GraphApi.Schema
                 IdOrigin = Guid.NewGuid(),
                 IdDestination = Guid.NewGuid(),
                 FinancialYearId = parameters.Value.FinancialYearId,
+                TransactionDate = parameters.Value.TransactionDate,
                 OriginAccountId = parameters.Value.OriginAccountId,
                 DestinationAccountId = parameters.Value.DestinationAccountId,
                 AmountInCents = parameters.Value.AmountInCents,

@@ -1,6 +1,7 @@
 ﻿AddIncome => AddIncomeTransaction // Adds an income transaction
     Id: Guid = Guid.NewGuid() // The id of the transaction
     FinancialYearId: Guid // The id of the financial year
+    TransactionDate: DateTimeOffset // The date of the transaction
     AccountId: Guid // The id of the account related to the transaction
     AmountInCents: long // The amount expressed in cents. Positive for income, negative for expenses
     Description: string // The description of the transaction
@@ -10,6 +11,7 @@
 AddExpense => AddExpenseTransaction // Adds an expense transaction
     Id: Guid = Guid.NewGuid() // The id of the transaction
     FinancialYearId: Guid // The id of the financial year
+    TransactionDate: DateTimeOffset // The date of the transaction
     AccountId: Guid // The id of the account related to the transaction
     SupplierId: Guid? // The optional id of the supplier linked to the transaction
     AmountInCents: long // The amount expressed in cents. Positive for income, negative for expenses
@@ -21,6 +23,7 @@ AddTransfer => AddTransferTransaction // Adds a transfer transaction
     IdOrigin: Guid = Guid.NewGuid() // The id of the origin transaction
     IdDestination: Guid = Guid.NewGuid() // The id of the destination transaction
     FinancialYearId: Guid // The id of the financial year
+    TransactionDate: DateTimeOffset // The date of the transaction
     OriginAccountId: Guid // The id of the origin account related to the transaction
     DestinationAccountId: Guid // The id of the destination account related to the transaction
     AmountInCents: long // The amount expressed in cents. Positive for income, negative for expenses

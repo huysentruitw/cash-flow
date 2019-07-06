@@ -11,8 +11,7 @@ const listQuery = gql`
       id
       evidenceNumber
       accountId
-      dateCreated
-      dateModified
+      transactionDate
       amountInCents
       isInternalTransfer
       description
@@ -47,7 +46,7 @@ export class TransactionService {
       .valueChanges.pipe(map(({ data }) => data.transactions));
   }
 
-  addIncome(financialYearId: string, accountId: string, amountInCents: number,
+  addIncome(financialYearId: string, transactionDate: Date, accountId: string, amountInCents: number,
     description: string, comment: string, codeNames: string[], refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({
@@ -62,6 +61,7 @@ export class TransactionService {
         variables: {
           parameters: {
             financialYearId: financialYearId,
+            transactionDate: transactionDate,
             accountId: accountId,
             amountInCents: amountInCents,
             description: description,
@@ -76,7 +76,7 @@ export class TransactionService {
       });
   }
 
-  addExpense(financialYearId: string, accountId: string, supplierId: string, amountInCents: number,
+  addExpense(financialYearId: string, transactionDate: Date, accountId: string, supplierId: string, amountInCents: number,
     description: string, comment: string, codeNames: string[], refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({
@@ -91,6 +91,7 @@ export class TransactionService {
         variables: {
           parameters: {
             financialYearId: financialYearId,
+            transactionDate: transactionDate,
             accountId: accountId,
             supplierId: supplierId,
             amountInCents: amountInCents,
@@ -106,7 +107,7 @@ export class TransactionService {
       });
   }
 
-  addTransfer(financialYearId: string, originAccountId: string, destinationAccountId: string, amountInCents: number,
+  addTransfer(financialYearId: string, transactionDate: Date, originAccountId: string, destinationAccountId: string, amountInCents: number,
     description: string, comment: string, codeNames: string[], refetchList: boolean = true): Observable<void> {
     return this.apollo
       .mutate({
@@ -121,6 +122,7 @@ export class TransactionService {
         variables: {
           parameters: {
             financialYearId: financialYearId,
+            transactionDate: transactionDate,
             originAccountId: originAccountId,
             destinationAccountId: destinationAccountId,
             amountInCents: amountInCents,

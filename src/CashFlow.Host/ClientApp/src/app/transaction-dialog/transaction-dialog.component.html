@@ -3,6 +3,11 @@
   <mat-form-field>
     <input matInput placeholder="{{'Amount' | translate}}" type="number" [(ngModel)]="data.amount" (input)="updateAmount($event.target.value)" />
   </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="{{'Date' | translate}}" [(ngModel)]="data.transactionDate" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
   <mat-form-field *ngIf="data.mode !== transactionMode.Transfer">
     <mat-select placeholder="{{'Account' | translate}}" [(ngModel)]="data.accountId">
       <mat-option *ngFor="let account of accounts$ | async" [value]="account.id">

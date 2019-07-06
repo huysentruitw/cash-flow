@@ -135,6 +135,8 @@ namespace CashFlow.GraphApi.Schema
     {
         [Description("The id of the financial year")]
         public Guid FinancialYearId { get; set; }
+        [Description("The date of the transaction")]
+        public DateTimeOffset TransactionDate { get; set; }
         [Description("The id of the account related to the transaction")]
         public Guid AccountId { get; set; }
         [Description("The amount expressed in cents. Positive for income, negative for expenses")]
@@ -153,6 +155,8 @@ namespace CashFlow.GraphApi.Schema
     {
         [Description("The id of the financial year")]
         public Guid FinancialYearId { get; set; }
+        [Description("The date of the transaction")]
+        public DateTimeOffset TransactionDate { get; set; }
         [Description("The id of the account related to the transaction")]
         public Guid AccountId { get; set; }
         [Description("The optional id of the supplier linked to the transaction")]
@@ -173,6 +177,8 @@ namespace CashFlow.GraphApi.Schema
     {
         [Description("The id of the financial year")]
         public Guid FinancialYearId { get; set; }
+        [Description("The date of the transaction")]
+        public DateTimeOffset TransactionDate { get; set; }
         [Description("The id of the origin account related to the transaction")]
         public Guid OriginAccountId { get; set; }
         [Description("The id of the destination account related to the transaction")]

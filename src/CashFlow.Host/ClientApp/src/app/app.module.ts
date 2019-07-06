@@ -24,6 +24,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { TransactionCodeDialogComponent } from './transaction-code-dialog/transaction-code-dialog.component';
 import { TransactionDialogComponent } from './transaction-dialog/transaction-dialog.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 @
 NgModule({
@@ -69,7 +70,8 @@ NgModule({
     TransactionDialogComponent
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'nl-BE' }
+    { provide: LOCALE_ID, useValue: 'nl-BE' },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ],
   bootstrap: [AppComponent]
 })

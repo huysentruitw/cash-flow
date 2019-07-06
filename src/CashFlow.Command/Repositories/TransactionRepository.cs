@@ -11,7 +11,7 @@ namespace CashFlow.Command.Repositories
 {
     internal interface ITransactionRepository
     {
-        Task Add(Guid id, Guid financialYearId, Guid accountId, Guid? supplierId, long amountInCents, bool isInternalTransfer, string description, string comment, string[] codeNames);
+        Task Add(Guid id, Guid financialYearId, DateTimeOffset transactionDate, Guid accountId, Guid? supplierId, long amountInCents, bool isInternalTransfer, string description, string comment, string[] codeNames);
         Task<bool> RemoveLatest(Guid id);
         Task AssignCode(Guid id, string codeName);
         Task UnassignCode(Guid id, string codeName);
@@ -28,25 +28,22 @@ namespace CashFlow.Command.Repositories
             _utcNowFactory = utcNowFactory ?? (() => DateTimeOffset.UtcNow);
         }
 
-        public async Task Add(Guid id, Guid financialYearId, Guid accountId, Guid? supplierId, long amountInCents, bool isInternalTransfer, string description, string comment, string[] codeNames)
+        public async Task Add(Guid id, Guid financialYearId, DateTimeOffset transactionDate, Guid accountId, Guid? supplierId, long amountInCents, bool isInternalTransfer, string description, string comment, string[] codeNames)
         {
             using (IDbContextTransaction transaction = await _dataContext.Database.BeginTransactionAsync())
             {
                 try
                 {
-                    int evidenceNumber = 1 + _dataContext.Transactions
-                        .Where(x => x.FinancialYearId == financialYearId)
-                        .Select(x => x.EvidenceNumber)
-                        .DefaultIfEmpty()
-                        .Max();
-
                     DateTimeOffset utcNow = _utcNowFactory();
+
+                    if (isInternalTransfer && amountInCents > 0)
+                        utcNow += TimeSpan.FromSeconds(1);
 
                     await _dataContext.Transactions.AddAsync(new Transaction
                     {
                         Id = id,
-                        EvidenceNumber = evidenceNumber,
                         FinancialYearId = financialYearId,
+                        TransactionDate = transactionDate,
                         AccountId = accountId,
                         SupplierId = supplierId,
                         DateCreated = utcNow,
@@ -83,13 +80,8 @@ namespace CashFlow.Command.Repositories
             if (transaction == null)
                 throw new TransactionNotFoundException(id);
 
-            int lastEvidenceNumber = _dataContext.Transactions
-                .Where(x => x.FinancialYearId == transaction.FinancialYearId)
-                .Select(x => x.EvidenceNumber)
-                .Max();
-
-            if (transaction.EvidenceNumber != lastEvidenceNumber)
-                return false;
+            // TODO Validate if this is really the latest transaction
+            // or can we allow to remove any transaction? -> Need to watch out for the sequence of evidenceNumbers
 
             _dataContext.Transactions.Remove(transaction);
             await _dataContext.SaveChangesAsync();

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using CashFlow.Command.Abstractions;
 using CashFlow.Command.Abstractions.Exceptions;
@@ -20,6 +21,7 @@ namespace CashFlow.Command.CommandHandlers
         {
             RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.FinancialYearId).NotEmpty();
+            RuleFor(x => x.TransactionDate).NotEmpty();
             RuleFor(x => x.AccountId).NotEmpty();
             RuleFor(x => x.AmountInCents).NotEqual(0);
             RuleFor(x => x.Description).NotEmpty().MaximumLength(250);
@@ -32,6 +34,7 @@ namespace CashFlow.Command.CommandHandlers
             await _repository.Add(
                 id: command.Id,
                 financialYearId: command.FinancialYearId,
+                transactionDate: command.TransactionDate,
                 accountId: command.AccountId,
                 supplierId: null,
                 amountInCents: command.AmountInCents,
@@ -56,6 +59,7 @@ namespace CashFlow.Command.CommandHandlers
         {
             RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.FinancialYearId).NotEmpty();
+            RuleFor(x => x.TransactionDate).NotEmpty();
             RuleFor(x => x.AccountId).NotEmpty();
             RuleFor(x => x.AmountInCents).NotEqual(0);
             RuleFor(x => x.Description).NotEmpty().MaximumLength(250);
@@ -68,6 +72,7 @@ namespace CashFlow.Command.CommandHandlers
             await _repository.Add(
                 id: command.Id,
                 financialYearId: command.FinancialYearId,
+                transactionDate: command.TransactionDate,
                 accountId: command.AccountId,
                 supplierId: command.SupplierId,
                 amountInCents: -command.AmountInCents,
@@ -93,6 +98,7 @@ namespace CashFlow.Command.CommandHandlers
             RuleFor(x => x.IdOrigin).NotEmpty();
             RuleFor(x => x.IdDestination).NotEmpty();
             RuleFor(x => x.FinancialYearId).NotEmpty();
+            RuleFor(x => x.TransactionDate).NotEmpty();
             RuleFor(x => x.OriginAccountId).NotEmpty();
             RuleFor(x => x.DestinationAccountId).NotEmpty();
             RuleFor(x => x.AmountInCents).NotEqual(0);
@@ -106,6 +112,7 @@ namespace CashFlow.Command.CommandHandlers
             await _repository.Add(
                 id: command.IdOrigin,
                 financialYearId: command.FinancialYearId,
+                transactionDate: command.TransactionDate,
                 accountId: command.OriginAccountId,
                 supplierId: null,
                 amountInCents: -command.AmountInCents,
@@ -117,6 +124,7 @@ namespace CashFlow.Command.CommandHandlers
             await _repository.Add(
                 id: command.IdDestination,
                 financialYearId: command.FinancialYearId,
+                transactionDate: command.TransactionDate,
                 accountId: command.DestinationAccountId,
                 supplierId: null,
                 amountInCents: command.AmountInCents,

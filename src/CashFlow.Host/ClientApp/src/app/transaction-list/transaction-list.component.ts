@@ -96,6 +96,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     if (dialogData.mode === TransactionMode.Income) {
       return this.transactionService.addIncome(
         dialogData.financialYear.id,
+        dialogData.transactionDate,
         dialogData.accountId,
         dialogData.amountInCents,
         dialogData.description,
@@ -106,6 +107,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     if (dialogData.mode === TransactionMode.Expense) {
       return this.transactionService.addExpense(
         dialogData.financialYear.id,
+        dialogData.transactionDate,
         dialogData.accountId,
         dialogData.supplierId,
         dialogData.amountInCents,
@@ -117,6 +119,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     if (dialogData.mode === TransactionMode.Transfer) {
       return this.transactionService.addTransfer(
         dialogData.financialYear.id,
+        dialogData.transactionDate,
         dialogData.originAccountId,
         dialogData.destinationAccountId,
         dialogData.amountInCents,

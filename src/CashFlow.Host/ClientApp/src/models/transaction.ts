@@ -11,8 +11,7 @@ export class Transaction {
   id!: string;
   evidenceNumber!: number;
   accountId!: string;
-  dateCreated!: Date;
-  dateModified: Date;
+  transactionDate: Date;
   amountInCents!: number;
   isInternalTransfer!: boolean;
   description!: string;

@@ -22,7 +22,8 @@ namespace CashFlow.Query.Repositories
             => await _dataContext.Transactions
                 .AsNoTracking()
                 .Where(x => x.FinancialYearId == financialYearId)
-                .OrderBy(x => x.EvidenceNumber)
+                .OrderBy(x => x.TransactionDate)
+                .ThenBy(x => x.DateCreated)
                 .ToArrayAsync();
 
         public async Task<ILookup<Guid, TransactionCode>> GetTransactionCodesInBatch(IEnumerable<Guid> transactionIds)

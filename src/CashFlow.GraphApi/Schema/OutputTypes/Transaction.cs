@@ -12,19 +12,17 @@ namespace CashFlow.GraphApi.Schema
     {
         public Guid Id { get; set; }
 
-        public int EvidenceNumber { get; set; }
+        public int? EvidenceNumber { get; set; }
 
         [Ignore]
         public Guid FinancialYearId { get; set; }
+
+        public DateTimeOffset TransactionDate { get; set; }
 
         public Guid AccountId { get; set; }
 
         [Ignore]
         public Guid? SupplierId { get; set; }
-
-        public DateTimeOffset DateCreated { get; set; }
-
-        public DateTimeOffset? DateModified { get; set; }
 
         public long AmountInCents { get; set; }
 
