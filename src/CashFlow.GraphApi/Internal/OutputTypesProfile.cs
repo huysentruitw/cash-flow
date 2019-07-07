@@ -11,6 +11,7 @@ namespace CashFlow.GraphApi
             CreateMap<Models.Account, Account>();
             CreateMap<Models.Code, Code>();
             CreateMap<Models.FinancialYear, FinancialYear>();
+            CreateMap<Models.StartingBalance, StartingBalance>();
             CreateMap<Models.Supplier, Supplier>();
             CreateMap<Models.Transaction, Transaction>();
             CreateMap<Models.TransactionCode, TransactionCode>();
