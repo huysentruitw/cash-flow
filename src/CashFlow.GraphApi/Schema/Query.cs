@@ -8,29 +8,29 @@ namespace CashFlow.GraphApi.Schema
 {
     internal sealed class Query
     {
-        private static IMapper _mapper;
+        private static IMapper Mapper;
 
         public Query(OutputTypesMapperResolver mapperResolver)
         {
-            _mapper = mapperResolver();
+            Mapper = mapperResolver();
         }
 
         public async Task<Account[]> Accounts([Inject] IAccountRepository repository)
-            => _mapper.Map<Account[]>(await repository.GetAccounts());
+            => Mapper.Map<Account[]>(await repository.GetAccounts());
 
         public async Task<Code[]> Codes([Inject] ICodeRepository repository)
-            => _mapper.Map<Code[]>(await repository.GetCodes());
+            => Mapper.Map<Code[]>(await repository.GetCodes());
 
         public async Task<FinancialYear[]> FinancialYears([Inject] IFinancialYearRepository repository)
-            => _mapper.Map<FinancialYear[]>(await repository.GetFinancialYears());
+            => Mapper.Map<FinancialYear[]>(await repository.GetFinancialYears());
 
         public async Task<StartingBalance[]> StartingBalances([Inject] IFinancialYearRepository repository, Guid financialYearId)
-            => _mapper.Map<StartingBalance[]>(await repository.GetFinancialYearStartingBalances(financialYearId));
+            => Mapper.Map<StartingBalance[]>(await repository.GetFinancialYearStartingBalances(financialYearId));
 
         public async Task<Supplier[]> Suppliers([Inject] ISupplierRepository repository)
-            => _mapper.Map<Supplier[]>(await repository.GetSuppliers());
+            => Mapper.Map<Supplier[]>(await repository.GetSuppliers());
 
         public async Task<Transaction[]> Transactions([Inject] ITransactionRepository repository, Guid financialYearId)
-            => _mapper.Map<Transaction[]>(await repository.GetTransactions(financialYearId));
+            => Mapper.Map<Transaction[]>(await repository.GetTransactions(financialYearId));
     }
 }
