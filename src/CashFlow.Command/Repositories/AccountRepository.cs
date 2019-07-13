@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
 using CashFlow.Data.Abstractions.Models;
@@ -13,6 +15,7 @@ namespace CashFlow.Command.Repositories
         Task RenameAccount(Guid id, string name);
         Task ChangeAccountType(Guid id, AccountType type);
         Task RemoveAccount(Guid id);
+        Task SetupAccountBalancesForNewFinancialYear(Guid closingFinancialYear, Guid newFinancialYearId);
     }
 
     internal sealed class AccountRepository : IAccountRepository
@@ -59,6 +62,35 @@ namespace CashFlow.Command.Repositories
             var account = new Account { Id = id };
             _dataContext.Accounts.Attach(account);
             _dataContext.Accounts.Remove(account);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task SetupAccountBalancesForNewFinancialYear(Guid closingFinancialYear, Guid newFinancialYearId)
+        {
+            Dictionary<Guid, long> startingBalances = await _dataContext.StartingBalances
+                .AsNoTracking()
+                .Where(x => x.FinancialYearId == closingFinancialYear)
+                .ToDictionaryAsync(x => x.AccountId, x => x.StartingBalanceInCents);
+
+            var balances = _dataContext.Transactions
+                .AsNoTracking()
+                .Where(x => x.FinancialYearId == closingFinancialYear)
+                .GroupBy(x => x.AccountId)
+                .ToDictionary(group => group.Key, group => group.Sum(x => x.AmountInCents));
+
+            foreach (var kvp in balances)
+            {
+                Guid accountId = kvp.Key;
+                startingBalances.TryGetValue(accountId, out long startingBalance);
+                startingBalance += kvp.Value;
+                await _dataContext.StartingBalances.AddAsync(new StartingBalance
+                {
+                    AccountId = accountId,
+                    FinancialYearId = newFinancialYearId,
+                    StartingBalanceInCents = startingBalance,
+                });
+            }
+
             await _dataContext.SaveChangesAsync();
         }
     }

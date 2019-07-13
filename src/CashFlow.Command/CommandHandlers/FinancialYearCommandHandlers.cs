@@ -8,11 +8,15 @@ namespace CashFlow.Command.CommandHandlers
 {
     internal sealed class AddFinancialYearCommandHandler : SafeCommandHandler<AddFinancialYearCommand>
     {
-        private readonly IFinancialYearRepository _repository;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IFinancialYearRepository _financialYearRepository;
 
-        public AddFinancialYearCommandHandler(IFinancialYearRepository repository)
+        public AddFinancialYearCommandHandler(
+            IAccountRepository accountRepository,
+            IFinancialYearRepository financialYearRepository)
         {
-            _repository = repository;
+            _accountRepository = accountRepository;
+            _financialYearRepository = financialYearRepository;
         }
 
         protected override void DefineRules()
@@ -25,10 +29,12 @@ namespace CashFlow.Command.CommandHandlers
         {
             if (command.PreviousFinancialYearId.HasValue)
             {
-                // TODO Get end balance of the previous financial year, for each account, and use it as starting balance
+                await _accountRepository.SetupAccountBalancesForNewFinancialYear(
+                    closingFinancialYear: command.PreviousFinancialYearId.Value,
+                    newFinancialYearId: command.Id);
             }
 
-            await _repository.AddFinancialYear(command.Id, command.Name);
+            await _financialYearRepository.AddFinancialYear(command.Id, command.Name);
             return Unit.Value;
         }
     }
