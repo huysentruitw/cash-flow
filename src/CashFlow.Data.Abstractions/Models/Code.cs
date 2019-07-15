@@ -7,5 +7,7 @@ namespace CashFlow.Data.Abstractions.Models
         public string Name { get; set; }
 
         public DateTimeOffset DateCreated { get; set; }
+
+        public DateTimeOffset? DateModified { get; set; }
     }
 }
