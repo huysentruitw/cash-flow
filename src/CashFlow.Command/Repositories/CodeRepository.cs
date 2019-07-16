@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
 using CashFlow.Data.Abstractions.Models;
@@ -34,14 +35,27 @@ namespace CashFlow.Command.Repositories
 
         public async Task RenameCode(string originalName, string newName)
         {
-            Code originalCode = await _dataContext.Codes.FirstAsync(x => x.Name == originalName);
-            _dataContext.Codes.Remove(originalCode);
-            await _dataContext.Codes.AddAsync(new Code
+            using (var databaseTransaction = await _dataContext.Database.BeginTransactionAsync())
             {
-                Name = newName,
-                DateCreated = originalCode.DateCreated
-            });
-            await _dataContext.SaveChangesAsync();
+                try
+                {
+                    Code code = await _dataContext.Codes.FirstAsync(x => x.Name == originalName);
+                    code.Name = newName;
+                    code.DateModified = DateTimeOffset.UtcNow;
+
+                    TransactionCode[] transactionCodes = await _dataContext.TransactionCodes.Where(x => x.CodeName == originalName).ToArrayAsync();
+                    foreach (var transactionCode in transactionCodes)
+                        transactionCode.CodeName = newName;
+
+                    await _dataContext.SaveChangesAsync();
+                    databaseTransaction.Commit();
+                }
+                catch
+                {
+                    databaseTransaction.Rollback();
+                    throw;
+                }
+            }
         }
 
         public async Task RemoveCode(string name)
