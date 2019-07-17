@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
 using CashFlow.Data.Abstractions.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CashFlow.Command.Repositories
 {
@@ -35,17 +36,30 @@ namespace CashFlow.Command.Repositories
 
         public async Task RenameCode(string originalName, string newName)
         {
-            using (var databaseTransaction = await _dataContext.Database.BeginTransactionAsync())
+            using (IDbContextTransaction databaseTransaction = await _dataContext.Database.BeginTransactionAsync())
             {
                 try
                 {
-                    Code code = await _dataContext.Codes.FirstAsync(x => x.Name == originalName);
-                    code.Name = newName;
-                    code.DateModified = DateTimeOffset.UtcNow;
+                    Code originalCode = await _dataContext.Codes.FirstAsync(x => x.Name == originalName);
+                    _dataContext.Codes.Remove(originalCode);
+                    await _dataContext.Codes.AddAsync(new Code
+                    {
+                        Name = newName,
+                        DateCreated = originalCode.DateCreated,
+                        DateModified = DateTimeOffset.UtcNow,
+                    });
 
                     TransactionCode[] transactionCodes = await _dataContext.TransactionCodes.Where(x => x.CodeName == originalName).ToArrayAsync();
-                    foreach (var transactionCode in transactionCodes)
-                        transactionCode.CodeName = newName;
+                    _dataContext.TransactionCodes.RemoveRange(transactionCodes);
+                    foreach (TransactionCode transactionCode in transactionCodes)
+                    {
+                        await _dataContext.TransactionCodes.AddAsync(new TransactionCode
+                        {
+                            TransactionId = transactionCode.TransactionId,
+                            CodeName = newName,
+                            DateAssigned = transactionCode.DateAssigned,
+                        });
+                    }
 
                     await _dataContext.SaveChangesAsync();
                     databaseTransaction.Commit();
