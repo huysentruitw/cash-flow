@@ -1,0 +1,10 @@
+<h2 mat-dialog-title translate>Edit description</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <input type="text" placeholder="{{'Description' | translate}}" matInput (focus)="descriptionFocused($event.target)" (keypress)="descriptionKeyPress($event)" [(ngModel)]="data.description">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{'Cancel' | translate}}</button>
+  <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="!isValid">{{'Save' | translate}}</button>
+</mat-dialog-actions>

@@ -14,6 +14,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { TransactionCodeDialogComponent } from '../transaction-code-dialog/transaction-code-dialog.component';
 import { DialogData, TransactionDialogComponent, TransactionMode } from '../transaction-dialog/transaction-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { TransactionDescriptionDialogComponent } from '../transaction-description-dialog/transaction-description-dialog.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -185,6 +186,25 @@ export class TransactionListComponent implements OnInit, OnDestroy {
       error => {
         console.error(error);
       });
+  }
+
+  editDescription(transaction): void {
+    const dialogRef = this.dialog.open(TransactionDescriptionDialogComponent, {
+      width: '400px',
+      data: {
+        description: transaction.description
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.transactionService.updateDescription(transaction.id, result.description, transaction.financialYear.id).subscribe(
+          () => { },
+          error => {
+            console.error(error);
+          });
+      }
+    });
   }
 
   private initAccountStream(): void {

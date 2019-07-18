@@ -41,3 +41,7 @@ AssignCode => AssignCodeToTransaction // Assigns a code to a transaction
 UnassignCode => UnassignCodeFromTransaction // Unassigns a code from a transaction
     Id: Guid // The id of the transaction
     CodeName: string // The name of the code to unassign
+
+UpdateDescription => UpdateDescriptionOfTransaction // Update the description of a transaction
+    Id: Guid // The id of the transaction
+    Description: string // The new description of the transaction

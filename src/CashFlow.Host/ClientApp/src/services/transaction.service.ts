@@ -209,4 +209,28 @@ export class TransactionService {
         }] : []
       });
   }
+
+  updateDescription(transactionId: string, description: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation updateTransactionDescription($parameters: UpdateDescriptionOfTransactionParameters!) {
+          transaction {
+            updateDescription(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: transactionId,
+            description: description
+          }
+        },
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
+      });
+  }
 }

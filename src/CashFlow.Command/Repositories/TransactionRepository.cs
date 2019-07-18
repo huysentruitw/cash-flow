@@ -15,6 +15,7 @@ namespace CashFlow.Command.Repositories
         Task<bool> RemoveLatest(Guid id);
         Task AssignCode(Guid id, string codeName);
         Task UnassignCode(Guid id, string codeName);
+        Task UpdateDescription(Guid id, string description);
     }
 
     internal sealed class TransactionRepository : ITransactionRepository
@@ -127,6 +128,16 @@ namespace CashFlow.Command.Repositories
             var code = new TransactionCode { TransactionId = id, CodeName = codeName };
             _dataContext.TransactionCodes.Attach(code);
             _dataContext.TransactionCodes.Remove(code);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateDescription(Guid id, string description)
+        {
+            Transaction transaction = await _dataContext.Transactions.FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new TransactionNotFoundException(id);
+
+            transaction.Description = description;
+            transaction.DateModified = DateTimeOffset.UtcNow;
             await _dataContext.SaveChangesAsync();
         }
     }

@@ -18,6 +18,7 @@
   "Transactions": "Transacties",
   "Remove latest transaction": "Laatste transactie verwijderen",
   "Remove transaction {{name}}?": "Transactie '{{name}}' verwijderen?",
+  "Edit description": "Wijzig omschrijving",
   "Evidence number": "Bewijsnummer",
   "Date": "Datum",
   "Codes": "Codes",

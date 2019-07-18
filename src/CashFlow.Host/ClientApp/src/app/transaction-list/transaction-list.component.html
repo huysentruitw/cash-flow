@@ -32,7 +32,12 @@
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef translate>Description</th>
-      <td mat-cell *matCellDef="let element">{{element.description}}</td>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="editDescription(element)" matTooltip="{{'Edit description' | translate}}">
+          <mat-icon>edit</mat-icon>
+        </button>
+        {{element.description}}
+      </td>
     </ng-container>
     <ng-container matColumnDef="income">
       <th mat-header-cell *matHeaderCellDef translate>Income</th>

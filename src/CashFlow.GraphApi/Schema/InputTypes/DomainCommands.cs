@@ -221,4 +221,14 @@ namespace CashFlow.GraphApi.Schema
         public NonNull<string> CodeName { get; set; }
     }
 
+    [Description("Update the description of a transaction")]
+    [InputType]
+    public sealed class UpdateDescriptionOfTransactionParameters
+    {
+        [Description("The id of the transaction")]
+        public Guid Id { get; set; }
+        [Description("The new description of the transaction")]
+        public NonNull<string> Description { get; set; }
+    }
+
 }

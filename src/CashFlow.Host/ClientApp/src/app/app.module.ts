@@ -25,6 +25,7 @@ import { TransactionCodeDialogComponent } from './transaction-code-dialog/transa
 import { TransactionDialogComponent } from './transaction-dialog/transaction-dialog.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { TransactionDescriptionDialogComponent } from './transaction-description-dialog/transaction-description-dialog.component';
 
 @
 NgModule({
@@ -42,6 +43,7 @@ NgModule({
     SupplierListComponent,
     ToolbarComponent,
     TransactionCodeDialogComponent,
+    TransactionDescriptionDialogComponent,
     TransactionDialogComponent,
     TransactionListComponent
   ],
@@ -67,6 +69,7 @@ NgModule({
     FinancialYearDialogComponent,
     SupplierDialogComponent,
     TransactionCodeDialogComponent,
+    TransactionDescriptionDialogComponent,
     TransactionDialogComponent
   ],
   providers: [

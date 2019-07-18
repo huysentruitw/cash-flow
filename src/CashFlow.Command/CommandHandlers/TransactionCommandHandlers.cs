@@ -206,4 +206,28 @@ namespace CashFlow.Command.CommandHandlers
             return Unit.Value;
         }
     }
+
+    internal sealed class UpdateDescriptionOfTransactionCommandHandler : SafeCommandHandler<UpdateDescriptionOfTransactionCommand>
+    {
+        private readonly ITransactionRepository _repository;
+
+        public UpdateDescriptionOfTransactionCommandHandler(ITransactionRepository repository)
+        {
+            _repository = repository;
+        }
+
+        protected override void DefineRules()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Description).NotEmpty().MaximumLength(250);
+        }
+
+        protected override async Task<Unit> HandleValidatedCommand(UpdateDescriptionOfTransactionCommand command)
+        {
+            await _repository.UpdateDescription(
+                id: command.Id,
+                description: command.Description);
+            return Unit.Value;
+        }
+    }
 }

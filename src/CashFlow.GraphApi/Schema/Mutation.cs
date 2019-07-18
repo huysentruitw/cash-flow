@@ -385,6 +385,21 @@ namespace CashFlow.GraphApi.Schema
 
             return MutationInfo.FromCommand(command);
         }
+
+        [Description("Update the description of a transaction")]
+        public async Task<MutationInfo> UpdateDescription([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<UpdateDescriptionOfTransactionParameters> parameters)
+        {
+            var command = new UpdateDescriptionOfTransactionCommand
+            {
+                Id = parameters.Value.Id,
+                Description = parameters.Value.Description,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
     }
 #pragma warning restore IDE0008 // Use explicit type
 }

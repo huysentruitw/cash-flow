@@ -365,4 +365,19 @@ namespace CashFlow.Command.Abstractions
         public string CodeName { get; set; }
     }
 
+    /// <summary>
+    /// Update the description of a transaction
+    /// </summary>
+    public sealed class UpdateDescriptionOfTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the transaction
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The new description of the transaction
+        /// </summary>
+        public string Description { get; set; }
+    }
+
 }
