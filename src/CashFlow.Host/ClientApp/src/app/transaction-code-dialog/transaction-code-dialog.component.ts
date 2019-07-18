@@ -38,6 +38,12 @@ export class TransactionCodeDialogComponent implements OnInit, OnDestroy {
     this.filter$.next(partialCodeName);
   }
 
+  codeSelected(): void {
+    if (this.isValid) {
+      this.dialogRef.close(this.data);
+    }
+  }
+
   get isValid(): boolean {
     return !!this.data.codeName;
   }
