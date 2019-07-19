@@ -6,6 +6,8 @@
 
 <mat-nav-list>
 
+  <h2 matSubheader>{{ 'Current financial year' | translate }}</h2>
+
   <a mat-list-item
      routerLink="/transactions"
      routerLinkActive
@@ -14,6 +16,9 @@
     <mat-icon color="primary">swap_horiz</mat-icon>
     <span translate>Transactions</span>
   </a>
+
+  <h2 matSubheader>{{ 'Settings' | translate }}</h2>
+
   <a mat-list-item
      routerLink="/suppliers"
      routerLinkActive
