@@ -230,4 +230,49 @@ namespace CashFlow.Command.CommandHandlers
             return Unit.Value;
         }
     }
+
+    internal sealed class AssignEvidenceNumberToTransactionCommandHandler : SafeCommandHandler<AssignEvidenceNumberToTransactionCommand>
+    {
+        private readonly ITransactionRepository _repository;
+
+        public AssignEvidenceNumberToTransactionCommandHandler(ITransactionRepository repository)
+        {
+            _repository = repository;
+        }
+
+        protected override void DefineRules()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.EvidenceNumber).NotEmpty().MaximumLength(50);
+        }
+
+        protected override async Task<Unit> HandleValidatedCommand(AssignEvidenceNumberToTransactionCommand command)
+        {
+            await _repository.AssignEvidenceNumber(
+                id: command.Id,
+                evidenceNumber: command.EvidenceNumber);
+            return Unit.Value;
+        }
+    }
+
+    internal sealed class UnassignEvidenceNumberFromTransactionCommandHandler : SafeCommandHandler<UnassignEvidenceNumberFromTransactionCommand>
+    {
+        private readonly ITransactionRepository _repository;
+
+        public UnassignEvidenceNumberFromTransactionCommandHandler(ITransactionRepository repository)
+        {
+            _repository = repository;
+        }
+
+        protected override void DefineRules()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+        }
+
+        protected override async Task<Unit> HandleValidatedCommand(UnassignEvidenceNumberFromTransactionCommand command)
+        {
+            await _repository.UnassignEvidenceNumber(id: command.Id);
+            return Unit.Value;
+        }
+    }
 }

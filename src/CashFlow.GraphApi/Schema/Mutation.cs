@@ -400,6 +400,35 @@ namespace CashFlow.GraphApi.Schema
 
             return MutationInfo.FromCommand(command);
         }
+
+        [Description("Assign a unique evidence number to a transaction")]
+        public async Task<MutationInfo> AssignEvidenceNumber([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AssignEvidenceNumberToTransactionParameters> parameters)
+        {
+            var command = new AssignEvidenceNumberToTransactionCommand
+            {
+                Id = parameters.Value.Id,
+                EvidenceNumber = parameters.Value.EvidenceNumber,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [Description("Unassigns the evidence number from a transaction")]
+        public async Task<MutationInfo> UnassignEvidenceNumber([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<UnassignEvidenceNumberFromTransactionParameters> parameters)
+        {
+            var command = new UnassignEvidenceNumberFromTransactionCommand
+            {
+                Id = parameters.Value.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
     }
 #pragma warning restore IDE0008 // Use explicit type
 }

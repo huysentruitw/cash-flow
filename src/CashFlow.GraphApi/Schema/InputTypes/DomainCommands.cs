@@ -231,4 +231,22 @@ namespace CashFlow.GraphApi.Schema
         public NonNull<string> Description { get; set; }
     }
 
+    [Description("Assign a unique evidence number to a transaction")]
+    [InputType]
+    public sealed class AssignEvidenceNumberToTransactionParameters
+    {
+        [Description("The id of the transaction")]
+        public Guid Id { get; set; }
+        [Description("The evidence number to assign to the transaction")]
+        public NonNull<string> EvidenceNumber { get; set; }
+    }
+
+    [Description("Unassigns the evidence number from a transaction")]
+    [InputType]
+    public sealed class UnassignEvidenceNumberFromTransactionParameters
+    {
+        [Description("The id of the transaction")]
+        public Guid Id { get; set; }
+    }
+
 }

@@ -16,6 +16,8 @@ namespace CashFlow.Command.Repositories
         Task AssignCode(Guid id, string codeName);
         Task UnassignCode(Guid id, string codeName);
         Task UpdateDescription(Guid id, string description);
+        Task AssignEvidenceNumber(Guid id, string evidenceNumber);
+        Task UnassignEvidenceNumber(Guid id);
     }
 
     internal sealed class TransactionRepository : ITransactionRepository
@@ -137,6 +139,26 @@ namespace CashFlow.Command.Repositories
                 ?? throw new TransactionNotFoundException(id);
 
             transaction.Description = description;
+            transaction.DateModified = DateTimeOffset.UtcNow;
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task AssignEvidenceNumber(Guid id, string evidenceNumber)
+        {
+            Transaction transaction = await _dataContext.Transactions.FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new TransactionNotFoundException(id);
+
+            transaction.EvidenceNumber = evidenceNumber;
+            transaction.DateModified = DateTimeOffset.UtcNow;
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task UnassignEvidenceNumber(Guid id)
+        {
+            Transaction transaction = await _dataContext.Transactions.FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new TransactionNotFoundException(id);
+
+            transaction.EvidenceNumber = null;
             transaction.DateModified = DateTimeOffset.UtcNow;
             await _dataContext.SaveChangesAsync();
         }

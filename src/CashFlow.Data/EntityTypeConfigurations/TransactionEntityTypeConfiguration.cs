@@ -9,9 +9,9 @@ namespace CashFlow.Data.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<Transaction> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.EvidenceNumber);
+            builder.Property(x => x.EvidenceNumber).HasMaxLength(50);
+            builder.HasIndex(x => x.EvidenceNumber).IsUnique();
             builder.Property(x => x.FinancialYearId).IsRequired();
-            builder.HasIndex(x => new { x.FinancialYearId, x.EvidenceNumber }).IsUnique();
             builder.Property(x => x.TransactionDate).IsRequired();
             builder.HasIndex(x => x.TransactionDate);
             builder.Property(x => x.AccountId).IsRequired();

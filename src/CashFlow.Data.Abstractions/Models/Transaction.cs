@@ -8,7 +8,7 @@ namespace CashFlow.Data.Abstractions.Models
 
         public DateTimeOffset TransactionDate { get; set; }
 
-        public int? EvidenceNumber { get; set; }
+        public string EvidenceNumber { get; set; }
 
         public Guid FinancialYearId { get; set; }
 

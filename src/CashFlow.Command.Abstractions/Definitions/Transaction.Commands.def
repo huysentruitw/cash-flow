@@ -45,3 +45,10 @@ UnassignCode => UnassignCodeFromTransaction // Unassigns a code from a transacti
 UpdateDescription => UpdateDescriptionOfTransaction // Update the description of a transaction
     Id: Guid // The id of the transaction
     Description: string // The new description of the transaction
+
+AssignEvidenceNumber => AssignEvidenceNumberToTransaction // Assign a unique evidence number to a transaction
+    Id: Guid // The id of the transaction
+    EvidenceNumber: string // The evidence number to assign to the transaction
+
+UnassignEvidenceNumber => UnassignEvidenceNumberFromTransaction // Unassigns the evidence number from a transaction
+    Id: Guid // The id of the transaction

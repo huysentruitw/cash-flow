@@ -380,4 +380,30 @@ namespace CashFlow.Command.Abstractions
         public string Description { get; set; }
     }
 
+    /// <summary>
+    /// Assign a unique evidence number to a transaction
+    /// </summary>
+    public sealed class AssignEvidenceNumberToTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the transaction
+        /// </summary>
+        public Guid Id { get; set; }
+        /// <summary>
+        /// The evidence number to assign to the transaction
+        /// </summary>
+        public string EvidenceNumber { get; set; }
+    }
+
+    /// <summary>
+    /// Unassigns the evidence number from a transaction
+    /// </summary>
+    public sealed class UnassignEvidenceNumberFromTransactionCommand : Command
+    {
+        /// <summary>
+        /// The id of the transaction
+        /// </summary>
+        public Guid Id { get; set; }
+    }
+
 }
