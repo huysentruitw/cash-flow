@@ -172,8 +172,7 @@ export class TransactionService {
               correlationId
             }
           }
-        }
-        `,
+        }`,
         variables: {
           parameters: {
             id: transactionId
@@ -225,6 +224,53 @@ export class TransactionService {
           parameters: {
             id: transactionId,
             description: description
+          }
+        },
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
+      });
+  }
+
+  assignEvidenceNumber(transactionId: string, evidenceNumber: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation assignEvidenceNumberToTransaction($parameters: AssignEvidenceNumberToTransactionParameters!) {
+          transaction {
+            assignEvidenceNumber(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: transactionId,
+            evidenceNumber: evidenceNumber
+          }
+        },
+        refetchQueries: refetchList ? [{
+          query: listQuery,
+          variables: { financialYearId: financialYearId }
+        }] : []
+      });
+  }
+
+  unassignEvidenceNumber(transactionId: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+        mutation unassignEvidenceNumberFromTransaction($parameters: UnassignEvidenceNumberFromTransactionParameters!) {
+          transaction {
+            unassignEvidenceNumber(parameters: $parameters) {
+              correlationId
+            }
+          }
+        }`,
+        variables: {
+          parameters: {
+            id: transactionId
           }
         },
         refetchQueries: refetchList ? [{

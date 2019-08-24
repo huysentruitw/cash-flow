@@ -9,7 +9,7 @@ export class TransactionCode {
 
 export class Transaction {
   id!: string;
-  evidenceNumber!: number;
+  evidenceNumber: string;
   accountId!: string;
   transactionDate: Date;
   amountInCents!: number;
