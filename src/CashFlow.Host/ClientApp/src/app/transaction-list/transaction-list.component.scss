@@ -5,6 +5,11 @@
   position: relative;
 }
 
+.gridContainer {
+  max-height: calc(100vh - 14.5rem);
+  overflow: auto;
+}
+
 .startingBalance {
   position: absolute;
   right: .5rem;
