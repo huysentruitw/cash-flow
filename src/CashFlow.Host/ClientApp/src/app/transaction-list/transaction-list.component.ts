@@ -141,7 +141,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
       {
         width: '400px',
         data: {
-          title: this.translateService.instant('Remove transaction {{name}}?', { name: `${transaction.financialYear.name}/${transaction.evidenceNumber}` }),
+          title: this.translateService.instant('Remove transaction {{description}}?', { description: transaction.description }),
           icon: 'delete'
         }
       });
