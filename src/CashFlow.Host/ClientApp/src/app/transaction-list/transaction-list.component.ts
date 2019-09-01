@@ -188,7 +188,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
       });
   }
 
-  editDescription(transaction): void {
+  editDescription(transaction: Transaction): void {
     const dialogRef = this.dialog.open(TransactionDescriptionDialogComponent, {
       width: '400px',
       data: {
