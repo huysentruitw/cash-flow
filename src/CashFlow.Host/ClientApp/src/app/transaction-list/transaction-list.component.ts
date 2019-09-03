@@ -212,7 +212,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(TransactionEvidenceNumberDialogComponent, {
       width: '400px',
       data: {
-        evidenceNumber: transaction.evidenceNumber || ''
+        evidenceNumber: transaction.evidenceNumber || `${transaction.financialYear.name}/`
       }
     });
 
