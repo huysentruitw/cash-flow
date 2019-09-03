@@ -26,6 +26,7 @@ import { TransactionDialogComponent } from './transaction-dialog/transaction-dia
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { TransactionDescriptionDialogComponent } from './transaction-description-dialog/transaction-description-dialog.component';
+import { TransactionEvidenceNumberDialogComponent } from './transaction-evidence-number-dialog/transaction-evidence-number-dialog.component';
 
 @
 NgModule({
@@ -45,6 +46,7 @@ NgModule({
     TransactionCodeDialogComponent,
     TransactionDescriptionDialogComponent,
     TransactionDialogComponent,
+    TransactionEvidenceNumberDialogComponent,
     TransactionListComponent
   ],
   imports: [
@@ -70,7 +72,8 @@ NgModule({
     SupplierDialogComponent,
     TransactionCodeDialogComponent,
     TransactionDescriptionDialogComponent,
-    TransactionDialogComponent
+    TransactionDialogComponent,
+    TransactionEvidenceNumberDialogComponent
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'nl-BE' },

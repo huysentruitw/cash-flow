@@ -15,6 +15,7 @@ import { TransactionCodeDialogComponent } from '../transaction-code-dialog/trans
 import { DialogData, TransactionDialogComponent, TransactionMode } from '../transaction-dialog/transaction-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionDescriptionDialogComponent } from '../transaction-description-dialog/transaction-description-dialog.component';
+import { TransactionEvidenceNumberDialogComponent } from '../transaction-evidence-number-dialog/transaction-evidence-number-dialog.component';
 
 @Component({
   selector: 'app-transaction-list',
@@ -203,6 +204,46 @@ export class TransactionListComponent implements OnInit, OnDestroy {
           error => {
             console.error(error);
           });
+      }
+    });
+  }
+
+  assignEvidenceNumber(transaction: Transaction): void {
+    const dialogRef = this.dialog.open(TransactionEvidenceNumberDialogComponent, {
+      width: '400px',
+      data: {
+        evidenceNumber: transaction.evidenceNumber || ''
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.transactionService.assignEvidenceNumber(transaction.id, result.evidenceNumber, transaction.financialYear.id).subscribe(
+          () => { },
+          error => {
+            console.error(error);
+          });
+      }
+    });
+  }
+
+  unassignEvidenceNumber(transaction: Transaction): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent,
+      {
+        width: '400px',
+        data: {
+          title: this.translateService.instant('Unassign evidence number {{evidenceNumber}} from transaction?', { evidenceNumber: transaction.evidenceNumber }),
+          icon: 'delete'
+        }
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.transactionService.unassignEvidenceNumber(transaction.id, transaction.financialYear.id).subscribe(
+            () => { },
+            error => {
+              console.error(error);
+            });
       }
     });
   }

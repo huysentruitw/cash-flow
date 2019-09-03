@@ -12,7 +12,7 @@ namespace CashFlow.GraphApi.Schema
     {
         public Guid Id { get; set; }
 
-        public int? EvidenceNumber { get; set; }
+        public string EvidenceNumber { get; set; }
 
         [Ignore]
         public Guid FinancialYearId { get; set; }

@@ -18,7 +18,13 @@
       </ng-container>
       <ng-container matColumnDef="evidenceNumber">
         <th mat-header-cell *matHeaderCellDef translate>Evidence number</th>
-      <td mat-cell *matCellDef="let element"><span *ngIf="element.evidenceNumber">{{element.evidenceNumber}}</span></td>
+        <td mat-cell *matCellDef="let element">
+          <button *ngIf="!element.evidenceNumber" mat-icon-button class="evidenceNumberActionButton" (click)="assignEvidenceNumber(element)" matTooltip="{{'Assign evidence number' | translate}}"><mat-icon>add</mat-icon></button>
+          <button *ngIf="element.evidenceNumber" mat-icon-button class="evidenceNumberActionButton" (click)="unassignEvidenceNumber(element)" matTooltip="{{'Unassign evidence number' | translate}}"><mat-icon>clear</mat-icon></button>
+          <span *ngIf="element.evidenceNumber">
+            {{element.evidenceNumber}}
+          </span>
+        </td>
       </ng-container>
       <ng-container matColumnDef="codes">
         <th mat-header-cell *matHeaderCellDef translate>Codes</th>

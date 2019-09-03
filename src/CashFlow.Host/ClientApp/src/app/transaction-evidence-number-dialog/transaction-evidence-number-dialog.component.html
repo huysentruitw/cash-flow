@@ -1,0 +1,10 @@
+<h2 mat-dialog-title translate>Assign evidence number</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <input type="text" placeholder="{{'Evidence number' | translate}}" matInput (focus)="evidenceNumberFocused($event.target)" (keypress)="evidenceNumberKeyPress($event)" [(ngModel)]="data.evidenceNumber">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{'Cancel' | translate}}</button>
+  <button mat-button color="primary" [mat-dialog-close]="data" [disabled]="!isValid">{{'Save' | translate}}</button>
+</mat-dialog-actions>
