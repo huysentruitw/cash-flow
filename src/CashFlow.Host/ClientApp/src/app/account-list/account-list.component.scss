@@ -1,3 +1,8 @@
+.gridContainer {
+  max-height: calc(100vh - 11.5rem);
+  overflow: auto;
+}
+
 .addAccount {
   margin-top: 1.5rem;
 }
