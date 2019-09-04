@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CashFlow.Command.Abstractions.Exceptions;
 using CashFlow.Data.Abstractions;
-using CashFlow.Data.Abstractions.Models;
+using CashFlow.Data.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 

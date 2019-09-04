@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using CashFlow.Data.Abstractions.Models;
+using CashFlow.Data.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -22,7 +22,7 @@ namespace CashFlow.Data.Abstractions
 
         DbSet<Transaction> Transactions { get; set; }
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         DatabaseFacade Database { get; }
     }

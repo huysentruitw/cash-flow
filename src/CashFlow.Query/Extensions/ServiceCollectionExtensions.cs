@@ -7,6 +7,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddQuery(this IServiceCollection services)
     {
         services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<ICodeBalanceRepository, CodeBalanceRepository>();
         services.AddScoped<ICodeRepository, CodeRepository>();
         services.AddScoped<IFinancialYearRepository, FinancialYearRepository>();
         services.AddScoped<ISupplierRepository, SupplierRepository>();

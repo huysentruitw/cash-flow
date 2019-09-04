@@ -1,5 +1,5 @@
 using System;
-using CashFlow.Data.Abstractions.Models;
+using CashFlow.Data.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

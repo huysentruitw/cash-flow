@@ -1,5 +1,5 @@
 using CashFlow.Data.Abstractions;
-using CashFlow.Data.Abstractions.Models;
+using CashFlow.Data.Abstractions.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CashFlow.Data

@@ -1,6 +1,7 @@
 using AutoMapper;
 using CashFlow.GraphApi.Schema;
-using Models = CashFlow.Data.Abstractions.Models;
+using Entities = CashFlow.Data.Abstractions.Entities;
+using Models = CashFlow.Query.Abstractions.Models;
 
 namespace CashFlow.GraphApi
 {
@@ -8,13 +9,15 @@ namespace CashFlow.GraphApi
     {
         public OutputTypesProfile()
         {
-            CreateMap<Models.Account, Account>();
-            CreateMap<Models.Code, Code>();
-            CreateMap<Models.FinancialYear, FinancialYear>();
-            CreateMap<Models.StartingBalance, StartingBalance>();
-            CreateMap<Models.Supplier, Supplier>();
-            CreateMap<Models.Transaction, Transaction>();
-            CreateMap<Models.TransactionCode, TransactionCode>();
+            CreateMap<Entities.Account, Account>();
+            CreateMap<Entities.Code, Code>();
+            CreateMap<Entities.FinancialYear, FinancialYear>();
+            CreateMap<Entities.StartingBalance, StartingBalance>();
+            CreateMap<Entities.Supplier, Supplier>();
+            CreateMap<Entities.Transaction, Transaction>();
+            CreateMap<Entities.TransactionCode, TransactionCode>();
+
+            CreateMap<Models.CodeBalance, CodeBalance>();
         }
     }
 }

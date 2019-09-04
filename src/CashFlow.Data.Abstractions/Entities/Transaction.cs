@@ -1,6 +1,7 @@
 using System;
+using System.Collections.Generic;
 
-namespace CashFlow.Data.Abstractions.Models
+namespace CashFlow.Data.Abstractions.Entities
 {
     public sealed class Transaction
     {
@@ -27,5 +28,7 @@ namespace CashFlow.Data.Abstractions.Models
         public string Description { get; set; }
 
         public string Comment { get; set; }
+
+        public ICollection<TransactionCode> Codes { get; set; }
     }
 }

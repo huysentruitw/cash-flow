@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
-using CashFlow.Data.Abstractions.Models;
+using CashFlow.Data.Abstractions.Entities;
 using CashFlow.Enums;
 using Microsoft.EntityFrameworkCore;
 

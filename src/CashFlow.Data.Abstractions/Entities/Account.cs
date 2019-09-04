@@ -1,14 +1,15 @@
 using System;
+using CashFlow.Enums;
 
-namespace CashFlow.Data.Abstractions.Models
+namespace CashFlow.Data.Abstractions.Entities
 {
-    public sealed class Supplier
+    public class Account
     {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
 
-        public string ContactInfo { get; set; }
+        public AccountType Type { get; set; }
 
         public DateTimeOffset DateCreated { get; set; }
 

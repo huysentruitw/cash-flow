@@ -1,6 +1,6 @@
 using System;
 
-namespace CashFlow.Data.Abstractions.Models
+namespace CashFlow.Data.Abstractions.Entities
 {
     public sealed class TransactionCode
     {
