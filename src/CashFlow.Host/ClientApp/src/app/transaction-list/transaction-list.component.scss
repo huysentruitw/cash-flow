@@ -1,22 +1,22 @@
 .filters {
   width: 100%;
-  height: 3.05rem;
   padding: 0;
   position: relative;
 }
 
-.gridContainer {
-  max-height: calc(100vh - 15rem);
-  overflow: auto;
-}
-
-.startingBalance {
+.filters .startingBalance {
   position: absolute;
+  top: .8rem;
   right: .5rem;
   display: inline-block;
   background-color: #e5e5e5;
   padding: .1rem .6rem .1rem .6rem;
   border-radius: .2rem;
+}
+
+.gridContainer {
+  max-height: calc(100vh - 15rem);
+  overflow: auto;
 }
 
 .code {

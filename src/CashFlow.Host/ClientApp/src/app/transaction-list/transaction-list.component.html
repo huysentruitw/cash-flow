@@ -1,5 +1,5 @@
 <div class="mat-elevation-z8">
-  <mat-toolbar class="filters">
+  <div class="filters">
     <mat-tab-group class="account" *ngIf="accounts$ | async as accounts"
                    [selectedIndex]="accounts.indexOf(selectedAccount$ | async) + 1"
                    (selectedIndexChange)="selectAccount($event > 0 ? accounts[$event - 1] : null)">
@@ -8,7 +8,7 @@
     </mat-tab-group>
 
     <span class="startingBalance"><span translate>Starting balance</span>: {{(startingBalance$ | async) / 100 | number:'1.2-2'}}</span>
-  </mat-toolbar>
+  </div>
 
   <div class="gridContainer" *ngIf="transactions$ | async as transactions">
     <table mat-table [dataSource]="transactions" class="mat-elevation-z8">
