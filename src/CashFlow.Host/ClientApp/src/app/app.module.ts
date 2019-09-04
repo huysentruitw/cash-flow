@@ -12,6 +12,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AccountDialogComponent } from './account-dialog/account-dialog.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { AppComponent } from './app.component';
+import { ByCodeOverviewComponent } from './by-code-overview/by-code-overview.component';
 import { CodeDialogComponent } from './code-dialog/code-dialog.component';
 import { CodeListComponent } from './code-list/code-list.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
@@ -34,6 +35,7 @@ NgModule({
     AccountDialogComponent,
     AccountListComponent,
     AppComponent,
+    ByCodeOverviewComponent,
     CodeDialogComponent,
     CodeListComponent,
     ConfirmationDialogComponent,
