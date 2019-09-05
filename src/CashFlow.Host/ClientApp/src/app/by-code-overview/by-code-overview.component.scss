@@ -1,0 +1,33 @@
+.gridContainer {
+  max-height: calc(100vh - 10rem);
+  overflow: auto;
+}
+
+.elementDetailRow {
+  height: 0;
+}
+
+.elementRow:not(.expanded):hover {
+  background: #eeeeee;
+}
+
+.elementRow:not(.expanded):active {
+  background: #efefef;
+}
+
+.elementRow td {
+  border-bottom-width: 0;
+}
+
+.elementRow.expanded td {
+  font-weight: bold;
+}
+
+.elementDetail {
+  overflow: hidden;
+  display: flex;
+}
+
+.elementDetailContent {
+  padding: .5rem;
+}

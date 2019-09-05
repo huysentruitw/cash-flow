@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
+using CashFlow.Data.Abstractions.Entities;
 using CashFlow.Query.Abstractions.Models;
 using CashFlow.Query.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,22 @@ namespace CashFlow.Query.Repositories
                         TotalIncomeInCents = rows.Where(x => x.Transaction.AmountInCents > 0).Sum(x => x.Transaction.AmountInCents),
                     })
                 .OrderBy(x => x.Name)
+                .ToArrayAsync();
+        }
+
+        public async Task<Transaction[]> GetCodeTransactions(Guid financialYearId, string codeName)
+        {
+            return await _dataContext.Transactions
+                .AsNoTracking()
+                .Join(
+                    _dataContext.TransactionCodes,
+                    transaction => transaction.Id,
+                    code => code.TransactionId,
+                    (transaction, code) => new { Transaction = transaction, CodeName = code.CodeName }
+                 )
+                .Where(x => x.Transaction.FinancialYearId == financialYearId && x.CodeName == codeName)
+                .Select(x => x.Transaction)
+                .OrderBy(x => x.TransactionDate)
                 .ToArrayAsync();
         }
     }

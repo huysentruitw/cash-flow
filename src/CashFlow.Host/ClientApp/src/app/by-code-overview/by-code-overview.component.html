@@ -1,1 +1,42 @@
-test
+<div class="gridContainer mat-elevation-z8">
+  <table mat-table [dataSource]="codeBalances$" multiTemplateDataRows>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef translate>Name</th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+    <ng-container matColumnDef="totalIncome">
+      <th mat-header-cell *matHeaderCellDef translate>Income</th>
+      <td mat-cell *matCellDef="let element">{{element.totalIncomeInCents / 100 | number:'1.2-2'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="totalExpense">
+      <th mat-header-cell *matHeaderCellDef translate>Expense</th>
+      <td mat-cell *matCellDef="let element">{{element.totalExpenseInCents / 100 | number:'1.2-2'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="balance">
+      <th mat-header-cell *matHeaderCellDef translate>Balance</th>
+      <td mat-cell *matCellDef="let element">{{element.balanceInCents / 100 | number:'1.2-2'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="elementDetail"
+             [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+
+          <div class="elementDetailContent" *ngIf="codeTransaction$ | async as transactions;else no_transactions">
+            <p *ngFor="let transaction of transactions">{{ transaction.name }}</p>
+          </div>
+
+          <ng-template #no_transactions>
+            <div class="elementDetailContent">
+              Loading...
+            </div>
+          </ng-template>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="elementRow" [class.expanded]="element === expandedElement" (click)="expandElement(element)"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="elementDetailRow"></tr>
+  </table>
+</div>
