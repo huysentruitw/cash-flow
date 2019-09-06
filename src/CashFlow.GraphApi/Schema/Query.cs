@@ -21,6 +21,9 @@ namespace CashFlow.GraphApi.Schema
         public async Task<CodeBalance[]> CodeBalances([Inject] ICodeBalanceRepository repository, Guid financialYearId)
             => Mapper.Map<CodeBalance[]>(await repository.GetCodeBalances(financialYearId));
 
+        public async Task<Transaction[]> CodeTransactions([Inject] ICodeBalanceRepository repository, Guid financialYearId, NonNull<string> codeName)
+            => Mapper.Map<Transaction[]>(await repository.GetCodeTransactions(financialYearId, codeName));
+
         public async Task<Code[]> Codes([Inject] ICodeRepository repository)
             => Mapper.Map<Code[]>(await repository.GetCodes());
 
