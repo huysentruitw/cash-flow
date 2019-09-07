@@ -31,6 +31,7 @@
   "Unassign code": "Code verwijderen",
   "Description": "Omschrijving",
   "Comment": "Commentaar",
+  "Amount": "Bedrag",
   "Income": "Inkomsten",
   "Add income for {{financialYear}}": "Inkomsten toevoegen voor {{financialYear}}",
   "Expense": "Uitgaven",

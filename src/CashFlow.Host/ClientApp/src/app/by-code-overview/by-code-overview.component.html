@@ -22,8 +22,29 @@
         <div class="elementDetail"
              [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
 
-          <div class="elementDetailContent" *ngIf="codeTransaction$ | async as transactions;else no_transactions">
-            <p *ngFor="let transaction of transactions">{{ transaction.name }}</p>
+          <div class="elementDetailContent" *ngIf="element === expandedElement && getCodeTransactions(element.name) | async as transactions;else no_transactions">
+            <table mat-table [dataSource]="transactions" class="mat-elevation-z2 transactions">
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef translate>Date</th>
+                <td mat-cell *matCellDef="let transaction">{{transaction.transactionDate | date}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef translate>Description</th>
+                <td mat-cell *matCellDef="let transaction">
+                  {{transaction.description}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef translate>Amount</th>
+                <td mat-cell *matCellDef="let transaction">
+                  {{transaction.amountInCents / 100 | number:'1.2-2'}}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['date', 'description', 'amount']"></tr>
+              <tr mat-row *matRowDef="let transaction; columns: ['date', 'description', 'amount'];"></tr>
+            </table>
           </div>
 
           <ng-template #no_transactions>

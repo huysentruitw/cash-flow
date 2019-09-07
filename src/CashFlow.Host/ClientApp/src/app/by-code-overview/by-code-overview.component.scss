@@ -25,9 +25,14 @@
 
 .elementDetail {
   overflow: hidden;
-  display: flex;
 }
 
 .elementDetailContent {
   padding: .5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.elementDetailContent table {
+  width: 97%;
 }
