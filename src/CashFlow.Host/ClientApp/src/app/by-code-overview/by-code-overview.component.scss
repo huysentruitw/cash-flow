@@ -1,5 +1,5 @@
 .gridContainer {
-  max-height: calc(100vh - 10rem);
+  max-height: calc(100vh - 11rem);
   overflow: auto;
 }
 
@@ -35,4 +35,9 @@
 
 .elementDetailContent table {
   width: 97%;
+}
+
+.financialYearToggle {
+  margin-left: .5rem;
+  margin-bottom: 1rem;
 }

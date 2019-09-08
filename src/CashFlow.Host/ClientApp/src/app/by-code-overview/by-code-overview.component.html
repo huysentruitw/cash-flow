@@ -1,3 +1,5 @@
+<mat-slide-toggle class="financialYearToggle" (change)="showCodesForAllFinancialYears($event.checked)">{{'Display code for all financial years' | translate}}</mat-slide-toggle>
+
 <div class="gridContainer mat-elevation-z8">
   <table mat-table [dataSource]="codeBalances$" multiTemplateDataRows>
     <ng-container matColumnDef="name">

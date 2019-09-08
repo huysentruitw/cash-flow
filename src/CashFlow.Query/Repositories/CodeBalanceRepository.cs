@@ -18,17 +18,21 @@ namespace CashFlow.Query.Repositories
             _dataContext = dataContext;
         }
 
-        public async Task<CodeBalance[]> GetCodeBalances(Guid financialYearId)
+        public async Task<CodeBalance[]> GetCodeBalances(Guid? financialYearId)
         {
-            return await _dataContext.Transactions
+            var query = _dataContext.Transactions
                 .AsNoTracking()
                 .Join(
                     _dataContext.TransactionCodes,
                     transaction => transaction.Id,
                     code => code.TransactionId,
                     (transaction, code) => new { Transaction = transaction, CodeName = code.CodeName }
-                )
-                .Where(x => x.Transaction.FinancialYearId == financialYearId)
+                );
+
+            if (financialYearId.HasValue)
+                query = query.Where(x => x.Transaction.FinancialYearId == financialYearId.Value);
+
+            return await query
                 .GroupBy(
                     x => x.CodeName,
                     (codeName, rows) => new CodeBalance
@@ -41,17 +45,21 @@ namespace CashFlow.Query.Repositories
                 .ToArrayAsync();
         }
 
-        public async Task<Transaction[]> GetCodeTransactions(Guid financialYearId, string codeName)
+        public async Task<Transaction[]> GetCodeTransactions(Guid? financialYearId, string codeName)
         {
-            return await _dataContext.Transactions
+            var query = _dataContext.Transactions
                 .AsNoTracking()
                 .Join(
                     _dataContext.TransactionCodes,
                     transaction => transaction.Id,
                     code => code.TransactionId,
-                    (transaction, code) => new { Transaction = transaction, CodeName = code.CodeName }
-                 )
-                .Where(x => x.Transaction.FinancialYearId == financialYearId && x.CodeName == codeName)
+                    (transaction, code) => new { Transaction = transaction, CodeName = code.CodeName })
+                .Where(x => x.CodeName == codeName);
+
+            if (financialYearId.HasValue)
+                query = query.Where(x => x.Transaction.FinancialYearId == financialYearId.Value);
+
+            return await query
                 .Select(x => x.Transaction)
                 .OrderBy(x => x.TransactionDate)
                 .ToArrayAsync();

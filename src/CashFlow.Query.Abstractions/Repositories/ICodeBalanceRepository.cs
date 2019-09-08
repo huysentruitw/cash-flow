@@ -7,8 +7,8 @@ namespace CashFlow.Query.Abstractions.Repositories
 {
     public interface ICodeBalanceRepository
     {
-        Task<CodeBalance[]> GetCodeBalances(Guid financialYearId);
+        Task<CodeBalance[]> GetCodeBalances(Guid? financialYearId);
 
-        Task<Transaction[]> GetCodeTransactions(Guid financialYearId, string codeName);
+        Task<Transaction[]> GetCodeTransactions(Guid? financialYearId, string codeName);
     }
 }

@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Observable, of } from 'rxjs';
+import { Subject, Observable, of, BehaviorSubject, combineLatest } from 'rxjs';
 import { CodeBalance } from '../../models/code-balance';
 import { ByCodeOverviewService } from '../../services/by-code-overview.service';
 import { BusService } from '../../services/bus.service';
-import { FinancialYear } from '../../models/financial-year';
-import { takeUntil, filter, switchMap, mergeMap, map, tap } from 'rxjs/operators';
+import { takeUntil, filter, switchMap, map } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Transaction } from '../../models/transaction';
 
@@ -22,7 +21,8 @@ import { Transaction } from '../../models/transaction';
 })
 export class ByCodeOverviewComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  private financialYear$: Observable<FinancialYear>;
+  private showAll$ = new BehaviorSubject(false);
+  private financialYearId$: Observable<string>;
   private codeTransactions$: { [codeName: string]: Observable<Transaction[]>; } = {};
   displayedColumns = ['name', 'totalIncome', 'totalExpense', 'balance'];
   codeBalances$: Observable<CodeBalance[]>;
@@ -49,20 +49,27 @@ export class ByCodeOverviewComponent implements OnInit, OnDestroy {
 
   getCodeTransactions(codeName: string): Observable<Transaction[]> {
     if (!this.codeTransactions$[codeName]) {
-      this.codeTransactions$[codeName] = this.financialYear$.pipe(
-        switchMap(financialYear => this.byCodeOverviewService.getTransactions(financialYear.id, codeName)));
+      this.codeTransactions$[codeName] = this.financialYearId$.pipe(
+        switchMap(financialYearId => this.byCodeOverviewService.getTransactions(financialYearId, codeName)));
     }
 
     return this.codeTransactions$[codeName];
   }
 
+  showCodesForAllFinancialYears(showAll: boolean): void {
+    this.showAll$.next(showAll);
+  }
+
   private initFinancialYearStream(): void {
-    this.financialYear$ = this.busService.activeFinancialYear$
+    const financialYear$ = this.busService.activeFinancialYear$
       .pipe(takeUntil(this.destroy$), filter(financialYear => !!financialYear));
+
+    this.financialYearId$ = combineLatest(financialYear$, this.showAll$)
+      .pipe(takeUntil(this.destroy$), map(([financialYear, showAll]) => showAll ? null : financialYear.id));
   }
 
   private initCodeBalancesStream(): void {
-    this.codeBalances$ = this.financialYear$.pipe(
-      switchMap(financialYear => this.byCodeOverviewService.getCodeBalances(financialYear.id)));
+    this.codeBalances$ = this.financialYearId$
+      .pipe(switchMap(financialYearId => this.byCodeOverviewService.getCodeBalances(financialYearId)));
   }
 }
