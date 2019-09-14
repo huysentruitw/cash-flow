@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CodeService } from './../../services/code.service';
 import { Code } from './../../models/code';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { CodeDialogComponent } from '../code-dialog/code-dialog.component';

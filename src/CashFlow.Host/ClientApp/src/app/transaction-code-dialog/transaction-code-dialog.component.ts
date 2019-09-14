@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subject, BehaviorSubject, combineLatest } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { Code } from 'src/models/code';

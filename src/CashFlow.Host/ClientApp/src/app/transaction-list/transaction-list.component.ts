@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { Account } from 'src/models/account';

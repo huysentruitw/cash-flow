@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, timer } from 'rxjs';
 import { debounce, map, switchMap, take, takeUntil } from 'rxjs/operators';
