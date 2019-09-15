@@ -8,6 +8,7 @@ import { Transaction } from './../models/transaction';
 const listQuery = gql`
   query getTransactions($financialYearId: GUID!) {
     transactions(financialYearId: $financialYearId) {
+      __typename
       id
       evidenceNumber
       accountId
@@ -73,7 +74,7 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   addExpense(financialYearId: string, transactionDate: Date, accountId: string, supplierId: string, amountInCents: number,
@@ -104,7 +105,7 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   addTransfer(financialYearId: string, transactionDate: Date, originAccountId: string, destinationAccountId: string, amountInCents: number,
@@ -135,7 +136,7 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   assignCode(transactionId: string, codeName: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
@@ -159,7 +160,7 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   removeLatest(transactionId: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
@@ -182,7 +183,7 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   unassignCode(transactionId: string, codeName: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
@@ -206,7 +207,7 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   updateDescription(transactionId: string, description: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
@@ -230,7 +231,7 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   assignEvidenceNumber(transactionId: string, evidenceNumber: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
@@ -254,7 +255,7 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   unassignEvidenceNumber(transactionId: string, financialYearId: string, refetchList: boolean = true): Observable<void> {
@@ -277,6 +278,6 @@ export class TransactionService {
           query: listQuery,
           variables: { financialYearId: financialYearId }
         }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 }

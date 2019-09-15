@@ -47,7 +47,7 @@ export class AccountService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   renameAccount(id: string, name: string, refetchList: boolean = true): Observable<void> {
@@ -68,7 +68,7 @@ export class AccountService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   changeAccountType(id: string, type: string, refetchList: boolean = true): Observable<void> {
@@ -89,7 +89,7 @@ export class AccountService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   removeAccount(id: string, refetchList: boolean = true): Observable<void> {
@@ -109,6 +109,6 @@ export class AccountService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 }

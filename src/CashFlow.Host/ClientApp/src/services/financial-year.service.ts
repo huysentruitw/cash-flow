@@ -63,7 +63,7 @@ export class FinancialYearService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   activateFinancialYear(id: string, refetchList: boolean = true): Observable<void> {
@@ -83,6 +83,6 @@ export class FinancialYearService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 }

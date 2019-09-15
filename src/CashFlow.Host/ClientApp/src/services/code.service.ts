@@ -43,7 +43,7 @@ export class CodeService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   renameCode(originalName: string, newName: string, refetchList: boolean = true): Observable<void> {
@@ -64,7 +64,7 @@ export class CodeService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   removeCode(name: string, refetchList: boolean = true): Observable<void> {
@@ -84,6 +84,6 @@ export class CodeService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 }

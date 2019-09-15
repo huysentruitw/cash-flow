@@ -47,7 +47,7 @@ export class SupplierService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   renameSupplier(id: string, name: string, refetchList: boolean = true): Observable<void> {
@@ -68,7 +68,7 @@ export class SupplierService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   updateContactInfo(id: string, contactInfo: string, refetchList: boolean = true): Observable<void> {
@@ -89,7 +89,7 @@ export class SupplierService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 
   removeSupplier(id: string, refetchList: boolean = true): Observable<void> {
@@ -109,6 +109,6 @@ export class SupplierService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
-      });
+      }).pipe(map(_ => { }));
   }
 }
