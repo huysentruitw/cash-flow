@@ -11,10 +11,12 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
     cache: new InMemoryCache(),
     defaultOptions: {
       watchQuery: {
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
+        errorPolicy: "all"
       },
       query: {
-        fetchPolicy: 'no-cache'
+        fetchPolicy: 'no-cache',
+        errorPolicy: "all"
       }
     }
   };
