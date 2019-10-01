@@ -62,6 +62,7 @@ namespace CashFlow.Query.Repositories
             return await query
                 .Select(x => x.Transaction)
                 .OrderBy(x => x.TransactionDate)
+                .ThenBy(x => x.DateCreated)
                 .ToArrayAsync();
         }
     }
