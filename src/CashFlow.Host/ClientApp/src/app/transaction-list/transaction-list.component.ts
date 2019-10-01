@@ -209,22 +209,27 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   assignEvidenceNumber(transaction: Transaction): void {
-    const dialogRef = this.dialog.open(TransactionEvidenceNumberDialogComponent, {
-      width: '400px',
-      data: {
-        evidenceNumber: transaction.evidenceNumber || `${transaction.financialYear.name}/`
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (!!result) {
-        this.transactionService.assignEvidenceNumber(transaction.id, result.evidenceNumber, transaction.financialYear.id).subscribe(
-          () => { },
-          error => {
-            console.error(error);
-          });
-      }
-    });
+    this.transactionService.getEvidenceNumberSuggestionForTransaction(transaction.id)
+      .pipe(
+        take(1),
+        switchMap(suggestedEvidenceNumber =>
+          this.dialog.open(TransactionEvidenceNumberDialogComponent, {
+            width: '400px',
+            data: {
+              evidenceNumber: transaction.evidenceNumber || suggestedEvidenceNumber || `${transaction.financialYear.name}/`
+            }
+          }).afterClosed()
+        )
+      )
+      .subscribe(result => {
+        if (!!result) {
+          this.transactionService.assignEvidenceNumber(transaction.id, result.evidenceNumber, transaction.financialYear.id).subscribe(
+            () => { },
+            error => {
+              console.error(error);
+            });
+        }
+      });
   }
 
   unassignEvidenceNumber(transaction: Transaction): void {

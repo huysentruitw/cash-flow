@@ -47,6 +47,17 @@ export class TransactionService {
       .valueChanges.pipe(map(({ data }) => data.transactions));
   }
 
+  getEvidenceNumberSuggestionForTransaction(transactionId: string): Observable<string> {
+    return this.apollo
+      .query<any>({
+        query: gql`
+        query getEvidenceNumberSuggestionForTransaction($transactionId: GUID!) {
+          suggestEvidenceNumberForTransaction(transactionId: $transactionId)
+        }`,
+        variables: { transactionId: transactionId }
+      }).pipe(map(({ data }) => data.suggestEvidenceNumberForTransaction));
+  }
+
   addIncome(financialYearId: string, transactionDate: Date, accountId: string, amountInCents: number,
     description: string, comment: string, codeNames: string[], refetchList: boolean = true): Observable<void> {
     return this.apollo

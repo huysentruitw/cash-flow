@@ -33,6 +33,9 @@ namespace CashFlow.GraphApi.Schema
         public async Task<StartingBalance[]> StartingBalances([Inject] IFinancialYearRepository repository, Guid financialYearId)
             => Mapper.Map<StartingBalance[]>(await repository.GetFinancialYearStartingBalances(financialYearId));
 
+        public async Task<string> SuggestEvidenceNumberForTransaction([Inject] ITransactionRepository repository, Guid transactionId)
+            => await repository.SuggestEvidenceNumberForTransaction(transactionId);
+
         public async Task<Supplier[]> Suppliers([Inject] ISupplierRepository repository)
             => Mapper.Map<Supplier[]>(await repository.GetSuppliers());
 
