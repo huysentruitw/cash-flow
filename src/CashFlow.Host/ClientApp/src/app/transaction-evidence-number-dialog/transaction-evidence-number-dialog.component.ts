@@ -33,6 +33,6 @@ export class TransactionEvidenceNumberDialogComponent implements OnInit {
   }
 
   get isValid(): boolean {
-    return !!this.data.evidenceNumber && this.data.evidenceNumber !== this.initialEvidenceNumber;
+    return !!this.data.evidenceNumber;
   }
 }
