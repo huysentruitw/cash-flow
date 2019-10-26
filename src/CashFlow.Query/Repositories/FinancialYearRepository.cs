@@ -18,6 +18,11 @@ namespace CashFlow.Query.Repositories
             _dataContext = dataContext;
         }
 
+        public async Task<FinancialYear> GetFinancialYear(Guid financialYearId)
+            => await _dataContext.FinancialYears
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == financialYearId);
+
         public async Task<FinancialYear[]> GetFinancialYears()
             => await _dataContext.FinancialYears.AsNoTracking().OrderBy(x => x.Name).ToArrayAsync();
 

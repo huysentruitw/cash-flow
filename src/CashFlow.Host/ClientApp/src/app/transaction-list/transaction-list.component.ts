@@ -68,7 +68,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   private addTransactionDialog(mode: TransactionMode): void {
-    combineLatest(this.selectedAccount$, this.busService.activeFinancialYear$)
+    combineLatest([this.selectedAccount$, this.busService.activeFinancialYear$])
       .pipe(take(1))
       .subscribe(([selectedAccount, financialYear]) => {
         const dialogRef = this.dialog.open(TransactionDialogComponent,
@@ -267,7 +267,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
       switchMap(financialYear => this.financialYearService.getStartingBalances(financialYear.id))
     );
 
-    this.startingBalance$ = combineLatest(this.selectedAccount$, startingBalances$).pipe(
+    this.startingBalance$ = combineLatest([this.selectedAccount$, startingBalances$]).pipe(
       map(([selectedAccount, startingBalances]) => startingBalances.filter(x => !selectedAccount || x.accountId === selectedAccount.id)),
       map(startingBalances => startingBalances.reduce((acc, startingBalance) => acc + startingBalance.startingBalanceInCents, 0))
     );
@@ -278,7 +278,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
       switchMap(financialYear => this.transactionService.getTransactions(financialYear.id))
     );
 
-    this.transactions$ = combineLatest(this.selectedAccount$, this.startingBalance$, transactions$).pipe(
+    this.transactions$ = combineLatest([this.selectedAccount$, this.startingBalance$, transactions$]).pipe(
       map<[Account, number, Transaction[]], [number, Transaction[]]>(([selectedAccount, balanceInCents, transactions]) => ([balanceInCents, transactions.filter(x => !selectedAccount || x.accountId === selectedAccount.id)])),
       map(([balanceInCents, transactions]) => transactions.map(transaction => {
         const transactionWithBalance = <TransactionWithBalance>transaction;

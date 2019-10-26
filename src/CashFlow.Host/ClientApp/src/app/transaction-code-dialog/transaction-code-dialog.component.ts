@@ -26,7 +26,7 @@ export class TransactionCodeDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const codes$ = this.codeService.getCodes().pipe(take(1));
 
-    this.filteredCodes$ = combineLatest(codes$, this.filter$)
+    this.filteredCodes$ = combineLatest([codes$, this.filter$])
       .pipe(map(([codes, filter]) => codes.filter(code => code.name.toUpperCase().startsWith(filter.toUpperCase()))));
   }
 

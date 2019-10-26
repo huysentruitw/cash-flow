@@ -1,18 +1,18 @@
-using System;
-using CashFlow.Reporting;
-using jsreport.Client;
-using jsreport.Shared;
+using CashFlow.Reporting.Services;
+using DinkToPdf;
+using DinkToPdf.Contracts;
+using HandlebarsDotNet;
 using Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddReporting(this IServiceCollection services, Action<ReportingOptions> configureOptions)
+    public static IServiceCollection AddReporting(this IServiceCollection services)
     {
-        var options = new ReportingOptions();
-        configureOptions?.Invoke(options);
-        options.Validate();
-        services.AddSingleton<IReportGenerator, ReportGenerator>();
-        services.AddSingleton<IRenderService, ReportingService>(_ => new ReportingService(options.JsReportServiceUri.ToString()));
+        services.AddSingleton<IPdfGenerator, PdfGenerator>();
+        services.AddSingleton<IHandlebars>(_ => Handlebars.Create());
+        services.AddSingleton<ITools, PdfTools>();
+        services.AddSingleton<IConverter, SynchronizedConverter>();
+        services.AddScoped<IReportService, ReportService>();
         return services;
     }
 }

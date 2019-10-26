@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>CashFlow - {{ codeName }}</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #000000;
+            border-collapse: collapse;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        th {
+            background-color: #aaaaaa;
+            border-bottom: 1px solid black;
+        }
+
+        tr.header th {
+            font-weight: normal;
+            background-color: #cccccc;
+        }
+
+        th, td {
+            text-align: left;
+            padding: .6em;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        tbody tr:nth-child(even) td {
+            background-color: #e2e2e2;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .align-right {
+            text-align: right;
+        }
+
+        .align-center {
+            text-align: center;
+        }
+
+        .account-badge {
+            padding: .1rem .5rem .1rem .5rem;
+            background-color: #aaaaaa;
+            color: #ffffff;
+            border-radius: .4rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr class="header">
+                <th colspan="6">
+                    <h1>CashFlow Code Overzicht</h1>
+                    <p>
+                        <strong>Financieel jaar:</strong>
+                        {{#if financialYear}}
+                            {{ financialYear }}
+                        {{else}}
+                            -
+                        {{/if}}
+                    </p>
+                    <p><strong>Code:</strong> {{ codeName }}</p>
+                </th>
+            </tr>
+            <tr>
+                <th>Datum</th>
+                <th class="align-center">Rekening</th>
+                <th>Omschrijving</th>
+                <th class="align-right">Inkomsten</th>
+                <th class="align-right">Uitgaven</th>
+                <th class="align-right">Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each transactions}}            
+            <tr>
+                <td>{{ transactionDate }}</td>
+                <td class="align-center"><span class="account-badge">{{ accountBadge }}</span></td>
+                <td>{{ description }}</td>
+                <td class="align-right">{{ income }}</td>
+                <td class="align-right">{{ expense }}</td>
+                <td class="align-right">{{ balance }}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>
