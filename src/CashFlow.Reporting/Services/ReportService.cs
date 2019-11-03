@@ -77,9 +77,9 @@ namespace CashFlow.Reporting.Services
                 TransactionDate = $"{transaction.TransactionDate:dd-MM-yyyy}",
                 AccountBadge = accountNameResolver(transaction.AccountId)?[0],
                 Description = transaction.Description,
-                Income = transaction.AmountInCents > 0 ? $"{transaction.AmountInCents / 100:F2}" : null,
-                Expense = transaction.AmountInCents < 0 ? $"{-transaction.AmountInCents / 100:F2}" : null,
-                Balance = $"{balanceInCents / 100:F2}",
+                Income = transaction.AmountInCents > 0 ? $"{transaction.AmountInCents / 100.0M:F2}" : null,
+                Expense = transaction.AmountInCents < 0 ? $"{-transaction.AmountInCents / 100.0M:F2}" : null,
+                Balance = $"{balanceInCents / 100.0M:F2}",
             };
 
         private sealed class TemplateData
