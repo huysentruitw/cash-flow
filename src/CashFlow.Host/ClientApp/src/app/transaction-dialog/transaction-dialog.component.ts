@@ -49,14 +49,14 @@ export class TransactionDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit(): void {
-    this.data.amount = this.data.amountInCents / 100;
+    this.data.amount = this.data.amountInCents / 100.0;
     this.data.transactionDate = this.data.transactionDate || moment.utc().startOf('day').toDate();
     this.accounts$ = this.accountService.getAccounts().pipe(take(1));
     this.suppliers$ = this.supplierService.getSuppliers().pipe(take(1));
   }
 
   updateAmount(value) {
-    this.data.amountInCents = value * 100;
+    this.data.amountInCents = value * 100.0;
   }
 
   get isValid(): boolean {
