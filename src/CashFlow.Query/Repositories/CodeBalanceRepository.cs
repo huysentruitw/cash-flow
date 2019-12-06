@@ -32,7 +32,7 @@ namespace CashFlow.Query.Repositories
             if (financialYearId.HasValue)
                 query = query.Where(x => x.Transaction.FinancialYearId == financialYearId.Value);
 
-            return await query
+            return (await query.ToArrayAsync())
                 .GroupBy(
                     x => x.CodeName,
                     (codeName, rows) => new CodeBalance
@@ -42,7 +42,7 @@ namespace CashFlow.Query.Repositories
                         TotalIncomeInCents = rows.Where(x => x.Transaction.AmountInCents > 0).Sum(x => x.Transaction.AmountInCents),
                     })
                 .OrderBy(x => x.Name)
-                .ToArrayAsync();
+                .ToArray();
         }
 
         public async Task<Transaction[]> GetCodeTransactions(Guid? financialYearId, string codeName)
