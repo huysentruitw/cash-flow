@@ -58,8 +58,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Reporting.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Importing", "src\CashFlow.Importing\CashFlow.Importing.csproj", "{81A68806-0283-4F99-9BBC-01CB20585104}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.BlazorHost", "src\CashFlow.BlazorHost\CashFlow.BlazorHost.csproj", "{B428D49F-E1A9-4489-AB9C-FC7D00ED2CC6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,10 +124,6 @@ Global
 		{81A68806-0283-4F99-9BBC-01CB20585104}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81A68806-0283-4F99-9BBC-01CB20585104}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81A68806-0283-4F99-9BBC-01CB20585104}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B428D49F-E1A9-4489-AB9C-FC7D00ED2CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B428D49F-E1A9-4489-AB9C-FC7D00ED2CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B428D49F-E1A9-4489-AB9C-FC7D00ED2CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B428D49F-E1A9-4489-AB9C-FC7D00ED2CC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,7 +145,6 @@ Global
 		{BB0D5DB9-6F16-49A7-BDF3-94FE85330B07} = {90CE7F05-CACA-4FD4-968E-10909AF8CA00}
 		{99D05D8D-C875-4FB6-9D96-A93CA2D4A219} = {90CE7F05-CACA-4FD4-968E-10909AF8CA00}
 		{81A68806-0283-4F99-9BBC-01CB20585104} = {90CE7F05-CACA-4FD4-968E-10909AF8CA00}
-		{B428D49F-E1A9-4489-AB9C-FC7D00ED2CC6} = {9E1F5616-E6AB-4EE2-9CF3-B4C996E3A25E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DFEFE907-17F9-47E9-AADF-17C6C427F5FB}

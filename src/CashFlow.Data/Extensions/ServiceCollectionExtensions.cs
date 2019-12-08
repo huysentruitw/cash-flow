@@ -7,7 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddData(this IServiceCollection services, string connectionString)
     {
-        services.AddDbContext<IDataContext, DataContext>(options => options.UseSqlServer(connectionString));
+        services.AddDbContext<IDataContext, DataContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
         return services;
     }
 }
