@@ -75,6 +75,7 @@ namespace CashFlow.Command.Repositories
             var balances = _dataContext.Transactions
                 .AsNoTracking()
                 .Where(x => x.FinancialYearId == closingFinancialYear)
+                .ToArray()
                 .GroupBy(x => x.AccountId)
                 .ToDictionary(group => group.Key, group => group.Sum(x => x.AmountInCents));
 
