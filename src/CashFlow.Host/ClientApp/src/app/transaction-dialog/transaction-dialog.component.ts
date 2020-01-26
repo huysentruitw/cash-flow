@@ -56,7 +56,7 @@ export class TransactionDialogComponent implements OnInit {
   }
 
   updateAmount(value) {
-    this.data.amountInCents = value * 100.0;
+    this.data.amountInCents = Math.round(value * 100.0);
   }
 
   get isValid(): boolean {
