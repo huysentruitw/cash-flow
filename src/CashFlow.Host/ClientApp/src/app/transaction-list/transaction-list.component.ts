@@ -25,7 +25,7 @@ import { TransactionEvidenceNumberDialogComponent } from '../transaction-evidenc
 export class TransactionListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private financialYear$: Observable<FinancialYear>;
-  private startingBalance$: Observable<number>;
+  startingBalance$: Observable<number>;
   displayedColumns = ['date', 'evidenceNumber', 'codes', 'supplier', 'description', 'income', 'expense', 'balance', 'remove'];
   transactions$: Observable<TransactionWithBalance[]>;
   accounts$: Observable<Account[]>;
@@ -50,7 +50,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  
+
   selectAccount(account): void {
     this.selectedAccount$.next(account);
   }
