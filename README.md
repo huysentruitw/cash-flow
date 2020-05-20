@@ -53,10 +53,8 @@ Other: see https://jsreport.net/on-prem
 ### Test GraphQL endpoint
 
 * Install GraphiQL tool from https://electronjs.org/apps/graphiql
-* Set the GraphQL endpoint to https://localhost:44312/api/graph (application url)
+* Set the GraphQL endpoint to https://localhost:5001/api/graph (application url)
 * Start writing queries
-
-The URL above is in case the back-end was started using IIS Express, when running the back-end in Kestrel use https://localhost:5001/api/graph.
 
 ### Text Template Transformation (T4)
 
