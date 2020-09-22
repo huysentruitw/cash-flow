@@ -1,3 +1,8 @@
 <mat-toolbar>
   <app-financial-year-selector></app-financial-year-selector>
+  <span class="fill-space"></span>
+  <button mat-stroked-button (click)="exportFinancialYear($event)">
+    <mat-icon>save_alt</mat-icon>
+    {{ 'Export to Excel' | translate }}
+  </button>
 </mat-toolbar>
