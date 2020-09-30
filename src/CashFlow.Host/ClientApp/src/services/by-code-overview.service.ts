@@ -1,8 +1,7 @@
+import { Apollo, gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import gql from "graphql-tag";
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { CodeBalance } from './../models/code-balance';
 import { Transaction } from './../models/transaction';
 
