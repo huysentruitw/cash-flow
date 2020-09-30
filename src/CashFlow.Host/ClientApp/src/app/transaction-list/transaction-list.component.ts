@@ -281,10 +281,13 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     this.transactions$ = combineLatest([this.selectedAccount$, this.startingBalance$, transactions$]).pipe(
       map<[Account, number, Transaction[]], [number, Transaction[]]>(([selectedAccount, balanceInCents, transactions]) => ([balanceInCents, transactions.filter(x => !selectedAccount || x.accountId === selectedAccount.id)])),
       map(([balanceInCents, transactions]) => transactions.map(transaction => {
-        const transactionWithBalance = <TransactionWithBalance>transaction;
         balanceInCents += transaction.amountInCents;
-        transactionWithBalance.balanceInCents = balanceInCents;
-        return transactionWithBalance;
+        let result: TransactionWithBalance = {
+          ...transaction,
+          balanceInCents: balanceInCents,
+        };
+
+        return result;
       }))
     );
   }
