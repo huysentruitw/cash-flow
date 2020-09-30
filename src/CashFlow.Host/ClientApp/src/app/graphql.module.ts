@@ -1,8 +1,7 @@
-import {NgModule} from '@angular/core';
-import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLinkModule, HttpLink} from 'apollo-angular-link-http';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import { ApolloClientOptions } from 'apollo-client';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache, ApolloClientOptions } from '@apollo/client/core';
+import { NgModule } from '@angular/core';
 
 const uri = 'https://localhost:5001/api/graph';
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
@@ -23,7 +22,6 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
 }
 
 @NgModule({
-  exports: [ApolloModule, HttpLinkModule],
   providers: [
     {
       provide: APOLLO_OPTIONS,
