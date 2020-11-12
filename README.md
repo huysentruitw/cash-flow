@@ -1,6 +1,6 @@
 # CashFlow
 
-Application for managing cash flows written in ASP.NET Core 3.1 and Angular 9 (EF Core, Apollo, GraphQL, CQRS).
+Application for managing cash flows written in ASP.NET Core 5 and Angular 10 (EF Core, Apollo, GraphQL, CQRS).
 
 The application currently has the following features:
 * Add bank/cash accounts
@@ -40,6 +40,7 @@ Other: see https://jsreport.net/on-prem
 * Enter a name in the form _CashFlow.Something.Tests_
 * Append _\tests_ to the location
 * Click OK
+* Change the target framework to net5.0 in the csproj file
 
 #### Class Library
 
@@ -49,6 +50,7 @@ Other: see https://jsreport.net/on-prem
 * Enter a name in the form _CashFlow.Something_
 * Append _\src_ to the location
 * Click OK
+* Change the target framework to net5.0 in the csproj file
 
 ### Test GraphQL endpoint
 
