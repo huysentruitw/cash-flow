@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Transaction } from './../models/transaction';
 
 const listQuery = gql`
-  query getTransactions($financialYearId: GUID!) {
+  query getTransactions($financialYearId: Uuid!) {
     transactions(financialYearId: $financialYearId) {
       __typename
       id
@@ -50,7 +50,7 @@ export class TransactionService {
     return this.apollo
       .query<any>({
         query: gql`
-        query getEvidenceNumberSuggestionForTransaction($transactionId: GUID!) {
+        query getEvidenceNumberSuggestionForTransaction($transactionId: Uuid!) {
           suggestEvidenceNumberForTransaction(transactionId: $transactionId)
         }`,
         variables: { transactionId: transactionId }
@@ -62,15 +62,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation addIncome($parameters: AddIncomeTransactionParameters!) {
+        mutation addIncome($input: AddIncomeTransactionInput!) {
           transaction {
-            addIncome(parameters: $parameters) {
+            addIncome(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             financialYearId: financialYearId,
             transactionDate: transactionDate,
             accountId: accountId,
@@ -92,15 +92,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation addExpense($parameters: AddExpenseTransactionParameters!) {
+        mutation addExpense($input: AddExpenseTransactionInput!) {
           transaction {
-            addExpense(parameters: $parameters) {
+            addExpense(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             financialYearId: financialYearId,
             transactionDate: transactionDate,
             accountId: accountId,
@@ -123,15 +123,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation addTransfer($parameters: AddTransferTransactionParameters!) {
+        mutation addTransfer($input: AddTransferTransactionInput!) {
           transaction {
-            addTransfer(parameters: $parameters) {
+            addTransfer(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             financialYearId: financialYearId,
             transactionDate: transactionDate,
             originAccountId: originAccountId,
@@ -153,15 +153,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation assignCodeToTransaction($parameters: AssignCodeToTransactionParameters!) {
+        mutation assignCodeToTransaction($input: AssignCodeToTransactionInput!) {
           transaction {
-            assignCode(parameters: $parameters) {
+            assignCode(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: transactionId,
             codeName: codeName
           }
@@ -177,15 +177,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation removeLatest($parameters: RemoveLatestTransactionParameters!) {
+        mutation removeLatest($input: RemoveLatestTransactionInput!) {
           transaction {
-            removeLatest(parameters: $parameters) {
+            removeLatest(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: transactionId
           }
         },
@@ -200,15 +200,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation unassignCodeToTransaction($parameters: UnassignCodeFromTransactionParameters!) {
+        mutation unassignCodeToTransaction($input: UnassignCodeFromTransactionInput!) {
           transaction {
-            unassignCode(parameters: $parameters) {
+            unassignCode(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: transactionId,
             codeName: codeName
           }
@@ -224,15 +224,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation updateTransactionDescription($parameters: UpdateDescriptionOfTransactionParameters!) {
+        mutation updateTransactionDescription($input: UpdateDescriptionOfTransactionInput!) {
           transaction {
-            updateDescription(parameters: $parameters) {
+            updateDescription(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: transactionId,
             description: description
           }
@@ -248,15 +248,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation assignEvidenceNumberToTransaction($parameters: AssignEvidenceNumberToTransactionParameters!) {
+        mutation assignEvidenceNumberToTransaction($input: AssignEvidenceNumberToTransactionInput!) {
           transaction {
-            assignEvidenceNumber(parameters: $parameters) {
+            assignEvidenceNumber(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: transactionId,
             evidenceNumber: evidenceNumber
           }
@@ -272,15 +272,15 @@ export class TransactionService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation unassignEvidenceNumberFromTransaction($parameters: UnassignEvidenceNumberFromTransactionParameters!) {
+        mutation unassignEvidenceNumberFromTransaction($input: UnassignEvidenceNumberFromTransactionInput!) {
           transaction {
-            unassignEvidenceNumber(parameters: $parameters) {
+            unassignEvidenceNumber(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: transactionId
           }
         },

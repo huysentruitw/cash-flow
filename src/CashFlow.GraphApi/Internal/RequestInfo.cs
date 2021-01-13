@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Http;
 
 namespace CashFlow.GraphApi
 {
-    internal interface IRequestInfo
+    public interface IRequestInfo
     {
         ClaimsIdentity Identity { get; }
         IPAddress IpAddress { get; }
     }
 
-    internal sealed class RequestInfo : IRequestInfo
+    public sealed class RequestInfo : IRequestInfo
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 

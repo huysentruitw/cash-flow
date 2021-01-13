@@ -60,9 +60,8 @@ namespace CashFlow.Host
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                endpoints.MapGraphQL("/api/graph");
             });
 
             app.UseSpa(spa =>

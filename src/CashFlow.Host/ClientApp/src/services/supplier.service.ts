@@ -32,15 +32,15 @@ export class SupplierService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation addSupplier($parameters: AddSupplierParameters!) {
+        mutation addSupplier($input: AddSupplierInput!) {
           supplier {
-            add(parameters: $parameters) {
+            add(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             name: name,
             contactInfo: contactInfo
           }
@@ -53,15 +53,15 @@ export class SupplierService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation renameSupplier($parameters: RenameSupplierParameters!) {
+        mutation renameSupplier($input: RenameSupplierInput!) {
           supplier {
-            rename(parameters: $parameters) {
+            rename(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: id,
             name: name
           }
@@ -74,15 +74,15 @@ export class SupplierService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation updateSupplierContactInfo($parameters: UpdateSupplierContactInfoParameters!) {
+        mutation updateSupplierContactInfo($input: UpdateSupplierContactInfoInput!) {
           supplier {
-            updateContactInfo(parameters: $parameters) {
+            updateContactInfo(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: id,
             contactInfo: contactInfo
           }
@@ -95,15 +95,15 @@ export class SupplierService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation removeSupplier($parameters: RemoveSupplierParameters!) {
+        mutation removeSupplier($input: RemoveSupplierInput!) {
           supplier {
-            remove(parameters: $parameters) {
+            remove(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: id
           }
         },

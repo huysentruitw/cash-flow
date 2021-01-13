@@ -32,15 +32,15 @@ export class AccountService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation addAcount($parameters: AddAccountParameters!) {
+        mutation addAcount($input: AddAccountInput!) {
           account {
-            add(parameters: $parameters) {
+            add(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             name: name,
             type: type
           }
@@ -53,15 +53,15 @@ export class AccountService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation renameAccount($parameters: RenameAccountParameters!) {
+        mutation renameAccount($input: RenameAccountInput!) {
           account {
-            rename(parameters: $parameters) {
+            rename(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: id,
             name: name
           }
@@ -74,15 +74,15 @@ export class AccountService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation changeAccountType($parameters: ChangeAccountTypeParameters!) {
+        mutation changeAccountType($input: ChangeAccountTypeInput!) {
           account {
-            changeType(parameters: $parameters) {
+            changeType(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: id,
             type: type
           }
@@ -95,15 +95,15 @@ export class AccountService {
     return this.apollo
       .mutate({
         mutation: gql`
-        mutation removeAccount($parameters: RemoveAccountParameters!) {
+        mutation removeAccount($input: RemoveAccountInput!) {
           account {
-            remove(parameters: $parameters) {
+            remove(input: $input) {
               correlationId
             }
           }
         }`,
         variables: {
-          parameters: {
+          input: {
             id: id
           }
         },

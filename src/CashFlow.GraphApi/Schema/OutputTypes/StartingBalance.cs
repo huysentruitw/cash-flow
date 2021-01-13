@@ -2,7 +2,7 @@ using System;
 
 namespace CashFlow.GraphApi.Schema
 {
-    internal sealed class StartingBalance
+    public sealed class StartingBalance
     {
         public Guid AccountId { get; set; }
 

@@ -1,18 +1,21 @@
-﻿﻿<#@ output extension=".cs" #>
+﻿<#@ output extension=".cs" #>
 <#@ template debug="false" hostspecific="true" language="C#" #>
-<#@ include file="..\..\Templates\Base.tt" #>
+<#@ include file="./../../Templates/Base.tt" #>
 <#
 
-var commands = LoadDefinitions(this.Host.ResolvePath(@".\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Commands.def");
-var results = LoadDefinitions(this.Host.ResolvePath(@".\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Results.def");
+var commands = LoadDefinitions(Host.ResolvePath(@"./../../CashFlow.Command.Abstractions/Definitions"), "*.Commands.def");
+var results = LoadDefinitions(Host.ResolvePath(@"./../../CashFlow.Command.Abstractions/Definitions"), "*.Results.def");
 var groupedCommands = commands
     .GroupBy(
         x => x.GroupName,
         x => x,
-        (gn, cmds) => new { GroupName = gn, Commands = cmds.ToArray() })
+        (groupName, commandsInGroup) => new { GroupName = groupName, Commands = commandsInGroup.ToArray() })
     .ToDictionary(x => x.GroupName, x => x.Commands);
 
-void RenderFieldAssignments(TypeDefinition type, string sourceBase = "parameters.Value", int indentationDepth = 0)
+bool CanIncludeSubjectId(TypeDefinition type)
+    => type.Fields.Any(x => x.Name == "Id" && x.Type == "Guid");
+
+void RenderFieldAssignments(TypeDefinition type, string sourceBase = "input", int indentationDepth = 0)
 {
     var indentation = new string(' ', indentationDepth * 4);
     foreach (var field in type.Fields)
@@ -25,7 +28,7 @@ void RenderFieldAssignments(TypeDefinition type, string sourceBase = "parameters
         }
         else if (field.NestedType != null)
         {
-            var sourceName = field.IsRequired ? $"{field.Name}.Value" : field.Name;
+            var sourceName = field.Name;
             var isArray = field.Type.EndsWith("[]");
             if (!isArray)
             {
@@ -62,16 +65,17 @@ void RenderFieldAssignments(TypeDefinition type, string sourceBase = "parameters
 
 #>
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CashFlow.Command.Abstractions;
-using GraphQL.Conventions;
+using HotChocolate;
 using MediatR;
 
 namespace CashFlow.GraphApi.Schema
 {
 #pragma warning disable IDE0008 // Use explicit type
-    internal sealed class Mutation
+    public sealed class Mutation
     {
         private readonly IMapper _mapper;
 
@@ -84,6 +88,7 @@ foreach (var groupName in groupedCommands.Keys)
 {
 #>
 
+        [GraphQLNonNullType]
         public <#=groupName #>Mutations <#=groupName #> => new <#=groupName #>Mutations(_mapper);
 <#
 }
@@ -94,7 +99,7 @@ foreach (var kvp in groupedCommands)
 {
 #>
 
-    internal sealed class <#=kvp.Key #>Mutations
+    public sealed class <#=kvp.Key #>Mutations
     {
         private readonly IMapper _mapper;
 
@@ -112,7 +117,7 @@ foreach (var kvp in groupedCommands)
         if (command.Description != null)
         {
 #>
-        [Description("<#=command.Description #>")]
+        [GraphQLDescription("<#=command.Description #>")]
 <#
         }
 
@@ -123,13 +128,13 @@ foreach (var kvp in groupedCommands)
         if (command.Fields.Any())
         {
 #>
-        public async Task<<#=returnType #>> <#=mutationName #>([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<<#=command.Name #>Parameters> parameters)
+        public async Task<<#=returnType #>> <#=mutationName #>([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] <#=command.Name #>Input input)
 <#
         }
         else
         {
 #>
-        public async Task<<#=returnType #>> <#=mutationName #>([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo)
+        public async Task<<#=returnType #>> <#=mutationName #>([Service] IMediator mediator, [Service] IRequestInfo requestInfo)
 <#
         }
 #>

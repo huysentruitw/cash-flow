@@ -2,19 +2,21 @@
 //  !! WARNING !! This file is auto-generated. Changes to this file will be lost.
 // </auto-generated>
 
+
 using System;
 
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using CashFlow.Command.Abstractions;
-using GraphQL.Conventions;
+using HotChocolate;
 using MediatR;
 
 namespace CashFlow.GraphApi.Schema
 {
 #pragma warning disable IDE0008 // Use explicit type
-    internal sealed class Mutation
+    public sealed class Mutation
     {
         private readonly IMapper _mapper;
 
@@ -23,18 +25,23 @@ namespace CashFlow.GraphApi.Schema
             _mapper = mapperResolver();
         }
 
+        [GraphQLNonNullType]
         public AccountMutations Account => new AccountMutations(_mapper);
 
+        [GraphQLNonNullType]
         public CodeMutations Code => new CodeMutations(_mapper);
 
+        [GraphQLNonNullType]
         public FinancialYearMutations FinancialYear => new FinancialYearMutations(_mapper);
 
+        [GraphQLNonNullType]
         public SupplierMutations Supplier => new SupplierMutations(_mapper);
 
+        [GraphQLNonNullType]
         public TransactionMutations Transaction => new TransactionMutations(_mapper);
     }
 
-    internal sealed class AccountMutations
+    public sealed class AccountMutations
     {
         private readonly IMapper _mapper;
 
@@ -43,14 +50,14 @@ namespace CashFlow.GraphApi.Schema
             _mapper = mapper;
         }
 
-        [Description("Add an account")]
-        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddAccountParameters> parameters)
+        [GraphQLDescription("Add an account")]
+        public async Task<MutationInfo> Add([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AddAccountInput input)
         {
             var command = new AddAccountCommand
             {
                 Id = Guid.NewGuid(),
-                Name = parameters.Value.Name,
-                Type = parameters.Value.Type,
+                Name = input.Name,
+                Type = input.Type,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -59,28 +66,13 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Rename an account")]
-        public async Task<MutationInfo> Rename([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RenameAccountParameters> parameters)
-        {
-            var command = new RenameAccountCommand
-            {
-                Id = parameters.Value.Id,
-                Name = parameters.Value.Name,
-                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
-            };
-
-            var result = await mediator.Send(command);
-
-            return MutationInfo.FromCommand(command);
-        }
-
-        [Description("Change the type of an account")]
-        public async Task<MutationInfo> ChangeType([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<ChangeAccountTypeParameters> parameters)
+        [GraphQLDescription("Change the type of an account")]
+        public async Task<MutationInfo> ChangeType([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] ChangeAccountTypeInput input)
         {
             var command = new ChangeAccountTypeCommand
             {
-                Id = parameters.Value.Id,
-                Type = parameters.Value.Type,
+                Id = input.Id,
+                Type = input.Type,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -89,12 +81,27 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Remove an account")]
-        public async Task<MutationInfo> Remove([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RemoveAccountParameters> parameters)
+        [GraphQLDescription("Remove an account")]
+        public async Task<MutationInfo> Remove([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] RemoveAccountInput input)
         {
             var command = new RemoveAccountCommand
             {
-                Id = parameters.Value.Id,
+                Id = input.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Rename an account")]
+        public async Task<MutationInfo> Rename([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] RenameAccountInput input)
+        {
+            var command = new RenameAccountCommand
+            {
+                Id = input.Id,
+                Name = input.Name,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -104,7 +111,7 @@ namespace CashFlow.GraphApi.Schema
         }
     }
 
-    internal sealed class CodeMutations
+    public sealed class CodeMutations
     {
         private readonly IMapper _mapper;
 
@@ -113,12 +120,12 @@ namespace CashFlow.GraphApi.Schema
             _mapper = mapper;
         }
 
-        [Description("Add a code")]
-        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddCodeParameters> parameters)
+        [GraphQLDescription("Add a code")]
+        public async Task<MutationInfo> Add([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AddCodeInput input)
         {
             var command = new AddCodeCommand
             {
-                Name = parameters.Value.Name,
+                Name = input.Name,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -127,27 +134,27 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Rename a code")]
-        public async Task<MutationInfo> Rename([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RenameCodeParameters> parameters)
-        {
-            var command = new RenameCodeCommand
-            {
-                OriginalName = parameters.Value.OriginalName,
-                NewName = parameters.Value.NewName,
-                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
-            };
-
-            var result = await mediator.Send(command);
-
-            return MutationInfo.FromCommand(command);
-        }
-
-        [Description("Remove a code")]
-        public async Task<MutationInfo> Remove([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RemoveCodeParameters> parameters)
+        [GraphQLDescription("Remove a code")]
+        public async Task<MutationInfo> Remove([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] RemoveCodeInput input)
         {
             var command = new RemoveCodeCommand
             {
-                Name = parameters.Value.Name,
+                Name = input.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Rename a code")]
+        public async Task<MutationInfo> Rename([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] RenameCodeInput input)
+        {
+            var command = new RenameCodeCommand
+            {
+                OriginalName = input.OriginalName,
+                NewName = input.NewName,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -157,7 +164,7 @@ namespace CashFlow.GraphApi.Schema
         }
     }
 
-    internal sealed class FinancialYearMutations
+    public sealed class FinancialYearMutations
     {
         private readonly IMapper _mapper;
 
@@ -166,14 +173,12 @@ namespace CashFlow.GraphApi.Schema
             _mapper = mapper;
         }
 
-        [Description("Add a new financial year")]
-        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddFinancialYearParameters> parameters)
+        [GraphQLDescription("Set the given financial year as active")]
+        public async Task<MutationInfo> Activate([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] ActivateFinancialYearInput input)
         {
-            var command = new AddFinancialYearCommand
+            var command = new ActivateFinancialYearCommand
             {
-                Id = Guid.NewGuid(),
-                Name = parameters.Value.Name,
-                PreviousFinancialYearId = parameters.Value.PreviousFinancialYearId,
+                Id = input.Id,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -182,12 +187,14 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Set the given financial year as active")]
-        public async Task<MutationInfo> Activate([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<ActivateFinancialYearParameters> parameters)
+        [GraphQLDescription("Add a new financial year")]
+        public async Task<MutationInfo> Add([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AddFinancialYearInput input)
         {
-            var command = new ActivateFinancialYearCommand
+            var command = new AddFinancialYearCommand
             {
-                Id = parameters.Value.Id,
+                Id = Guid.NewGuid(),
+                Name = input.Name,
+                PreviousFinancialYearId = input.PreviousFinancialYearId,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -197,7 +204,7 @@ namespace CashFlow.GraphApi.Schema
         }
     }
 
-    internal sealed class SupplierMutations
+    public sealed class SupplierMutations
     {
         private readonly IMapper _mapper;
 
@@ -206,14 +213,14 @@ namespace CashFlow.GraphApi.Schema
             _mapper = mapper;
         }
 
-        [Description("Add a supplier")]
-        public async Task<MutationInfo> Add([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddSupplierParameters> parameters)
+        [GraphQLDescription("Add a supplier")]
+        public async Task<MutationInfo> Add([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AddSupplierInput input)
         {
             var command = new AddSupplierCommand
             {
                 Id = Guid.NewGuid(),
-                Name = parameters.Value.Name,
-                ContactInfo = parameters.Value.ContactInfo,
+                Name = input.Name,
+                ContactInfo = input.ContactInfo,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -222,42 +229,42 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Rename a supplier")]
-        public async Task<MutationInfo> Rename([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RenameSupplierParameters> parameters)
-        {
-            var command = new RenameSupplierCommand
-            {
-                Id = parameters.Value.Id,
-                Name = parameters.Value.Name,
-                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
-            };
-
-            var result = await mediator.Send(command);
-
-            return MutationInfo.FromCommand(command);
-        }
-
-        [Description("Update the contact info of the supplier")]
-        public async Task<MutationInfo> UpdateContactInfo([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<UpdateSupplierContactInfoParameters> parameters)
-        {
-            var command = new UpdateSupplierContactInfoCommand
-            {
-                Id = parameters.Value.Id,
-                ContactInfo = parameters.Value.ContactInfo,
-                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
-            };
-
-            var result = await mediator.Send(command);
-
-            return MutationInfo.FromCommand(command);
-        }
-
-        [Description("Remove a supplier")]
-        public async Task<MutationInfo> Remove([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RemoveSupplierParameters> parameters)
+        [GraphQLDescription("Remove a supplier")]
+        public async Task<MutationInfo> Remove([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] RemoveSupplierInput input)
         {
             var command = new RemoveSupplierCommand
             {
-                Id = parameters.Value.Id,
+                Id = input.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Rename a supplier")]
+        public async Task<MutationInfo> Rename([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] RenameSupplierInput input)
+        {
+            var command = new RenameSupplierCommand
+            {
+                Id = input.Id,
+                Name = input.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Update the contact info of the supplier")]
+        public async Task<MutationInfo> UpdateContactInfo([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] UpdateSupplierContactInfoInput input)
+        {
+            var command = new UpdateSupplierContactInfoCommand
+            {
+                Id = input.Id,
+                ContactInfo = input.ContactInfo,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -267,7 +274,7 @@ namespace CashFlow.GraphApi.Schema
         }
     }
 
-    internal sealed class TransactionMutations
+    public sealed class TransactionMutations
     {
         private readonly IMapper _mapper;
 
@@ -276,41 +283,20 @@ namespace CashFlow.GraphApi.Schema
             _mapper = mapper;
         }
 
-        [Description("Adds an income transaction")]
-        public async Task<MutationInfo> AddIncome([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddIncomeTransactionParameters> parameters)
-        {
-            var command = new AddIncomeTransactionCommand
-            {
-                Id = Guid.NewGuid(),
-                FinancialYearId = parameters.Value.FinancialYearId,
-                TransactionDate = parameters.Value.TransactionDate,
-                AccountId = parameters.Value.AccountId,
-                AmountInCents = parameters.Value.AmountInCents,
-                Description = parameters.Value.Description,
-                Comment = parameters.Value.Comment,
-                CodeNames = parameters.Value.CodeNames,
-                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
-            };
-
-            var result = await mediator.Send(command);
-
-            return MutationInfo.FromCommand(command);
-        }
-
-        [Description("Adds an expense transaction")]
-        public async Task<MutationInfo> AddExpense([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddExpenseTransactionParameters> parameters)
+        [GraphQLDescription("Adds an expense transaction")]
+        public async Task<MutationInfo> AddExpense([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AddExpenseTransactionInput input)
         {
             var command = new AddExpenseTransactionCommand
             {
                 Id = Guid.NewGuid(),
-                FinancialYearId = parameters.Value.FinancialYearId,
-                TransactionDate = parameters.Value.TransactionDate,
-                AccountId = parameters.Value.AccountId,
-                SupplierId = parameters.Value.SupplierId,
-                AmountInCents = parameters.Value.AmountInCents,
-                Description = parameters.Value.Description,
-                Comment = parameters.Value.Comment,
-                CodeNames = parameters.Value.CodeNames,
+                FinancialYearId = input.FinancialYearId,
+                TransactionDate = input.TransactionDate,
+                AccountId = input.AccountId,
+                SupplierId = input.SupplierId,
+                AmountInCents = input.AmountInCents,
+                Description = input.Description,
+                Comment = input.Comment,
+                CodeNames = input.CodeNames,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -319,21 +305,42 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Adds a transfer transaction")]
-        public async Task<MutationInfo> AddTransfer([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AddTransferTransactionParameters> parameters)
+        [GraphQLDescription("Adds an income transaction")]
+        public async Task<MutationInfo> AddIncome([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AddIncomeTransactionInput input)
+        {
+            var command = new AddIncomeTransactionCommand
+            {
+                Id = Guid.NewGuid(),
+                FinancialYearId = input.FinancialYearId,
+                TransactionDate = input.TransactionDate,
+                AccountId = input.AccountId,
+                AmountInCents = input.AmountInCents,
+                Description = input.Description,
+                Comment = input.Comment,
+                CodeNames = input.CodeNames,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Adds a transfer transaction")]
+        public async Task<MutationInfo> AddTransfer([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AddTransferTransactionInput input)
         {
             var command = new AddTransferTransactionCommand
             {
                 IdOrigin = Guid.NewGuid(),
                 IdDestination = Guid.NewGuid(),
-                FinancialYearId = parameters.Value.FinancialYearId,
-                TransactionDate = parameters.Value.TransactionDate,
-                OriginAccountId = parameters.Value.OriginAccountId,
-                DestinationAccountId = parameters.Value.DestinationAccountId,
-                AmountInCents = parameters.Value.AmountInCents,
-                Description = parameters.Value.Description,
-                Comment = parameters.Value.Comment,
-                CodeNames = parameters.Value.CodeNames,
+                FinancialYearId = input.FinancialYearId,
+                TransactionDate = input.TransactionDate,
+                OriginAccountId = input.OriginAccountId,
+                DestinationAccountId = input.DestinationAccountId,
+                AmountInCents = input.AmountInCents,
+                Description = input.Description,
+                Comment = input.Comment,
+                CodeNames = input.CodeNames,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -342,27 +349,13 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Removes the latest transaction")]
-        public async Task<MutationInfo> RemoveLatest([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<RemoveLatestTransactionParameters> parameters)
-        {
-            var command = new RemoveLatestTransactionCommand
-            {
-                Id = parameters.Value.Id,
-                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
-            };
-
-            var result = await mediator.Send(command);
-
-            return MutationInfo.FromCommand(command);
-        }
-
-        [Description("Assigns a code to a transaction")]
-        public async Task<MutationInfo> AssignCode([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AssignCodeToTransactionParameters> parameters)
+        [GraphQLDescription("Assigns a code to a transaction")]
+        public async Task<MutationInfo> AssignCode([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AssignCodeToTransactionInput input)
         {
             var command = new AssignCodeToTransactionCommand
             {
-                Id = parameters.Value.Id,
-                CodeName = parameters.Value.CodeName,
+                Id = input.Id,
+                CodeName = input.CodeName,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -371,43 +364,13 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Unassigns a code from a transaction")]
-        public async Task<MutationInfo> UnassignCode([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<UnassignCodeFromTransactionParameters> parameters)
-        {
-            var command = new UnassignCodeFromTransactionCommand
-            {
-                Id = parameters.Value.Id,
-                CodeName = parameters.Value.CodeName,
-                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
-            };
-
-            var result = await mediator.Send(command);
-
-            return MutationInfo.FromCommand(command);
-        }
-
-        [Description("Update the description of a transaction")]
-        public async Task<MutationInfo> UpdateDescription([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<UpdateDescriptionOfTransactionParameters> parameters)
-        {
-            var command = new UpdateDescriptionOfTransactionCommand
-            {
-                Id = parameters.Value.Id,
-                Description = parameters.Value.Description,
-                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
-            };
-
-            var result = await mediator.Send(command);
-
-            return MutationInfo.FromCommand(command);
-        }
-
-        [Description("Assign a unique evidence number to a transaction")]
-        public async Task<MutationInfo> AssignEvidenceNumber([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<AssignEvidenceNumberToTransactionParameters> parameters)
+        [GraphQLDescription("Assign a unique evidence number to a transaction")]
+        public async Task<MutationInfo> AssignEvidenceNumber([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AssignEvidenceNumberToTransactionInput input)
         {
             var command = new AssignEvidenceNumberToTransactionCommand
             {
-                Id = parameters.Value.Id,
-                EvidenceNumber = parameters.Value.EvidenceNumber,
+                Id = input.Id,
+                EvidenceNumber = input.EvidenceNumber,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 
@@ -416,12 +379,56 @@ namespace CashFlow.GraphApi.Schema
             return MutationInfo.FromCommand(command);
         }
 
-        [Description("Unassigns the evidence number from a transaction")]
-        public async Task<MutationInfo> UnassignEvidenceNumber([Inject] IMediator mediator, [Inject] IRequestInfo requestInfo, NonNull<UnassignEvidenceNumberFromTransactionParameters> parameters)
+        [GraphQLDescription("Removes the latest transaction")]
+        public async Task<MutationInfo> RemoveLatest([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] RemoveLatestTransactionInput input)
+        {
+            var command = new RemoveLatestTransactionCommand
+            {
+                Id = input.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Unassigns a code from a transaction")]
+        public async Task<MutationInfo> UnassignCode([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] UnassignCodeFromTransactionInput input)
+        {
+            var command = new UnassignCodeFromTransactionCommand
+            {
+                Id = input.Id,
+                CodeName = input.CodeName,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Unassigns the evidence number from a transaction")]
+        public async Task<MutationInfo> UnassignEvidenceNumber([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] UnassignEvidenceNumberFromTransactionInput input)
         {
             var command = new UnassignEvidenceNumberFromTransactionCommand
             {
-                Id = parameters.Value.Id,
+                Id = input.Id,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Update the description of a transaction")]
+        public async Task<MutationInfo> UpdateDescription([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] UpdateDescriptionOfTransactionInput input)
+        {
+            var command = new UpdateDescriptionOfTransactionCommand
+            {
+                Id = input.Id,
+                Description = input.Description,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
             };
 

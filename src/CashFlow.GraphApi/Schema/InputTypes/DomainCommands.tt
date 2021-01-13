@@ -1,62 +1,69 @@
-﻿﻿<#@ output extension=".cs" #>
+﻿<#@ output extension=".cs" #>
 <#@ template debug="false" hostspecific="true" language="C#" #>
-<#@ include file="..\..\..\Templates\Base.tt" #>
+<#@ include file="./../../../Templates\Base.tt" #>
 <#
 
 string GetFieldType(FieldDefinition field)
 {
     var typeName = field.Type;
+
     if (field.NestedType != null)
     {
         var baseTypeName = typeName.TrimEnd(new[] { '[', ']' });
-        typeName = typeName.Replace(baseTypeName, $"{baseTypeName}Parameters");
+        typeName = typeName.Replace(baseTypeName, $"{baseTypeName}Input");
     }
 
-    // Optional value type
-    if (!field.IsRequired && field.NestedType == null && IsValueType(field))
-        return $"{typeName}?";
+    if (!field.IsRequired && (field.IsEnum || IsValueType(field.Type)))
+    {
+        // Optional value type
+        typeName = $"{typeName}?";
+    }
 
-    // Required reference type
-    if (field.IsRequired && (field.NestedType != null || !IsValueType(field)))
-        return $"NonNull<{typeName}>";
-
-    // Other
     return typeName;
 }
 
 #>
 using CashFlow.Enums;
-using GraphQL.Conventions;
+using HotChocolate;
 
+// ReSharper disable ClassNeverInstantiated.Global
 namespace CashFlow.GraphApi.Schema
 {
 <#
-var commands = LoadDefinitions(this.Host.ResolvePath(@".\..\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Commands.def");
+var commands = LoadDefinitions(Host.ResolvePath(@"./../../../CashFlow.Command.Abstractions/Definitions"), "*.Commands.def");
 var nestedTypes = ExtractNestedTypes(commands);
 
 foreach (var type in commands.Union(nestedTypes))
 {
+    if (!type.Fields.Any()) continue;
+
     if (type.IsObsolete) continue;
 
     if (type.Description != null)
     {
 #>
-    [Description("<#=type.Description #>")]
+    [GraphQLDescription("<#=type.Description #>")]
 <#
     }
 #>
-    [InputType]
-    public sealed class <#=type.Name #>Parameters
+    public sealed class <#=type.Name #>Input
     {
 <#
     foreach (var field in type.Fields)
     {
         if (field.IsRequired && field.DefaultValue != null) continue;
 
+        if (field.IsRequired)
+        {
+#>
+        [GraphQLNonNullType]
+<#
+        }
+
         if (field.Description != null)
         {
 #>
-        [Description("<#=field.Description #>")]
+        [GraphQLDescription("<#=field.Description #>")]
 <#
         }
 

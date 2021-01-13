@@ -1,26 +1,27 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using CashFlow.Query.Abstractions.Repositories;
-using GraphQL.Conventions;
-using GraphQL.DataLoader;
+using HotChocolate;
+using HotChocolate.Resolvers;
 using Entities = CashFlow.Data.Abstractions.Entities;
 
 namespace CashFlow.GraphApi.Schema
 {
-    internal sealed class Transaction
+    public sealed class Transaction
     {
         public Guid Id { get; set; }
 
         public string EvidenceNumber { get; set; }
 
-        [Ignore]
+        [GraphQLIgnore]
         public Guid FinancialYearId { get; set; }
 
         public DateTimeOffset TransactionDate { get; set; }
 
         public Guid AccountId { get; set; }
 
-        [Ignore]
+        [GraphQLIgnore]
         public Guid? SupplierId { get; set; }
 
         public long AmountInCents { get; set; }
@@ -34,27 +35,29 @@ namespace CashFlow.GraphApi.Schema
         public TransactionCode[] Codes { get; set; }
 
         public async Task<FinancialYear> FinancialYear(
-            [Inject] DataLoaderContext dataLoaderContext,
-            [Inject] OutputTypesMapperResolver mapperResolver,
-            [Inject] IFinancialYearRepository repository)
+            IResolverContext context,
+            [Service] OutputTypesMapperResolver mapperResolver,
+            [Service] IFinancialYearRepository repository,
+            CancellationToken cancellationToken)
         {
-            Entities.FinancialYear financialYear = await dataLoaderContext
-                .GetOrAddBatchLoader<Guid, Entities.FinancialYear>(nameof(repository.GetFinancialYearsInBatch), repository.GetFinancialYearsInBatch)
-                .LoadAsync(FinancialYearId).GetResultAsync();
+            Entities.FinancialYear financialYear = await context
+                .BatchDataLoader<Guid, Entities.FinancialYear>(repository.GetFinancialYearsInBatch, "financialYearById")
+                .LoadAsync(FinancialYearId, cancellationToken);
             return mapperResolver().Map<FinancialYear>(financialYear);
         }
 
         public async Task<Supplier> Supplier(
-            [Inject] DataLoaderContext dataLoaderContext,
-            [Inject] OutputTypesMapperResolver mapperResolver,
-            [Inject] ISupplierRepository repository)
+            IResolverContext context,
+            [Service] OutputTypesMapperResolver mapperResolver,
+            [Service] ISupplierRepository repository,
+            CancellationToken cancellationToken)
         {
             if (!SupplierId.HasValue)
                 return null;
 
-            Entities.Supplier supplier = await dataLoaderContext
-                .GetOrAddBatchLoader<Guid, Entities.Supplier>(nameof(repository.GetSuppliersInBatch), repository.GetSuppliersInBatch)
-                .LoadAsync(SupplierId.Value).GetResultAsync();
+            Entities.Supplier supplier = await context
+                .BatchDataLoader<Guid, Entities.Supplier>(repository.GetSuppliersInBatch, "supplierById")
+                .LoadAsync(SupplierId.Value, cancellationToken);
             return mapperResolver().Map<Supplier>(supplier);
         }
     }

@@ -2,11 +2,13 @@
 //  !! WARNING !! This file is auto-generated. Changes to this file will be lost.
 // </auto-generated>
 
+
 using System;
 
 using CashFlow.Enums;
-using GraphQL.Conventions;
+using HotChocolate;
 
+// ReSharper disable ClassNeverInstantiated.Global
 namespace CashFlow.GraphApi.Schema
 {
 }

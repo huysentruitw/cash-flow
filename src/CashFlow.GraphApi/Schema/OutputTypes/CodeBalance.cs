@@ -1,6 +1,6 @@
 namespace CashFlow.GraphApi.Schema
 {
-    internal sealed class CodeBalance
+    public sealed class CodeBalance
     {
         public string Name { get; set; }
 

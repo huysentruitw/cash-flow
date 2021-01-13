@@ -10,8 +10,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="GraphQL.Conventions" Version="3.0.0" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.1.0-preview.4" />
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
   </ItemGroup>
 
   <ItemGroup>

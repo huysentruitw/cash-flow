@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
 using CashFlow.Data.Abstractions.Entities;
@@ -26,8 +27,13 @@ namespace CashFlow.Query.Repositories
         public async Task<FinancialYear[]> GetFinancialYears()
             => await _dataContext.FinancialYears.AsNoTracking().OrderBy(x => x.Name).ToArrayAsync();
 
-        public async Task<IDictionary<Guid, FinancialYear>> GetFinancialYearsInBatch(IEnumerable<Guid> financialYearIds)
-            => await _dataContext.FinancialYears.AsNoTracking().Where(x => financialYearIds.Contains(x.Id)).ToDictionaryAsync(x => x.Id);
+        public async Task<IReadOnlyDictionary<Guid, FinancialYear>> GetFinancialYearsInBatch(
+            IReadOnlyList<Guid> financialYearIds,
+            CancellationToken cancellationToken)
+            => await _dataContext.FinancialYears
+                .AsNoTracking()
+                .Where(x => financialYearIds.Contains(x.Id))
+                .ToDictionaryAsync(x => x.Id, cancellationToken: cancellationToken);
 
         public async Task<StartingBalance[]> GetFinancialYearStartingBalances(Guid financialYearId)
             => await _dataContext.Accounts

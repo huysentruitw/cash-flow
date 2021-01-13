@@ -2,7 +2,7 @@ using System;
 
 namespace CashFlow.GraphApi.Schema
 {
-    internal sealed class TransactionCode
+    public sealed class TransactionCode
     {
         public Guid TransactionId { get; set; }
 

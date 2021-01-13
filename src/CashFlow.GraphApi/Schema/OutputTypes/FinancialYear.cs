@@ -2,7 +2,7 @@ using System;
 
 namespace CashFlow.GraphApi.Schema
 {
-    internal sealed class FinancialYear
+    public sealed class FinancialYear
     {
         public Guid Id { get; set; }
 

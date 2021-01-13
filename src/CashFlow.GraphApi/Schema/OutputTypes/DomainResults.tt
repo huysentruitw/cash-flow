@@ -1,13 +1,14 @@
-﻿﻿<#@ output extension=".cs" #>
+﻿<#@ output extension=".cs" #>
 <#@ template debug="false" hostspecific="true" language="C#" #>
-<#@ include file="..\..\..\Templates\Base.tt" #>
+<#@ include file="./../../../Templates/Base.tt" #>
 using CashFlow.Enums;
-using GraphQL.Conventions;
+using HotChocolate;
 
+// ReSharper disable ClassNeverInstantiated.Global
 namespace CashFlow.GraphApi.Schema
 {
 <#
-var results = LoadDefinitions(this.Host.ResolvePath(@".\..\..\..\CashFlow.Command.Abstractions\Definitions"), "*.Results.def");
+var results = LoadDefinitions(Host.ResolvePath(@"./../../../CashFlow.Command.Abstractions/Definitions"), "*.Results.def");
 
 foreach (var result in results)
 {
@@ -16,11 +17,11 @@ foreach (var result in results)
     if (result.Description != null)
     {
 #>
-    [Description("<#=result.Description #>")]
+    [GraphQLDescription("<#=result.Description #>")]
 <#
     }
 #>
-    public sealed class <#=result.Name #>
+    public sealed class <#=result.Name #>Result
     {
 <#
     foreach (var field in result.Fields)
@@ -30,7 +31,7 @@ foreach (var result in results)
         if (field.Description != null)
         {
 #>
-        [Description("<#=field.Description #>")]
+        [GraphQLDescription("<#=field.Description #>")]
 <#
         }
 #>

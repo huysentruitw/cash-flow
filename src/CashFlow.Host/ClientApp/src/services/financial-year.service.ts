@@ -32,7 +32,7 @@ export class FinancialYearService {
     return this.apollo
       .query<any>({
         query: gql`
-        query getStartingBalances($financialYearId: GUID!) {
+        query getStartingBalances($financialYearId: Uuid!) {
           startingBalances(financialYearId: $financialYearId) {
             accountId
             financialYearId
@@ -48,15 +48,15 @@ export class FinancialYearService {
     return this.apollo
       .mutate({
         mutation: gql`
-            mutation addFinancialYear($parameters: AddFinancialYearParameters!) {
+            mutation addFinancialYear($input: AddFinancialYearInput!) {
               financialYear {
-                add(parameters: $parameters) {
+                add(input: $input) {
                   correlationId
                 }
               }
             }`,
         variables: {
-          parameters: {
+          input: {
             name: name,
             previousFinancialYearId: previousFinancialYearId
           }
@@ -69,15 +69,15 @@ export class FinancialYearService {
     return this.apollo
       .mutate({
         mutation: gql`
-          mutation activateFinancialYear($parameters: ActivateFinancialYearParameters!) {
+          mutation activateFinancialYear($input: ActivateFinancialYearInput!) {
             financialYear {
-              activate(parameters: $parameters) {
+              activate(input: $input) {
                 correlationId
               }
             }
           }`,
         variables: {
-          parameters: {
+          input: {
             id: id
           }
         },

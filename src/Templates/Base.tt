@@ -1,12 +1,10 @@
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ import namespace="System.IO" #>
-<#@ include file=".\Header.tt" #>
-<#@ include file=".\TypeDefinition.tt" #>
-
+<#@ include file="./Header.tt" #>
+<#@ include file="./TypeDefinition.tt" #>
 using System;
 <#+
 
@@ -18,10 +16,10 @@ public static TypeDefinition FindDefinition(IEnumerable<TypeDefinition> definiti
 public static TypeDefinition[] LoadDefinitions(string path, string pattern)
 {
     var result = new List<TypeDefinition>();
-    foreach (var file in Directory.EnumerateFiles(path, pattern))
+    foreach (string file in Directory.EnumerateFiles(path, pattern))
         result.AddRange(LoadDefinition(file));
 
-    return result.ToArray();
+    return result.OrderBy(x => x.GroupName).ThenBy(x => x.Name).ToArray();
 }
 
 public static IEnumerable<TypeDefinition> LoadDefinition(string definitionFileName)
@@ -66,9 +64,9 @@ private static FieldDefinition[] LoadFieldDefinitions(Queue<string> lines, strin
     while (lines.Any())
     {
         lineNumber++;
-        
+
         int indentationLevel = GetIndentationLevel(lines.Peek());
-        currentIndentationLevel = currentIndentationLevel ?? indentationLevel;
+        currentIndentationLevel ??= indentationLevel;
         if (indentationLevel == 0 || indentationLevel < currentIndentationLevel.Value)
             break;
 
@@ -83,7 +81,7 @@ private static FieldDefinition[] LoadFieldDefinitions(Queue<string> lines, strin
             continue;
         }
 
-        string definition = lines.Dequeue().Trim(); 
+        string definition = lines.Dequeue().Trim();
         fieldDefinitions.Add(ParseFieldDefinition(definition, fileName, lineNumber));
     }
 
@@ -96,10 +94,10 @@ private static TypeDefinition ParseTypeDefinition(string definition, string file
         * type definition: `CreateUserCommand`
         * type definition with description: `CreateUserCommand // Creates a new user`
         * type definition with related type: `CreateUserCommand: UserCommandCreationResult`
-        * type defintions with short name: `Create => CreateUserCommand: UserCommandCreationResult`
+        * type definition with short name: `Create => CreateUserCommand: UserCommandCreationResult`
         * obsolete type definition: `-CreateUserCommand`
     */
-    var match = Regex.Match(definition, @"^(?<obsolete>\-)?((?<shortName>[^\s=]+)\s*=>\s*)?(?<name>[^\s\/:]+)\s*(:\s*(?<responseType>[^\s\/]+)\s*)?(\/\/\s*(?<description>.+)?)?$");
+    var match = Regex.Match(definition, @"^(?<obsolete>\-)?(?<anonymous>👀)?((?<shortName>[^\s=]+)\s*=>\s*)?(?<name>[^\s\/:]+)\s*(:\s*(?<responseType>[^\s\/]+)\s*)?(\/\/\s*(?<description>.+)?)?$");
     if (!match.Success) throw new Exception($"Failed to parse type definition in '{fileName}' at line {lineNumber}: '{definition}'");
 
     return new TypeDefinition
@@ -110,7 +108,8 @@ private static TypeDefinition ParseTypeDefinition(string definition, string file
         Description = NullOnEmpty(match.Groups["description"].Value),
         Fields = Array.Empty<FieldDefinition>(),
         IsObsolete = NullOnEmpty(match.Groups["obsolete"].Value) != null,
-        ResponseType = NullOnEmpty(match.Groups["responseType"].Value)
+        ResponseType = NullOnEmpty(match.Groups["responseType"].Value),
+        IsAnonymous = NullOnEmpty(match.Groups["anonymous"].Value) != null
     };
 }
 
@@ -151,10 +150,9 @@ public static string CamelCase(string input)
     return new string(new[] { Char.ToLower(input[0]) }.Concat(input.Skip(1)).ToArray());
 }
 
-public static bool IsValueType(FieldDefinition field)
+public static bool IsValueType(string typeName)
 {
-    if (field.IsEnum) return true;
-    switch (field.Type.TrimEnd('[', ']'))
+    switch (typeName.TrimEnd('[', ']'))
     {
     case "bool":
     case "byte":
@@ -169,14 +167,14 @@ public static bool IsValueType(FieldDefinition field)
     case "uint":
     case "ulong":
     case "ushort":
-    case "Guid":
     case "DateTimeOffset":
+    case "Guid":
         return true;
     case "object":
     case "string":
         return false;
     default:
-        return Type.GetType(field.Type).IsValueType;
+        return Type.GetType(typeName)?.IsValueType ?? false;
     }
 }
 

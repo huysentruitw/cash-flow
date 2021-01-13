@@ -6,12 +6,12 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddQuery(this IServiceCollection services)
     {
-        services.AddTransient<IAccountRepository, AccountRepository>();
-        services.AddTransient<ICodeBalanceRepository, CodeBalanceRepository>();
-        services.AddTransient<ICodeRepository, CodeRepository>();
-        services.AddTransient<IFinancialYearRepository, FinancialYearRepository>();
-        services.AddTransient<ISupplierRepository, SupplierRepository>();
-        services.AddTransient<ITransactionRepository, TransactionRepository>();
+        services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<ICodeBalanceRepository, CodeBalanceRepository>();
+        services.AddScoped<ICodeRepository, CodeRepository>();
+        services.AddScoped<IFinancialYearRepository, FinancialYearRepository>();
+        services.AddScoped<ISupplierRepository, SupplierRepository>();
+        services.AddScoped<ITransactionRepository, TransactionRepository>();
         return services;
     }
 }

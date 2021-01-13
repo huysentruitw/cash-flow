@@ -2,251 +2,278 @@
 //  !! WARNING !! This file is auto-generated. Changes to this file will be lost.
 // </auto-generated>
 
+
 using System;
 
 using CashFlow.Enums;
-using GraphQL.Conventions;
+using HotChocolate;
 
+// ReSharper disable ClassNeverInstantiated.Global
 namespace CashFlow.GraphApi.Schema
 {
-    [Description("Add an account")]
-    [InputType]
-    public sealed class AddAccountParameters
+    [GraphQLDescription("Add an account")]
+    public sealed class AddAccountInput
     {
-        [Description("The name of the account to add")]
-        public NonNull<string> Name { get; set; }
-        [Description("The type of the account")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the account to add")]
+        public string Name { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The type of the account")]
         public AccountType Type { get; set; }
     }
 
-    [Description("Rename an account")]
-    [InputType]
-    public sealed class RenameAccountParameters
+    [GraphQLDescription("Change the type of an account")]
+    public sealed class ChangeAccountTypeInput
     {
-        [Description("The id of the account")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the account")]
         public Guid Id { get; set; }
-        [Description("The new name of the account")]
-        public NonNull<string> Name { get; set; }
-    }
-
-    [Description("Change the type of an account")]
-    [InputType]
-    public sealed class ChangeAccountTypeParameters
-    {
-        [Description("The id of the account")]
-        public Guid Id { get; set; }
-        [Description("The new type of the account")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The new type of the account")]
         public AccountType Type { get; set; }
     }
 
-    [Description("Remove an account")]
-    [InputType]
-    public sealed class RemoveAccountParameters
+    [GraphQLDescription("Remove an account")]
+    public sealed class RemoveAccountInput
     {
-        [Description("The id of the account to remove")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the account to remove")]
         public Guid Id { get; set; }
     }
 
-    [Description("Add a code")]
-    [InputType]
-    public sealed class AddCodeParameters
+    [GraphQLDescription("Rename an account")]
+    public sealed class RenameAccountInput
     {
-        [Description("The name of the code to add")]
-        public NonNull<string> Name { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the account")]
+        public Guid Id { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The new name of the account")]
+        public string Name { get; set; }
     }
 
-    [Description("Rename a code")]
-    [InputType]
-    public sealed class RenameCodeParameters
+    [GraphQLDescription("Add a code")]
+    public sealed class AddCodeInput
     {
-        [Description("The original name of the code")]
-        public NonNull<string> OriginalName { get; set; }
-        [Description("The new name of the code")]
-        public NonNull<string> NewName { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the code to add")]
+        public string Name { get; set; }
     }
 
-    [Description("Remove a code")]
-    [InputType]
-    public sealed class RemoveCodeParameters
+    [GraphQLDescription("Remove a code")]
+    public sealed class RemoveCodeInput
     {
-        [Description("The name of the code to remove")]
-        public NonNull<string> Name { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the code to remove")]
+        public string Name { get; set; }
     }
 
-    [Description("Add a new financial year")]
-    [InputType]
-    public sealed class AddFinancialYearParameters
+    [GraphQLDescription("Rename a code")]
+    public sealed class RenameCodeInput
     {
-        [Description("The name of the new financial year")]
-        public NonNull<string> Name { get; set; }
-        [Description("The id of the previous financial year")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The original name of the code")]
+        public string OriginalName { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The new name of the code")]
+        public string NewName { get; set; }
+    }
+
+    [GraphQLDescription("Set the given financial year as active")]
+    public sealed class ActivateFinancialYearInput
+    {
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the financial year to activate")]
+        public Guid Id { get; set; }
+    }
+
+    [GraphQLDescription("Add a new financial year")]
+    public sealed class AddFinancialYearInput
+    {
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the new financial year")]
+        public string Name { get; set; }
+        [GraphQLDescription("The id of the previous financial year")]
         public Guid? PreviousFinancialYearId { get; set; }
     }
 
-    [Description("Set the given financial year as active")]
-    [InputType]
-    public sealed class ActivateFinancialYearParameters
+    [GraphQLDescription("Add a supplier")]
+    public sealed class AddSupplierInput
     {
-        [Description("The id of the financial year to activate")]
-        public Guid Id { get; set; }
-    }
-
-    [Description("Add a supplier")]
-    [InputType]
-    public sealed class AddSupplierParameters
-    {
-        [Description("The name of the supplier to add")]
-        public NonNull<string> Name { get; set; }
-        [Description("The contact info of the supplier")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the supplier to add")]
+        public string Name { get; set; }
+        [GraphQLDescription("The contact info of the supplier")]
         public string ContactInfo { get; set; }
     }
 
-    [Description("Rename a supplier")]
-    [InputType]
-    public sealed class RenameSupplierParameters
+    [GraphQLDescription("Remove a supplier")]
+    public sealed class RemoveSupplierInput
     {
-        [Description("The id of the supplier")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the supplier to remove")]
         public Guid Id { get; set; }
-        [Description("The new name of the supplier")]
-        public NonNull<string> Name { get; set; }
     }
 
-    [Description("Update the contact info of the supplier")]
-    [InputType]
-    public sealed class UpdateSupplierContactInfoParameters
+    [GraphQLDescription("Rename a supplier")]
+    public sealed class RenameSupplierInput
     {
-        [Description("The id of the supplier")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the supplier")]
         public Guid Id { get; set; }
-        [Description("The new contact info of the supplier")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The new name of the supplier")]
+        public string Name { get; set; }
+    }
+
+    [GraphQLDescription("Update the contact info of the supplier")]
+    public sealed class UpdateSupplierContactInfoInput
+    {
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the supplier")]
+        public Guid Id { get; set; }
+        [GraphQLDescription("The new contact info of the supplier")]
         public string ContactInfo { get; set; }
     }
 
-    [Description("Remove a supplier")]
-    [InputType]
-    public sealed class RemoveSupplierParameters
+    [GraphQLDescription("Adds an expense transaction")]
+    public sealed class AddExpenseTransactionInput
     {
-        [Description("The id of the supplier to remove")]
-        public Guid Id { get; set; }
-    }
-
-    [Description("Adds an income transaction")]
-    [InputType]
-    public sealed class AddIncomeTransactionParameters
-    {
-        [Description("The id of the financial year")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the financial year")]
         public Guid FinancialYearId { get; set; }
-        [Description("The date of the transaction")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The date of the transaction")]
         public DateTimeOffset TransactionDate { get; set; }
-        [Description("The id of the account related to the transaction")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the account related to the transaction")]
         public Guid AccountId { get; set; }
-        [Description("The amount expressed in cents. Positive for income, negative for expenses")]
-        public long AmountInCents { get; set; }
-        [Description("The description of the transaction")]
-        public NonNull<string> Description { get; set; }
-        [Description("Optional comment related to the transaction")]
-        public string Comment { get; set; }
-        [Description("Zero or more names of codes to assign to the transaction")]
-        public NonNull<string[]> CodeNames { get; set; }
-    }
-
-    [Description("Adds an expense transaction")]
-    [InputType]
-    public sealed class AddExpenseTransactionParameters
-    {
-        [Description("The id of the financial year")]
-        public Guid FinancialYearId { get; set; }
-        [Description("The date of the transaction")]
-        public DateTimeOffset TransactionDate { get; set; }
-        [Description("The id of the account related to the transaction")]
-        public Guid AccountId { get; set; }
-        [Description("The optional id of the supplier linked to the transaction")]
+        [GraphQLDescription("The optional id of the supplier linked to the transaction")]
         public Guid? SupplierId { get; set; }
-        [Description("The amount expressed in cents. Positive for income, negative for expenses")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The amount expressed in cents. Positive for income, negative for expenses")]
         public long AmountInCents { get; set; }
-        [Description("The description of the transaction")]
-        public NonNull<string> Description { get; set; }
-        [Description("Optional comment related to the transaction")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The description of the transaction")]
+        public string Description { get; set; }
+        [GraphQLDescription("Optional comment related to the transaction")]
         public string Comment { get; set; }
-        [Description("Zero or more names of codes to assign to the transaction")]
-        public NonNull<string[]> CodeNames { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("Zero or more names of codes to assign to the transaction")]
+        public string[] CodeNames { get; set; }
     }
 
-    [Description("Adds a transfer transaction")]
-    [InputType]
-    public sealed class AddTransferTransactionParameters
+    [GraphQLDescription("Adds an income transaction")]
+    public sealed class AddIncomeTransactionInput
     {
-        [Description("The id of the financial year")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the financial year")]
         public Guid FinancialYearId { get; set; }
-        [Description("The date of the transaction")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The date of the transaction")]
         public DateTimeOffset TransactionDate { get; set; }
-        [Description("The id of the origin account related to the transaction")]
-        public Guid OriginAccountId { get; set; }
-        [Description("The id of the destination account related to the transaction")]
-        public Guid DestinationAccountId { get; set; }
-        [Description("The amount expressed in cents. Positive for income, negative for expenses")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the account related to the transaction")]
+        public Guid AccountId { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The amount expressed in cents. Positive for income, negative for expenses")]
         public long AmountInCents { get; set; }
-        [Description("The description of the transaction")]
-        public NonNull<string> Description { get; set; }
-        [Description("Optional comment related to the transaction")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The description of the transaction")]
+        public string Description { get; set; }
+        [GraphQLDescription("Optional comment related to the transaction")]
         public string Comment { get; set; }
-        [Description("Zero or more names of codes to assign to the transaction")]
-        public NonNull<string[]> CodeNames { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("Zero or more names of codes to assign to the transaction")]
+        public string[] CodeNames { get; set; }
     }
 
-    [Description("Removes the latest transaction")]
-    [InputType]
-    public sealed class RemoveLatestTransactionParameters
+    [GraphQLDescription("Adds a transfer transaction")]
+    public sealed class AddTransferTransactionInput
     {
-        [Description("The id of the transaction (used for verification)")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the financial year")]
+        public Guid FinancialYearId { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The date of the transaction")]
+        public DateTimeOffset TransactionDate { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the origin account related to the transaction")]
+        public Guid OriginAccountId { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the destination account related to the transaction")]
+        public Guid DestinationAccountId { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The amount expressed in cents. Positive for income, negative for expenses")]
+        public long AmountInCents { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The description of the transaction")]
+        public string Description { get; set; }
+        [GraphQLDescription("Optional comment related to the transaction")]
+        public string Comment { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("Zero or more names of codes to assign to the transaction")]
+        public string[] CodeNames { get; set; }
+    }
+
+    [GraphQLDescription("Assigns a code to a transaction")]
+    public sealed class AssignCodeToTransactionInput
+    {
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the transaction")]
+        public Guid Id { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the code to assign")]
+        public string CodeName { get; set; }
+    }
+
+    [GraphQLDescription("Assign a unique evidence number to a transaction")]
+    public sealed class AssignEvidenceNumberToTransactionInput
+    {
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the transaction")]
+        public Guid Id { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The evidence number to assign to the transaction")]
+        public string EvidenceNumber { get; set; }
+    }
+
+    [GraphQLDescription("Removes the latest transaction")]
+    public sealed class RemoveLatestTransactionInput
+    {
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the transaction (used for verification)")]
         public Guid Id { get; set; }
     }
 
-    [Description("Assigns a code to a transaction")]
-    [InputType]
-    public sealed class AssignCodeToTransactionParameters
+    [GraphQLDescription("Unassigns a code from a transaction")]
+    public sealed class UnassignCodeFromTransactionInput
     {
-        [Description("The id of the transaction")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the transaction")]
         public Guid Id { get; set; }
-        [Description("The name of the code to assign")]
-        public NonNull<string> CodeName { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the code to unassign")]
+        public string CodeName { get; set; }
     }
 
-    [Description("Unassigns a code from a transaction")]
-    [InputType]
-    public sealed class UnassignCodeFromTransactionParameters
+    [GraphQLDescription("Unassigns the evidence number from a transaction")]
+    public sealed class UnassignEvidenceNumberFromTransactionInput
     {
-        [Description("The id of the transaction")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the transaction")]
         public Guid Id { get; set; }
-        [Description("The name of the code to unassign")]
-        public NonNull<string> CodeName { get; set; }
     }
 
-    [Description("Update the description of a transaction")]
-    [InputType]
-    public sealed class UpdateDescriptionOfTransactionParameters
+    [GraphQLDescription("Update the description of a transaction")]
+    public sealed class UpdateDescriptionOfTransactionInput
     {
-        [Description("The id of the transaction")]
+        [GraphQLNonNullType]
+        [GraphQLDescription("The id of the transaction")]
         public Guid Id { get; set; }
-        [Description("The new description of the transaction")]
-        public NonNull<string> Description { get; set; }
-    }
-
-    [Description("Assign a unique evidence number to a transaction")]
-    [InputType]
-    public sealed class AssignEvidenceNumberToTransactionParameters
-    {
-        [Description("The id of the transaction")]
-        public Guid Id { get; set; }
-        [Description("The evidence number to assign to the transaction")]
-        public NonNull<string> EvidenceNumber { get; set; }
-    }
-
-    [Description("Unassigns the evidence number from a transaction")]
-    [InputType]
-    public sealed class UnassignEvidenceNumberFromTransactionParameters
-    {
-        [Description("The id of the transaction")]
-        public Guid Id { get; set; }
+        [GraphQLNonNullType]
+        [GraphQLDescription("The new description of the transaction")]
+        public string Description { get; set; }
     }
 
 }

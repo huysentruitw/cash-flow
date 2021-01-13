@@ -29,15 +29,15 @@ export class CodeService {
     return this.apollo
       .mutate({
         mutation: gql`
-            mutation addCode($parameters: AddCodeParameters!) {
+            mutation addCode($input: AddCodeInput!) {
               code {
-                add(parameters: $parameters) {
+                add(input: $input) {
                   correlationId
                 }
               }
             }`,
         variables: {
-          parameters: {
+          input: {
             name: name
           }
         },
@@ -49,15 +49,15 @@ export class CodeService {
     return this.apollo
       .mutate({
         mutation: gql`
-            mutation renameCode($parameters: RenameCodeParameters!) {
+            mutation renameCode($input: RenameCodeInput!) {
               code {
-                rename(parameters: $parameters) {
+                rename(input: $input) {
                   correlationId
                 }
               }
             }`,
         variables: {
-          parameters: {
+          input: {
             originalName: originalName,
             newName: newName
           }
@@ -70,15 +70,15 @@ export class CodeService {
     return this.apollo
       .mutate({
         mutation: gql`
-            mutation removeCode($parameters: RemoveCodeParameters!) {
+            mutation removeCode($input: RemoveCodeInput!) {
               code {
-                remove(parameters: $parameters) {
+                remove(input: $input) {
                   correlationId
                 }
               }
             }`,
         variables: {
-          parameters: {
+          input: {
             name: name
           }
         },
