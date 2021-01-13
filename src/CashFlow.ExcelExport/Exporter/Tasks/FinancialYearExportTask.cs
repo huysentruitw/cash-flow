@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
 using CashFlow.Data.Abstractions.Entities;
 using CashFlow.ExcelExport.Exceptions;
@@ -25,8 +26,9 @@ namespace CashFlow.ExcelExport.Exporter.Tasks
 
         public string Name => $"Financial Year {_financialYear.Name}";
 
-        public IEnumerable<ISheetExportTask> EnumSheetExportTasks()
+        public async IAsyncEnumerable<ISheetExportTask> EnumSheetExportTasks()
         {
+            await Task.CompletedTask; // Makes the compiler happy :)
             yield return new TransactionsSheetExportTask(_dataContext, _financialYear);
         }
     }
@@ -49,7 +51,7 @@ namespace CashFlow.ExcelExport.Exporter.Tasks
 
         public string Name => "Transactions";
 
-        public string[] GetColumnLabels()
+        public Task<string[]> GetColumnLabels()
         {
             IEnumerable<string> EnumColumnLabels()
             {
@@ -66,11 +68,13 @@ namespace CashFlow.ExcelExport.Exporter.Tasks
                 yield return "Description";
             }
 
-            return EnumColumnLabels().ToArray();
+            return Task.FromResult(EnumColumnLabels().ToArray());
         }
 
-        public IEnumerable<IEnumerable<object>> EnumRowData()
+        public async IAsyncEnumerable<IEnumerable<object>> EnumRowData()
         {
+            await Task.CompletedTask; // Makes the compiler happy :)
+
             yield return EnumStartingBalanceCells();
 
             IEnumerable<Transaction> transactions = _dataContext.Transactions

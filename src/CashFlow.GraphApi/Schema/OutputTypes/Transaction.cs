@@ -40,7 +40,7 @@ namespace CashFlow.GraphApi.Schema
         {
             Entities.FinancialYear financialYear = await dataLoaderContext
                 .GetOrAddBatchLoader<Guid, Entities.FinancialYear>(nameof(repository.GetFinancialYearsInBatch), repository.GetFinancialYearsInBatch)
-                .LoadAsync(FinancialYearId);
+                .LoadAsync(FinancialYearId).GetResultAsync();
             return mapperResolver().Map<FinancialYear>(financialYear);
         }
 
@@ -54,7 +54,7 @@ namespace CashFlow.GraphApi.Schema
 
             Entities.Supplier supplier = await dataLoaderContext
                 .GetOrAddBatchLoader<Guid, Entities.Supplier>(nameof(repository.GetSuppliersInBatch), repository.GetSuppliersInBatch)
-                .LoadAsync(SupplierId.Value);
+                .LoadAsync(SupplierId.Value).GetResultAsync();
             return mapperResolver().Map<Supplier>(supplier);
         }
     }

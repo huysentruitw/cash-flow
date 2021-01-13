@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="GraphQL.Conventions" Version="2.5.5" />
+    <PackageReference Include="GraphQL.Conventions" Version="3.0.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 

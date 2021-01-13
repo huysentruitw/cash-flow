@@ -1,11 +1,15 @@
-﻿using GraphQL.Language.AST;
+﻿using System.Threading.Tasks;
+using GraphQL.Language.AST;
 using GraphQL.Validation;
 
 namespace CashFlow.GraphApi.ValidationRules
 {
     internal sealed class DisableIntrospectionRule : IValidationRule
     {
-        public INodeVisitor Validate(ValidationContext context)
+        public Task<INodeVisitor> ValidateAsync(ValidationContext context)
+            => Task.FromResult(Validate(context));
+
+        private static INodeVisitor Validate(ValidationContext context)
         {
             return new EnterLeaveListener(_ =>
             {

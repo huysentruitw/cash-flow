@@ -16,19 +16,16 @@ namespace CashFlow.GraphApi
     public sealed class GraphController : ControllerBase
     {
         private readonly GraphQLEngine _engine;
-        private readonly IUserContext _userContext;
         private readonly IDependencyInjector _injector;
         private readonly ILogger<GraphController> _logger;
         private readonly IValidationRule[] _validationRules;
 
         public GraphController(
             GraphQLEngine engine,
-            IUserContext userContext,
             IDependencyInjector injector,
             ILogger<GraphController> logger)
         {
             _engine = engine;
-            _userContext = userContext;
             _injector = injector;
             _logger = logger;
 #if !DEBUG
@@ -46,12 +43,11 @@ namespace CashFlow.GraphApi
             ExecutionResult result = await _engine
                 .NewExecutor()
                 .WithValidationRules(_validationRules)
-                .WithUserContext(_userContext)
                 .WithDependencyInjector(_injector)
                 .WithRequest(requestBody)
-                .Execute();
+                .ExecuteAsync();
 
-            var responseBody = _engine.SerializeResult(result);
+            var responseBody = await _engine.SerializeResultAsync(result);
 
             HttpStatusCode statusCode = HttpStatusCode.OK;
 

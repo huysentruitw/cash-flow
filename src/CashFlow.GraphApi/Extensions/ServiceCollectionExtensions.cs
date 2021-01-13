@@ -16,7 +16,6 @@ public static class ServiceCollectionExtensions
             .BuildSchema(typeof(SchemaDefinition<Schema.Query, Schema.Mutation>)));
 
         services.AddScoped<IDependencyInjector, Injector>();
-        services.AddScoped<IUserContext, UserContext>();
         services.AddScoped<Schema.Query>();
         services.AddScoped<Schema.Mutation>();
 

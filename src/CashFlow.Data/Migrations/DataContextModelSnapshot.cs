@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CashFlow.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
+    // ReSharper disable once ArrangeTypeModifiers
     partial class DataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
