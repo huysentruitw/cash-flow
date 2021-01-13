@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TransactionEvidenceNumberDialogComponent } from './transaction-evidence-number-dialog.component';
 
@@ -6,7 +6,7 @@ describe('TransactionDescriptionDialogComponent', () => {
   let component: TransactionEvidenceNumberDialogComponent;
   let fixture: ComponentFixture<TransactionEvidenceNumberDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [TransactionEvidenceNumberDialogComponent ]
     })
