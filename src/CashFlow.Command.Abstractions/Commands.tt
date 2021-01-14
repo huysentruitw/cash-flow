@@ -53,7 +53,7 @@ foreach (var command in commands)
 <#
         }
 
-        if (!field.IsRequired && field.NestedType == null && IsValueType(field))
+        if (!field.IsRequired && field.NestedType == null && IsValueType(field.Type))
         {
 #>
         public <#=field.Type #>? <#=field.Name #> { get; set; }
@@ -89,7 +89,7 @@ foreach (var nestedType in ExtractNestedTypes(commands))
 <#
         }
 
-        if (!field.IsRequired && field.NestedType == null && IsValueType(field))
+        if (!field.IsRequired && field.NestedType == null && IsValueType(field.Type))
         {
 #>
         public <#=field.Type #>? <#=field.Name #> { get; set; }

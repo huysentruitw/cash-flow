@@ -7,3 +7,9 @@ Rename => RenameCode // Rename a code
 
 Remove => RemoveCode // Remove a code
     Name: string // The name of the code to remove
+
+Activate => ActivateCode // Activate a code
+    Name: string // The name of the code to activate
+
+Deactivate => DeactivateCode // Deactivate a code
+    Name: string // The name of the code to deactivate

@@ -8,6 +8,7 @@ const listQuery = gql`
   query getCodes {
     codes {
       name
+      isActive
       dateCreated
     }
   }`;
@@ -23,6 +24,16 @@ export class CodeService {
     return this.apollo
       .watchQuery<any>({ query: listQuery })
       .valueChanges.pipe(map(({ data }) => data.codes));
+  }
+
+  getActiveCodeNames(): Observable<string[]> {
+    return this.apollo
+      .query<any>({
+        query: gql`
+          query getActiveCodeNames {
+            activeCodeNames
+          }`,
+      }).pipe(map(({ data }) => data.activeCodeNames));
   }
 
   addCode(name: string, refetchList: boolean = true): Observable<void> {
@@ -83,6 +94,44 @@ export class CodeService {
           }
         },
         refetchQueries: refetchList ? [{ query: listQuery }] : []
+      }).pipe(map(_ => { }));
+  }
+
+  activateCode(name: string): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+          mutation activateCode($input: ActivateCodeInput!) {
+            code {
+              activate(input: $input) {
+                correlationId
+              }
+            }
+          }`,
+        variables: {
+          input: {
+            name: name
+          }
+        },
+      }).pipe(map(_ => { }));
+  }
+
+  deactivateCode(name: string): Observable<void> {
+    return this.apollo
+      .mutate({
+        mutation: gql`
+          mutation deactivateCode($input: DeactivateCodeInput!) {
+            code {
+              deactivate(input: $input) {
+                correlationId
+              }
+            }
+          }`,
+        variables: {
+          input: {
+            name: name
+          }
+        },
       }).pipe(map(_ => { }));
   }
 }

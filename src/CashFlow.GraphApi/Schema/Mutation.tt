@@ -12,9 +12,6 @@ var groupedCommands = commands
         (groupName, commandsInGroup) => new { GroupName = groupName, Commands = commandsInGroup.ToArray() })
     .ToDictionary(x => x.GroupName, x => x.Commands);
 
-bool CanIncludeSubjectId(TypeDefinition type)
-    => type.Fields.Any(x => x.Name == "Id" && x.Type == "Guid");
-
 void RenderFieldAssignments(TypeDefinition type, string sourceBase = "input", int indentationDepth = 0)
 {
     var indentation = new string(' ', indentationDepth * 4);

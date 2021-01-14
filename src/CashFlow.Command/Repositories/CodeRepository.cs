@@ -13,6 +13,8 @@ namespace CashFlow.Command.Repositories
         Task AddCode(string name);
         Task RenameCode(string originalName, string newName);
         Task RemoveCode(string name);
+        Task ActivateCode(string name);
+        Task DeactivateCode(string name);
     }
 
     internal sealed class CodeRepository : ICodeRepository
@@ -62,11 +64,11 @@ namespace CashFlow.Command.Repositories
                     }
 
                     await _dataContext.SaveChangesAsync();
-                    databaseTransaction.Commit();
+                    await databaseTransaction.CommitAsync();
                 }
                 catch
                 {
-                    databaseTransaction.Rollback();
+                    await databaseTransaction.RollbackAsync();
                     throw;
                 }
             }
@@ -77,6 +79,20 @@ namespace CashFlow.Command.Repositories
             var code = new Code { Name = name };
             _dataContext.Codes.Attach(code);
             _dataContext.Codes.Remove(code);
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task ActivateCode(string name)
+        {
+            Code code = await _dataContext.Codes.FirstAsync(x => x.Name == name);
+            code.IsActive = true;
+            await _dataContext.SaveChangesAsync();
+        }
+
+        public async Task DeactivateCode(string name)
+        {
+            Code code = await _dataContext.Codes.FirstAsync(x => x.Name == name);
+            code.IsActive = false;
             await _dataContext.SaveChangesAsync();
         }
     }

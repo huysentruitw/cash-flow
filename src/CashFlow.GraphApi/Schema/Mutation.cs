@@ -120,10 +120,38 @@ namespace CashFlow.GraphApi.Schema
             _mapper = mapper;
         }
 
+        [GraphQLDescription("Activate a code")]
+        public async Task<MutationInfo> Activate([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] ActivateCodeInput input)
+        {
+            var command = new ActivateCodeCommand
+            {
+                Name = input.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
         [GraphQLDescription("Add a code")]
         public async Task<MutationInfo> Add([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] AddCodeInput input)
         {
             var command = new AddCodeCommand
+            {
+                Name = input.Name,
+                Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)
+            };
+
+            var result = await mediator.Send(command);
+
+            return MutationInfo.FromCommand(command);
+        }
+
+        [GraphQLDescription("Deactivate a code")]
+        public async Task<MutationInfo> Deactivate([Service] IMediator mediator, [Service] IRequestInfo requestInfo, [GraphQLNonNullType] DeactivateCodeInput input)
+        {
+            var command = new DeactivateCodeCommand
             {
                 Name = input.Name,
                 Headers = new CommandHeaders(correlationId: Guid.NewGuid(), identity: requestInfo.Identity, remoteIpAddress: requestInfo.IpAddress)

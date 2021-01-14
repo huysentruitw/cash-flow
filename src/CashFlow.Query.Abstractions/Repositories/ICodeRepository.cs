@@ -6,5 +6,7 @@ namespace CashFlow.Query.Abstractions.Repositories
     public interface ICodeRepository
     {
         Task<Code[]> GetCodes();
+
+        Task<string[]> GetActiveCodeNames();
     }
 }

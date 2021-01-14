@@ -18,5 +18,8 @@ namespace CashFlow.Query.Repositories
 
         public async Task<Code[]> GetCodes()
             => await _dataContext.Codes.AsNoTracking().OrderBy(x => x.Name).ToArrayAsync();
+
+        public async Task<string[]> GetActiveCodeNames()
+            => await _dataContext.Codes.AsNoTracking().Where(x => x.IsActive).OrderBy(x => x.Name).Select(x => x.Name).ToArrayAsync();
     }
 }

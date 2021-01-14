@@ -52,11 +52,27 @@ namespace CashFlow.GraphApi.Schema
         public string Name { get; set; }
     }
 
+    [GraphQLDescription("Activate a code")]
+    public sealed class ActivateCodeInput
+    {
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the code to activate")]
+        public string Name { get; set; }
+    }
+
     [GraphQLDescription("Add a code")]
     public sealed class AddCodeInput
     {
         [GraphQLNonNullType]
         [GraphQLDescription("The name of the code to add")]
+        public string Name { get; set; }
+    }
+
+    [GraphQLDescription("Deactivate a code")]
+    public sealed class DeactivateCodeInput
+    {
+        [GraphQLNonNullType]
+        [GraphQLDescription("The name of the code to deactivate")]
         public string Name { get; set; }
     }
 

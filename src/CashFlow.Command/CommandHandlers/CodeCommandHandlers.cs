@@ -70,4 +70,46 @@ namespace CashFlow.Command.CommandHandlers
             return Unit.Value;
         }
     }
+
+    internal sealed class ActivateCodeCommandHandler : SafeCommandHandler<ActivateCodeCommand>
+    {
+        private readonly ICodeRepository _repository;
+
+        public ActivateCodeCommandHandler(ICodeRepository repository)
+        {
+            _repository = repository;
+        }
+
+        protected override void DefineRules()
+        {
+            RuleFor(x => x.Name).NotNull();
+        }
+
+        protected override async Task<Unit> HandleValidatedCommand(ActivateCodeCommand command)
+        {
+            await _repository.ActivateCode(command.Name);
+            return Unit.Value;
+        }
+    }
+
+    internal sealed class DeactivateCodeCommandHandler : SafeCommandHandler<DeactivateCodeCommand>
+    {
+        private readonly ICodeRepository _repository;
+
+        public DeactivateCodeCommandHandler(ICodeRepository repository)
+        {
+            _repository = repository;
+        }
+
+        protected override void DefineRules()
+        {
+            RuleFor(x => x.Name).NotNull();
+        }
+
+        protected override async Task<Unit> HandleValidatedCommand(DeactivateCodeCommand command)
+        {
+            await _repository.DeactivateCode(command.Name);
+            return Unit.Value;
+        }
+    }
 }

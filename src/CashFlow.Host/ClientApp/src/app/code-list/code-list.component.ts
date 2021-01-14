@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import {MatCheckboxChange} from "@angular/material/checkbox";
 import { Observable, Subject } from 'rxjs';
+import {take} from "rxjs/operators";
 import { CodeService } from './../../services/code.service';
 import { Code } from './../../models/code';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +16,7 @@ import { CodeDialogComponent } from '../code-dialog/code-dialog.component';
 })
 export class CodeListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  displayedColumns = ['name', 'createdAt', 'modify', 'remove'];
+  displayedColumns = ['isActive', 'name', 'createdAt', 'modify', 'remove'];
   codes$: Observable<Code[]>;
 
   constructor(private codeService: CodeService, private dialog: MatDialog, private translateService: TranslateService) { }
@@ -40,7 +42,7 @@ export class CodeListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
-        this.codeService.removeCode(code.name).subscribe(
+        this.codeService.removeCode(code.name).pipe(take(1)).subscribe(
           () => { },
           error => {
             console.error(error);
@@ -60,7 +62,7 @@ export class CodeListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
-        this.codeService.addCode(result.name).subscribe(
+        this.codeService.addCode(result.name).pipe(take(1)).subscribe(
           () => { },
           error => {
             console.error(error);
@@ -81,12 +83,24 @@ export class CodeListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
-        this.codeService.renameCode(account.name, result.name).subscribe(
+        this.codeService.renameCode(account.name, result.name).pipe(take(1)).subscribe(
           () => { },
           error => {
             console.error(error);
           });
       }
     });
+  }
+
+  toggleIsActive(code: Code, change: MatCheckboxChange): void {
+    const action$ = change.checked
+      ? this.codeService.activateCode(code.name)
+      : this.codeService.deactivateCode(code.name);
+
+    action$.pipe(take(1)).subscribe(
+      () => { },
+      error => {
+        console.error(error);
+      });
   }
 }

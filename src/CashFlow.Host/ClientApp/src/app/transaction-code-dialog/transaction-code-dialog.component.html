@@ -3,7 +3,7 @@
   <mat-form-field>
     <input type="text" placeholder="{{'Code' | translate}}" matInput [matAutocomplete]="auto" [(ngModel)]="data.codeName" (input)="filterCodes($event.target.value)">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="codeSelected()">
-      <mat-option *ngFor="let code of filteredCodes$ | async" [value]="code.name">{{code.name}}</mat-option>
+      <mat-option *ngFor="let codeName of filteredCodeNames$ | async" [value]="codeName">{{codeName}}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 </mat-dialog-content>
