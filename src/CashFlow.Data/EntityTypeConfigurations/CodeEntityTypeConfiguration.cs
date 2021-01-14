@@ -11,7 +11,14 @@ namespace CashFlow.Data.EntityTypeConfigurations
         {
             builder.HasKey(x => x.Name);
             builder.Property(x => x.Name).HasMaxLength(100);
+            builder.Property(x => x.IsActive).IsRequired().HasDefaultValue(true);
             builder.Property(x => x.DateCreated).IsRequired();
+
+            builder
+                .HasMany<TransactionCode>()
+                .WithOne()
+                .HasForeignKey(x => x.CodeName)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             var dateCreated = DateTimeOffset.Parse("2019-01-21 20:00:00");
             builder.HasData(new[]

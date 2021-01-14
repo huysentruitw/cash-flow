@@ -22,6 +22,12 @@ namespace CashFlow.Data.EntityTypeConfigurations
             builder.Property(x => x.IsInternalTransfer).IsRequired();
             builder.Property(x => x.Description).IsRequired().HasMaxLength(250);
             builder.Property(x => x.Comment).HasMaxLength(250);
+
+            builder
+                .HasMany(x => x.Codes)
+                .WithOne()
+                .HasForeignKey(x => x.TransactionId)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }
