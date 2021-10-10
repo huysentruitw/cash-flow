@@ -58,6 +58,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Reporting.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.ExcelExport", "src\CashFlow.ExcelExport\CashFlow.ExcelExport.csproj", "{58A112F8-CE9B-4C4D-AC8E-DB94F4E9972C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.CsvImport", "src\CashFlow.CsvImport\CashFlow.CsvImport.csproj", "{8B25A313-8ED9-496B-BAF1-58B767D43653}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -124,6 +126,10 @@ Global
 		{58A112F8-CE9B-4C4D-AC8E-DB94F4E9972C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A112F8-CE9B-4C4D-AC8E-DB94F4E9972C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A112F8-CE9B-4C4D-AC8E-DB94F4E9972C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B25A313-8ED9-496B-BAF1-58B767D43653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B25A313-8ED9-496B-BAF1-58B767D43653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B25A313-8ED9-496B-BAF1-58B767D43653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B25A313-8ED9-496B-BAF1-58B767D43653}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +151,7 @@ Global
 		{BB0D5DB9-6F16-49A7-BDF3-94FE85330B07} = {90CE7F05-CACA-4FD4-968E-10909AF8CA00}
 		{99D05D8D-C875-4FB6-9D96-A93CA2D4A219} = {90CE7F05-CACA-4FD4-968E-10909AF8CA00}
 		{58A112F8-CE9B-4C4D-AC8E-DB94F4E9972C} = {90CE7F05-CACA-4FD4-968E-10909AF8CA00}
+		{8B25A313-8ED9-496B-BAF1-58B767D43653} = {90CE7F05-CACA-4FD4-968E-10909AF8CA00}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DFEFE907-17F9-47E9-AADF-17C6C427F5FB}

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title translate>Select a CSV file</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-select placeholder="{{'Account' | translate}}" [(ngModel)]="accountId">
+      <mat-option *ngFor="let account of accounts$ | async" [value]="account.id">
+        {{account.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <input type="file" onclick="this.value=null" (change)="fileSelected($event.target.files)" accept=".csv"/>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>{{'Cancel' | translate}}</button>
+  <button mat-button color="primary" [disabled]="!isValid" (click)="importFile()">{{'Import' | translate}}</button>
+</mat-dialog-actions>
