@@ -58,6 +58,9 @@
   "Previous financial year": "Vorig boekjaar",
   "Are you sure you want to change the active financial year to {{name}}?": "Weet u zeker dat u het actieve boekjaar wilt wijzigen naar {{name}}?",
   "Export to Excel": "Exporteer naar Excel",
+  "Import transactions": "Importeer transacties",
+  "Select a CSV file": "Kies een CSV bestand",
+  "Import": "Importeren",
 
   "CASH_ACCOUNT": "Cash",
   "CURRENT_ACCOUNT": "Zichtrekening",
