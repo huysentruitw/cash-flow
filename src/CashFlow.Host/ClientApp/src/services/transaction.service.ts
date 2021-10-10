@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { Transaction } from './../models/transaction';
 
 const listQuery = gql`
-  query getTransactions($financialYearId: Uuid!) {
+  query getTransactions($financialYearId: UUID!) {
     transactions(financialYearId: $financialYearId) {
       __typename
       id
@@ -50,7 +50,7 @@ export class TransactionService {
     return this.apollo
       .query<any>({
         query: gql`
-        query getEvidenceNumberSuggestionForTransaction($transactionId: Uuid!) {
+        query getEvidenceNumberSuggestionForTransaction($transactionId: UUID!) {
           suggestEvidenceNumberForTransaction(transactionId: $transactionId)
         }`,
         variables: { transactionId: transactionId }

@@ -16,7 +16,7 @@ export class ByCodeOverviewService {
     return this.apollo
       .watchQuery<any>({
         query: gql`
-          query getCodeBalances($financialYearId: Uuid) {
+          query getCodeBalances($financialYearId: UUID) {
             codeBalances(financialYearId: $financialYearId) {
               name
               totalExpenseInCents
@@ -33,7 +33,7 @@ export class ByCodeOverviewService {
     return this.apollo
       .watchQuery<any>({
         query: gql`
-          query getCodeTransactions($financialYearId: Uuid, $codeName: String!) {
+          query getCodeTransactions($financialYearId: UUID, $codeName: String!) {
             codeTransactions(financialYearId: $financialYearId, codeName: $codeName) {
               id
               transactionDate
