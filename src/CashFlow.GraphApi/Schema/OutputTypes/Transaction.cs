@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CashFlow.Query.Abstractions.Repositories;
 using HotChocolate;
 using HotChocolate.Resolvers;
+using HotChocolate.Types;
 using Entities = CashFlow.Data.Abstractions.Entities;
 
 namespace CashFlow.GraphApi.Schema

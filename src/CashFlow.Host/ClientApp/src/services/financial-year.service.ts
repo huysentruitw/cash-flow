@@ -32,7 +32,7 @@ export class FinancialYearService {
     return this.apollo
       .query<any>({
         query: gql`
-        query getStartingBalances($financialYearId: Uuid!) {
+        query getStartingBalances($financialYearId: UUID!) {
           startingBalances(financialYearId: $financialYearId) {
             accountId
             financialYearId
