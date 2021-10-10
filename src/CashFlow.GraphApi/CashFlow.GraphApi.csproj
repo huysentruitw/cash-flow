@@ -12,7 +12,7 @@
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="11.2.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.13.1" />
   </ItemGroup>
 
   <ItemGroup>
