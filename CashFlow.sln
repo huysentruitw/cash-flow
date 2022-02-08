@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Data", "01 Data", "{3EB13B78-6F5F-4AE8-86A3-8D9A419E26E7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 Persistence", "05 Persistence", "{3EB13B78-6F5F-4AE8-86A3-8D9A419E26E7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 Host", "05 Host", "{9E1F5616-E6AB-4EE2-9CF3-B4C996E3A25E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Host", "01 Host", "{9E1F5616-E6AB-4EE2-9CF3-B4C996E3A25E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 Domain", "02 Domain", "{EEFEC32E-3E3A-48D1-A53A-1C8B5AD27424}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Domain", "03 Domain", "{EEFEC32E-3E3A-48D1-A53A-1C8B5AD27424}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.GraphApi", "src\CashFlow.GraphApi\CashFlow.GraphApi.csproj", "{5C8289B3-F7B0-4492-A3A6-6ADBF44D899A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Host", "src\CashFlow.Host\CashFlow.Host.csproj", "{B2AFC949-9F52-417E-A13A-DABB87D1BC03}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 API", "04 API", "{B0489CBC-17EF-4D48-A4B9-A62D587AC355}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 API", "02 API", "{B0489CBC-17EF-4D48-A4B9-A62D587AC355}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F71C8922-1372-42A4-B4FD-B74B10E3A4A0}"
 	ProjectSection(SolutionItems) = preProject
@@ -42,7 +42,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Query.Abstractions
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Query.Tests", "tests\CashFlow.Query.Tests\CashFlow.Query.Tests.csproj", "{9DAAF2F9-3F48-4B5D-A086-A141A111292E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 Cross-cutting concerns", "00 Cross-cutting concerns", "{CCA25268-A775-493A-8B09-8742EAED1F24}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06 Cross-cutting concerns", "06 Cross-cutting concerns", "{CCA25268-A775-493A-8B09-8742EAED1F24}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Enums", "src\CashFlow.Enums\CashFlow.Enums.csproj", "{7D483B6A-F830-4DE1-9B85-24D6DEF3AEF7}"
 EndProject
@@ -50,7 +50,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Data.Abstractions"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Data", "src\CashFlow.Data\CashFlow.Data.csproj", "{21AB16FA-2113-438A-8ECE-6A748682D520}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 Services", "03 Services", "{90CE7F05-CACA-4FD4-968E-10909AF8CA00}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 Services", "04 Services", "{90CE7F05-CACA-4FD4-968E-10909AF8CA00}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Reporting", "src\CashFlow.Reporting\CashFlow.Reporting.csproj", "{BB0D5DB9-6F16-49A7-BDF3-94FE85330B07}"
 EndProject
