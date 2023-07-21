@@ -31,56 +31,45 @@ import { TransactionEvidenceNumberDialogComponent } from './transaction-evidence
 
 @
 NgModule({
-  declarations: [
-    AccountDialogComponent,
-    AccountListComponent,
-    AppComponent,
-    ByCodeOverviewComponent,
-    CodeDialogComponent,
-    CodeListComponent,
-    ConfirmationDialogComponent,
-    FinancialYearDialogComponent,
-    FinancialYearSelectorComponent,
-    SidebarComponent,
-    SupplierDialogComponent,
-    SupplierListComponent,
-    ToolbarComponent,
-    TransactionCodeDialogComponent,
-    TransactionDescriptionDialogComponent,
-    TransactionDialogComponent,
-    TransactionEvidenceNumberDialogComponent,
-    TransactionListComponent
-  ],
-  imports: [
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    GraphQLModule,
-    HttpClientModule,
-    MaterialModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
-        deps: [HttpClient]
-      }
-    })
-  ],
-  entryComponents: [
-    AccountDialogComponent,
-    CodeDialogComponent,
-    ConfirmationDialogComponent,
-    FinancialYearDialogComponent,
-    SupplierDialogComponent,
-    TransactionCodeDialogComponent,
-    TransactionDescriptionDialogComponent,
-    TransactionDialogComponent,
-    TransactionEvidenceNumberDialogComponent
-  ],
-  providers: [
-    { provide: LOCALE_ID, useValue: 'nl-BE' },
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AccountDialogComponent,
+        AccountListComponent,
+        AppComponent,
+        ByCodeOverviewComponent,
+        CodeDialogComponent,
+        CodeListComponent,
+        ConfirmationDialogComponent,
+        FinancialYearDialogComponent,
+        FinancialYearSelectorComponent,
+        SidebarComponent,
+        SupplierDialogComponent,
+        SupplierListComponent,
+        ToolbarComponent,
+        TransactionCodeDialogComponent,
+        TransactionDescriptionDialogComponent,
+        TransactionDialogComponent,
+        TransactionEvidenceNumberDialogComponent,
+        TransactionListComponent
+    ],
+    imports: [
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        GraphQLModule,
+        HttpClientModule,
+        MaterialModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json'),
+                deps: [HttpClient]
+            }
+        })
+    ],
+    providers: [
+        { provide: LOCALE_ID, useValue: 'nl-BE' },
+        { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
