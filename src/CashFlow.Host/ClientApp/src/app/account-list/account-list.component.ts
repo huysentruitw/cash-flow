@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { AccountService } from './../../services/account.service';
 import { Account } from './../../models/account';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { AccountDialogComponent } from './../account-dialog/account-dialog.component';
 import { ConfirmationDialogComponent } from './../confirmation-dialog/confirmation-dialog.component';
 import { TranslateService } from '@ngx-translate/core';

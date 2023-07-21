@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatCheckboxChange } from "@angular/material/checkbox";
+import { MatLegacyCheckboxChange as MatCheckboxChange } from "@angular/material/legacy-checkbox";
 import { Observable, Subject } from 'rxjs';
 import { take } from "rxjs/operators";
 import { Account } from "../../models/account";
 import { CodeService } from '../../services/code.service';
 import { Code } from '../../models/code';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { CodeDialogComponent } from '../code-dialog/code-dialog.component';
