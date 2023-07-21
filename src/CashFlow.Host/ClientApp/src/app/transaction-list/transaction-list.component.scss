@@ -26,7 +26,12 @@
   font-size: 11px;
   border-radius: .2rem;
   margin-right: .5rem;
-  text-wrap: avoid;
+  white-space: nowrap;
+
+  button {
+    padding: 0;
+    top: .2rem;
+  }
 }
 
 .codeButton, .codeButton .mat-icon {
@@ -41,7 +46,7 @@
   border-radius: .6rem;
   width: 18px;
   height: 18px;
-  line-height: 18px;
+  padding: .6rem;
 }
 
 .addTransactionButtons {
