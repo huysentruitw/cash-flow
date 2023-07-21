@@ -60,14 +60,14 @@ tr.internalTransfer {
   background-color: rgba(255, 255, 0, .1);
 }
 
-.mat-column-description .mat-icon-button,
+.mat-column-description .mat-mdc-icon-button,
 .mat-column-evidenceNumber .mat-icon-button {
   width: 0;
   opacity: 0;
   transition: width .3s, opacity .3s;
 }
 
-.mat-column-description:hover .mat-icon-button,
+.mat-column-description:hover .mat-mdc-icon-button,
 .mat-column-evidenceNumber:hover .mat-icon-button {
   width: 40px;
   opacity: 1;
