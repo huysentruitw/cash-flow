@@ -1,9 +1,17 @@
-<mat-form-field *ngIf="financialYears$ | async as financialYears" class="selector">
-  <mat-select placeholder="{{'Financial year' | translate}}" (selectionChange)="updateActiveFinancialYear($event.value)" [value]="(activeFinancialYear$ | async)?.id">
-    <mat-option *ngFor="let financialYear of financialYears" [value]="financialYear.id">
-      {{financialYear.name}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<ng-container *ngIf="activeFinancialYear$ | async as activeFinancialYear">
+  <button mat-button [matMenuTriggerFor]="menu">
+    {{activeFinancialYear.name}}
+  </button>
+  <mat-menu #menu="matMenu">
+    <ng-container *ngFor="let financialYear of financialYears$ | async">
+      <button
+        *ngIf="financialYear.id !== activeFinancialYear.id"
+        mat-menu-item
+        (click)="updateActiveFinancialYear(financialYear.id)">
+        {{financialYear.name}}
+      </button>
+    </ng-container>
+  </mat-menu>
 
-<button mat-icon-button class="add-financial-year-button" (click)="addFinancialYear()" matTooltip="{{'Add new financial year' | translate}}"><mat-icon>add</mat-icon></button>
+  <button mat-icon-button class="add-financial-year-button" (click)="addFinancialYear()" matTooltip="{{'Add new financial year' | translate}}"><mat-icon>add</mat-icon></button>
+</ng-container>

@@ -84,4 +84,5 @@ export class FinancialYearSelectorComponent implements OnInit, OnDestroy {
       });
   }
 
+  protected readonly FinancialYear = FinancialYear;
 }
