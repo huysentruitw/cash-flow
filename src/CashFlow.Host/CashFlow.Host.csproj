@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CashFlow.Command\CashFlow.Command.csproj" />
+    <ProjectReference Include="..\CashFlow.CsvImport\CashFlow.CsvImport.csproj" />
     <ProjectReference Include="..\CashFlow.Data\CashFlow.Data.csproj" />
     <ProjectReference Include="..\CashFlow.ExcelExport\CashFlow.ExcelExport.csproj" />
     <ProjectReference Include="..\CashFlow.GraphApi\CashFlow.GraphApi.csproj" />

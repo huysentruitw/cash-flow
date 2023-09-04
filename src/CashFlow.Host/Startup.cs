@@ -33,6 +33,7 @@ namespace CashFlow.Host
             services.AddGraphApi();
             services.AddReporting();
             services.AddExcelExport();
+            services.AddCsvImport();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
