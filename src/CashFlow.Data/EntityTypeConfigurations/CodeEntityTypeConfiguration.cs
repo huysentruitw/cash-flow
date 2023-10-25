@@ -21,16 +21,14 @@ namespace CashFlow.Data.EntityTypeConfigurations
                 .OnDelete(DeleteBehavior.ClientCascade);
 
             var dateCreated = DateTimeOffset.Parse("2019-01-21 20:00:00");
-            builder.HasData(new[]
-            {
+            builder.HasData(
                 new Code { Name = "6000 aankopen", DateCreated = dateCreated },
                 new Code { Name = "6100 diensten en diverse goederen", DateCreated = dateCreated },
                 new Code { Name = "6560 bankkosten", DateCreated = dateCreated },
                 new Code { Name = "6600 uitzonderlijke kosten", DateCreated = dateCreated },
                 new Code { Name = "7000 verkopen", DateCreated = dateCreated },
                 new Code { Name = "7400 diverse opbrengsten", DateCreated = dateCreated },
-                new Code { Name = "7510 ontvangen bankintresten", DateCreated = dateCreated }
-            });
+                new Code { Name = "7510 ontvangen bankintresten", DateCreated = dateCreated });
         }
     }
 }

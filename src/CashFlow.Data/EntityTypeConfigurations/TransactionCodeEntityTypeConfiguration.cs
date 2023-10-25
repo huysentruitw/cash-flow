@@ -12,6 +12,7 @@ namespace CashFlow.Data.EntityTypeConfigurations
             builder.Property(x => x.CodeName).HasMaxLength(100);
             builder.HasIndex(x => x.CodeName);
             builder.Property(x => x.DateAssigned).IsRequired();
+            builder.HasIndex(x => x.DateAssigned);
         }
     }
 }

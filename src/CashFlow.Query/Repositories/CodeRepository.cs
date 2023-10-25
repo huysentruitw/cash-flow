@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CashFlow.Data.Abstractions;
@@ -20,6 +21,18 @@ namespace CashFlow.Query.Repositories
             => await _dataContext.Codes.AsNoTracking().OrderBy(x => x.Name).ToArrayAsync();
 
         public async Task<string[]> GetActiveCodeNames()
-            => await _dataContext.Codes.AsNoTracking().Where(x => x.IsActive).OrderBy(x => x.Name).Select(x => x.Name).ToArrayAsync();
+            => await _dataContext.Codes.AsNoTracking()
+                .Where(c => c.IsActive)
+                .Select(c => new
+                {
+                    CodeName = c.Name,
+                    LatestDateAssigned = _dataContext.TransactionCodes.AsNoTracking()
+                        .Where(tc => tc.CodeName == c.Name)
+                        .Max(tc => (DateTimeOffset?)tc.DateAssigned),
+                })
+                .OrderByDescending(x => x.LatestDateAssigned)
+                .ThenBy(x => x.CodeName)
+                .Select(x => x.CodeName)
+                .ToArrayAsync();
     }
 }
