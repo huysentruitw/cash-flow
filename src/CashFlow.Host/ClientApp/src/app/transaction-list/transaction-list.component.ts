@@ -1,21 +1,29 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { Account } from 'src/models/account';
-import { FinancialYear } from 'src/models/financial-year';
-import { Transaction, TransactionCode } from 'src/models/transaction';
-import { TransactionWithBalance } from 'src/models/transaction-with-balance';
-import { AccountService } from 'src/services/account.service';
-import { BusService } from 'src/services/bus.service';
-import { FinancialYearService } from 'src/services/financial-year.service';
-import { TransactionService } from 'src/services/transaction.service';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { TransactionCodeDialogComponent } from '../transaction-code-dialog/transaction-code-dialog.component';
-import { DialogData, TransactionDialogComponent, TransactionMode } from '../transaction-dialog/transaction-dialog.component';
-import { TranslateService } from '@ngx-translate/core';
-import { TransactionDescriptionDialogComponent } from '../transaction-description-dialog/transaction-description-dialog.component';
-import { TransactionEvidenceNumberDialogComponent } from '../transaction-evidence-number-dialog/transaction-evidence-number-dialog.component';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {TranslateService} from '@ngx-translate/core';
+import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs';
+import {filter, map, switchMap, take, takeUntil} from 'rxjs/operators';
+import {Account} from 'src/models/account';
+import {FinancialYear} from 'src/models/financial-year';
+import {Transaction, TransactionCode} from 'src/models/transaction';
+import {TransactionWithBalance} from 'src/models/transaction-with-balance';
+import {AccountService} from 'src/services/account.service';
+import {BusService} from 'src/services/bus.service';
+import {FinancialYearService} from 'src/services/financial-year.service';
+import {TransactionService} from 'src/services/transaction.service';
+import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import {TransactionCodeDialogComponent} from '../transaction-code-dialog/transaction-code-dialog.component';
+import {
+  TransactionDescriptionDialogComponent
+} from '../transaction-description-dialog/transaction-description-dialog.component';
+import {
+  DialogData,
+  TransactionDialogComponent,
+  TransactionMode
+} from '../transaction-dialog/transaction-dialog.component';
+import {
+  TransactionEvidenceNumberDialogComponent
+} from '../transaction-evidence-number-dialog/transaction-evidence-number-dialog.component';
 
 @Component({
   selector: 'app-transaction-list',
