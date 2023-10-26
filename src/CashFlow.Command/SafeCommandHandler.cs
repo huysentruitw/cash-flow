@@ -7,13 +7,13 @@ namespace CashFlow.Command
 {
     internal abstract class SafeCommandHandler<TCommand, TResult>
         : AbstractValidator<TCommand>
-            , IRequestHandler<TCommand, TResult>
+        , IRequestHandler<TCommand, TResult>
         where TCommand : IRequest<TResult>
     {
         public async Task<TResult> Handle(TCommand command, CancellationToken cancellationToken)
         {
             DefineRules();
-            this.ValidateAndThrow(command);
+            await this.ValidateAndThrowAsync(command, cancellationToken);
             return await HandleValidatedCommand(command);
         }
 
@@ -23,7 +23,7 @@ namespace CashFlow.Command
     }
 
     internal abstract class SafeCommandHandler<TCommand> : SafeCommandHandler<TCommand, Unit>
-        where TCommand : IRequest
+        where TCommand : IRequest<Unit>
     {
     }
 }

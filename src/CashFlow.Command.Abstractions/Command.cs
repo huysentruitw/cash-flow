@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CashFlow.Command.Abstractions
 {
-    public abstract class Command : Command<Unit>, IRequest
+    public abstract class Command : Command<Unit>, IRequest<Unit>
     {
     }
 
